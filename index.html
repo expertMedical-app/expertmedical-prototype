@@ -1306,7 +1306,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
   <div class="cxi" onclick="hideCtx();openAddPdf()">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg><span data-i18n="action.ajouterpdf">Ajouter un PDF</span>
   </div>
-  <div class="cxi" onclick="openAssignMenu()">
+  <div class="cxi" onclick="hideCtx();toggleAssignMenu()">
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="action.assigner">Assigner à</span>
 </div>
   <div class="cxi" onclick="hideCtx();openNotes(_ctxDossier)">
@@ -1567,19 +1567,34 @@ function closeModal(){document.getElementById('movl').classList.remove('show')}
 function closeModalOut(e){if(e.target===document.getElementById('movl'))closeModal()}
 
 function toggleAssignMenu(e){
-  e.stopPropagation();
+  if(e) e.stopPropagation();
+
   const menu = document.getElementById('assignMenu');
+
+  // Cas 1 : menu batch normal
   const btn = document.getElementById('assignBatchBtn');
-  const rect = btn.getBoundingClientRect();
-  menu.style.left = rect.left + 'px';
-  menu.style.top = (rect.top - menu.offsetHeight - 4) + 'px';
-  menu.classList.toggle('show');
-  requestAnimationFrame(function(){
-    const r2 = btn.getBoundingClientRect();
-    const mh = menu.offsetHeight || 120;
-    menu.style.left = r2.left + 'px';
-    menu.style.top = (r2.top - mh - 4) + 'px';
-  });
+  if(btn){
+    const rect = btn.getBoundingClientRect();
+    menu.style.left = rect.left + 'px';
+    menu.style.top = (rect.top - menu.offsetHeight - 4) + 'px';
+    menu.classList.toggle('show');
+
+    requestAnimationFrame(function(){
+      const r2 = btn.getBoundingClientRect();
+      const mh = menu.offsetHeight || 120;
+      menu.style.left = r2.left + 'px';
+      menu.style.top = (r2.top - mh - 4) + 'px';
+    });
+    return;
+  }
+
+  // Cas 2 : ouverture depuis le menu contextuel d'une ligne
+  const ctx = document.getElementById('ctxMenu');
+  if(ctx){
+    menu.style.left = ctx.style.left;
+    menu.style.top = ctx.style.top;
+    menu.classList.add('show');
+  }
 }
 
 function doAssign(name){
