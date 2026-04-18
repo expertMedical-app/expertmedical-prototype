@@ -2221,7 +2221,7 @@ function renderKE(){
       + '<td><input type="checkbox" class="chk"></td>'
       + '<td style="font-family:monospace;font-size:11px;color:var(--mu)">'+(d.id||'')+'</td>'
       + '<td><div style="font-weight:600;font-size:12px">'+d.name+'</div><div style="font-size:10px;color:var(--mu);font-family:monospace">'+(d.ramq||'')+'</div></td>'
-      + + '<td><select onchange="setPipeVal(\''+d.id+'\',\'niveau\',this.value)" onclick="event.stopPropagation()" style="border:1px solid var(--br);border-radius:6px;font-size:11px;cursor:pointer;outline:none;font-family:inherit;padding:3px 6px;background:white">'
+      + '<td><select onchange="setPipeVal(\''+d.id+'\',\'niveau\',this.value)" onclick="event.stopPropagation()" style="border:1px solid var(--br);border-radius:6px;font-size:11px;cursor:pointer;outline:none;font-family:inherit;padding:3px 6px;background:white">'
       + niveauOpts.map(function(o){ return '<option value="'+o+'"'+(o===p.niveau?' selected':'')+'>'+o+'</option>'; }).join('')
       + '</select></td>'
       + '<td>'+mkSelect('analyseIA', analyseIAOpts, p.analyseIA)+'</td>'
