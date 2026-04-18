@@ -3804,23 +3804,100 @@ function closeNotes(){
   document.getElementById('noteInput').value = '';
 }
 
+--- APRÈS ---
+var _notesExempleHTML =
+  '<div style="background:#fff;border:1px solid #d1d5db;border-radius:8px;padding:18px 20px;margin-bottom:4px">' +
+
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">' +
+      '<span style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:#e5e7eb;color:#6b7280;padding:2px 8px;border-radius:4px">Document exemple</span>' +
+      '<span style="font-size:11px;color:#9ca3af">DOS : 788455301 &nbsp;·&nbsp; ORI : 2023-05-25</span>' +
+    '</div>' +
+
+    /* ── Note 1 ── */
+    '<div style="border-left:3px solid #1a7a4a;padding-left:12px;margin-bottom:18px">' +
+      '<div style="font-size:11px;color:#6b7280;margin-bottom:6px"><strong>2023-06-19 15:17</strong> &nbsp;·&nbsp; Julie Châteauneuf — Agent d\'indemnisation &nbsp;·&nbsp; <em>NOTE DE PRISE EN CHARGE</em></div>' +
+      '<div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:6px">Appel à T</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#1a7a4a;margin:8px 0 4px">— Aspect médical</div>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 6px">Dr Guy Cormier désigné par T comme PSQAC pour assurer le suivi CNESST. Poursuite des traitements en physio, encore du gain. Genou douloureux avec boiterie et enflure importante. Traitements ergo non envisagés pour le moment en raison de la douleur. Prise d\'AINS. Rendez-vous médical prévu le 14 juin 2023. Prescription pour consultation orthopédique au privé. T informée du remboursement au tarif RAMQ : 54,51 $ (consultation) et 22,00 $ (rapport).</p>' +
+      '<div style="font-size:12px;font-weight:700;color:#1a7a4a;margin:8px 0 4px">— Aspect professionnel</div>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 6px">Communication avec l\'employeur par courriel à l\'occasion, suivi médical assuré par T. Travail léger clérical non disponible. PSQAC a rempli les formulaires d\'ATT.</p>' +
+      '<div style="font-size:12px;font-weight:700;color:#1a7a4a;margin:8px 0 4px">— Aspect psychosocial</div>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 4px"><strong>AVQ :</strong> essaie d\'être autonome mais difficile, aucun enfant, conjointe très aidante, vaisselle avec pauses, conduite automobile possible.</p>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 4px"><strong>Loisirs :</strong> hockey, moto.</p>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 4px"><strong>Moral :</strong> des hauts et des bas, parfois découragée, s\'ennuie. S\'occupe en allant aux traitements en physio.</p>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 6px"><strong>Domicile :</strong> locataire d\'une maison, entretien neige/gazon pris en charge par la conjointe.</p>' +
+      '<div style="font-size:12px;font-weight:700;color:#1a7a4a;margin:8px 0 4px">— Aspect légal</div>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 4px"><strong>2023-05-26 :</strong> Tentative d\'appel au 438-819-0905 — boîte vocale familiale, aucun message laissé. Communication via messagerie.</p>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 4px"><strong>2023-05-27 :</strong> Retour d\'appel de T — confirme numéro valide, questionne consultation orthopédie, demande rappel pour suivi.</p>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 6px">Présentation de la nouvelle agente. Rôle : suivi médical, financier, administratif et légal. Travail en équipe avec Mme Baulieu (retour au travail, réadaptation). T informée de ses responsabilités, de ses droits et des étapes du cheminement d\'un dossier CNESST. Autorisation de T d\'ajouter le no de cellulaire de sa conjointe (438-246-6137). Utilisation de la messagerie et dépôt direct confirmés.</p>' +
+    '</div>' +
+
+    /* ── Note 2 ── */
+    '<div style="border-left:3px solid #6b7280;padding-left:12px;margin-bottom:18px">' +
+      '<div style="font-size:11px;color:#6b7280;margin-bottom:6px"><strong>2023-05-29 14:13</strong> &nbsp;·&nbsp; Amira Maiga Doulay — Étudiant &nbsp;·&nbsp; <em>INTERVENTION</em></div>' +
+      '<div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:6px">Décision maintenue (002-003)</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#1a7a4a;margin:8px 0 4px">— Aspect légal</div>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 4px"><strong>Contestation 002 — 2023-05-28 :</strong> DRA maintient la décision du 26 mai 2023. L\'événement décrit est susceptible de produire une rupture du LCA, une entorse du LCM et une déchirure du ménisque interne du genou droit.</p>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 6px"><strong>Contestation 003 — 2023-05-28 :</strong> Même décision maintenue.</p>' +
+    '</div>' +
+
+    /* ── Note 3 ── */
+    '<div style="border-left:3px solid #6b7280;padding-left:12px;margin-bottom:18px">' +
+      '<div style="font-size:11px;color:#6b7280;margin-bottom:6px"><strong>2023-07-12 13:37</strong> &nbsp;·&nbsp; Julie Châteauneuf — Agent d\'indemnisation &nbsp;·&nbsp; <em>INTERVENTION</em></div>' +
+      '<div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:6px">Retour d\'appel à T — récupération des sommes</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#1a7a4a;margin:8px 0 4px">— Aspect financier</div>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0">T questionne la récupération de sommes. Des montants sont récupérés en provenance d\'un dossier antérieur (~25 %). Tentative de modification à 15 % — panoramas bloqués. Message laissé au conjoint de T pour qu\'elle consulte sa messagerie.</p>' +
+    '</div>' +
+
+    /* ── Note 4 ── */
+    '<div style="border-left:3px solid #6b7280;padding-left:12px;margin-bottom:18px">' +
+      '<div style="font-size:11px;color:#6b7280;margin-bottom:6px"><strong>2023-07-31 11:35</strong> &nbsp;·&nbsp; Julie Châteauneuf — Agent d\'indemnisation &nbsp;·&nbsp; <em>INTERVENTION</em></div>' +
+      '<div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:6px">IRR accepté — ATT</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#1a7a4a;margin:8px 0 4px">— Aspect financier</div>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0">Formulaire ATT au dossier débutant le 2023-05-25. Sans retour d\'appel de T et en présence d\'un formulaire ATT signé par le PSQAC débutant le 2023-05-30, les IRR sont annulées à compter du 2023-05-30 afin d\'éviter un surpayé.</p>' +
+    '</div>' +
+
+    /* ── Note 5 ── */
+    '<div style="border-left:3px solid #6b7280;padding-left:12px;margin-bottom:18px">' +
+      '<div style="font-size:11px;color:#6b7280;margin-bottom:6px"><strong>2023-08-27 10:38</strong> &nbsp;·&nbsp; Julie Châteauneuf — Agent d\'indemnisation &nbsp;·&nbsp; <em>INTERVENTION</em></div>' +
+      '<div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:6px">Retour d\'appel fait au travailleur</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#1a7a4a;margin:8px 0 4px">— Aspect financier</div>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0">T questionne via l\'espace client l\'absence d\'indemnités au-delà du 24 août. En raison du formulaire ATT signé par le PSQAC à compter du 1er août 2023, le versement des pleines indemnités a cessé au 25 août 2023. Message téléphonique laissé à T résumant la situation.</p>' +
+    '</div>' +
+
+    /* ── Note 6 ── */
+    '<div style="border-left:3px solid #6b7280;padding-left:12px;margin-bottom:18px">' +
+      '<div style="font-size:11px;color:#6b7280;margin-bottom:6px"><strong>2023-09-13 09:38</strong> &nbsp;·&nbsp; Julie Châteauneuf — Agent d\'indemnisation &nbsp;·&nbsp; <em>INTERVENTION</em></div>' +
+      '<div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:6px">Nouveau retour d\'appel au travailleur — vérification ATT</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#1a7a4a;margin:8px 0 4px">— Aspect financier / professionnel</div>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 4px">T a reçu seulement les IRR pour 6 jours et est inquiète. Elle est toujours en arrêt de travail, sans date de retour confirmée.</p>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0 0 4px">Contact de l\'employeur (Carl Gagné) et de la Mutuelle de prévention (Mme Laurence Gagné, 438-647-2772) — messages laissés.</p>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0">Reprise des indemnités de T à partir du 25 août dans l\'attente du retour d\'appel de l\'employeur ou de la Mutuelle.</p>' +
+    '</div>' +
+
+    /* ── Note 7 ── */
+    '<div style="border-left:3px solid #6b7280;padding-left:12px;margin-bottom:0">' +
+      '<div style="font-size:11px;color:#6b7280;margin-bottom:6px"><strong>2023-10-07 15:57</strong> &nbsp;·&nbsp; Manon Lafontaine — Agent d\'indemnisation &nbsp;·&nbsp; <em>INTERVENTION — APPEL REÇU</em></div>' +
+      '<div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:6px">Retour d\'appel de la Mutuelle</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#1a7a4a;margin:8px 0 4px">— Aspect médical</div>' +
+      '<p style="font-size:12px;line-height:1.7;color:#374151;margin:0">M. Sylvain Noël (Mutuelle, 438-647-2772) demande copie du formulaire ATT par télécopieur (438-647-2773). Envoi confirmé. M. Noël précise qu\'il n\'y a aucune assignation temporaire disponible chez l\'employeur.</p>' +
+    '</div>' +
+
+  '</div>';
+
 function renderNotes(key){
   var notes = _notesStore[key] || [];
-
-  if(notes.length === 0){
-    document.getElementById('notesBody').innerHTML =
-      '<div style="text-align:center;color:#9ca3af;padding:40px">Aucune note</div>';
-    return;
-  }
-
-  document.getElementById('notesBody').innerHTML = notes.map(function(n){
-    return `
-      <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:14px">
-        <div style="font-size:11px;color:#6b7280;margin-bottom:6px">${n.date} • ${n.author}</div>
-        <div style="font-size:13px;line-height:1.5;white-space:pre-wrap">${n.text}</div>
-      </div>
-    `;
+  var body = document.getElementById('notesBody');
+  var exempleHTML = _notesExempleHTML;
+  var notesHTML = notes.map(function(n){
+    return (
+      '<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px">' +
+        '<div style="font-size:11px;color:#6b7280;margin-bottom:6px">' + n.date + ' • ' + n.author + '</div>' +
+        '<div style="font-size:13px;line-height:1.5;white-space:pre-wrap">' + n.text + '</div>' +
+      '</div>'
+    );
   }).join('');
+  body.innerHTML = exempleHTML + notesHTML;
 }
 
 function submitNote(){
