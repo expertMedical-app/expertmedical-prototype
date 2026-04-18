@@ -1571,7 +1571,18 @@ function toggleAssignMenu(e){
 
   const menu = document.getElementById('assignMenu');
 
-  // Cas 1 : menu batch normal
+  // Si on vient du menu contextuel d'une ligne
+  if(_ctxRow){
+    const ctx = document.getElementById('ctxMenu');
+    if(ctx){
+      menu.style.left = ctx.style.left;
+      menu.style.top = ctx.style.top;
+      menu.classList.add('show');
+      return;
+    }
+  }
+
+  // Sinon : mode batch normal
   const btn = document.getElementById('assignBatchBtn');
   if(btn){
     const rect = btn.getBoundingClientRect();
@@ -1585,15 +1596,6 @@ function toggleAssignMenu(e){
       menu.style.left = r2.left + 'px';
       menu.style.top = (r2.top - mh - 4) + 'px';
     });
-    return;
-  }
-
-  // Cas 2 : ouverture depuis le menu contextuel d'une ligne
-  const ctx = document.getElementById('ctxMenu');
-  if(ctx){
-    menu.style.left = ctx.style.left;
-    menu.style.top = ctx.style.top;
-    menu.classList.add('show');
   }
 }
 
