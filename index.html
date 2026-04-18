@@ -1312,7 +1312,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
   <div class="cxi" onclick="hideCtx();openNotes(_ctxDossier)">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span data-i18n="action.note">Notes administratives</span>
   </div>
-  <div class="cxi cxr" onclick="hideCtx();alert('Dossier supprimé')">
+  <div class="cxi cxr" onclick="hideCtx();openDeleteDossier()">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg><span data-i18n="action.supprimer">Supprimer</span>
   </div>
   <div class="cxd"></div>
@@ -1666,6 +1666,27 @@ function doAssign(name){
 
   clearSel();
   _ctxRow = null;
+}
+
+// ── SUPPRESSION — MES DOSSIERS ───────────────────────────────────────────────
+function openDeleteDossier(){
+  document.getElementById('delDossierOverlay').classList.add('show');
+}
+function closeDeleteDossier(){
+  document.getElementById('delDossierOverlay').classList.remove('show');
+}
+function confirmDeleteDossier(){
+  document.getElementById('delDossierOverlay').classList.remove('show');
+  if(_ctxRow){
+    _ctxRow.style.transition = 'opacity .35s';
+    _ctxRow.style.opacity = '0';
+    setTimeout(function(){ _ctxRow.remove(); }, 370);
+    _ctxRow = null;
+  }
+  const toast = document.getElementById('assignToast');
+  toast.textContent = 'Dossier supprimé définitivement';
+  toast.classList.add('show');
+  setTimeout(function(){ toast.classList.remove('show'); }, 3000);
 }
 
 document.addEventListener('click', function(e){
@@ -3417,6 +3438,26 @@ renderE();renderA();renderK();renderAgents();
   </div>
 </div>
 
+<!-- MODAL SUPPRESSION — MES DOSSIERS -->
+<div class="del-overlay" id="delDossierOverlay" onclick="if(event.target===this)closeDeleteDossier()">
+  <div class="del-modal">
+    <div class="del-modal-top">
+      <div class="del-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+      </div>
+      <div class="del-title">Vous êtes sur le point de supprimer ce dossier.</div>
+      <div class="del-body">Cette action est irréversible. Toutes les données associées à ce dossier seront définitivement supprimées et ne pourront pas être récupérées.</div>
+      <div class="del-warning">&#9888; Souhaitez-vous confirmer la suppression ?</div>
+    </div>
+    <div class="del-ftr">
+      <button class="btn" onclick="closeDeleteDossier()">Annuler</button>
+      <button class="btn" style="background:#dc2626;color:#fff;border-color:#dc2626;font-weight:600" onclick="confirmDeleteDossier()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        Confirmer la suppression
+      </button>
+    </div>
+  </div>
+</div>
 <!-- NEW USER MODAL -->
 <div class="nu-overlay" id="nuOverlay" onclick="closeNuOut(event)">
   <div class="nu-modal">
