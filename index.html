@@ -1309,7 +1309,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
   <div class="cxi" onclick="hideCtx();alert('Assignation')">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="action.assigner">Assigner à</span>
   </div>
-  <div class="cxi" onclick="hideCtx();alert('Note ajoutée')">
+  <div class="cxi" onclick="hideCtx();openNotes(_ctxDossier)">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span data-i18n="action.note">Notes administratives</span>
   </div>
   <div class="cxi cxr" onclick="hideCtx();alert('Dossier supprimé')">
@@ -3672,5 +3672,94 @@ renderE();renderA();renderK();renderAgents();
     </div>
   </div>
 </div>
-</body>
-</html>
+  <!-- MODAL NOTES -->
+<div id="notesOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9000;overflow-y:auto;padding:40px 0">
+  <div style="max-width:780px;margin:0 auto;background:#f7f8fa;border-radius:10px;min-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.18)">
+
+    <!-- Header -->
+    <div style="position:sticky;top:0;z-index:2;background:#fff;border-bottom:2px solid #e5e7eb;padding:16px 28px">
+      <div style="display:flex;justify-content:space-between">
+        <div>
+          <div style="font-size:10px;font-weight:600;color:#6b7280;text-transform:uppercase">Notes administratives</div>
+          <div id="notesDossierName" style="font-weight:700;font-size:14px">—</div>
+          <div id="notesDossierRamq" style="font-size:11px;color:#9ca3af"></div>
+        </div>
+        <button onclick="closeNotes()">✕</button>
+      </div>
+    </div>
+
+    <!-- Corps -->
+    <div id="notesBody" style="flex:1;padding:28px 36px;display:flex;flex-direction:column;gap:12px;overflow-y:auto"></div>
+
+    <!-- Ajout -->
+    <div style="padding:16px 28px;border-top:2px solid #e5e7eb;background:#fff">
+      <textarea id="noteInput" placeholder="Rédiger une note administrative…" style="width:100%;min-height:80px;border:1px solid #d1d5db;border-radius:8px;padding:10px"></textarea>
+      <div style="text-align:right;margin-top:8px">
+        <button onclick="submitNote()" style="background:#1a7a4a;color:#fff;border:none;padding:8px 16px;border-radius:6px">+ Ajouter une note</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+var _notesStore = {};
+
+function openNotes(dossier){
+  if(!dossier) return;
+  var key = dossier.id || dossier.name;
+  document.getElementById('notesOverlay').dataset.key = key;
+  document.getElementById('notesDossierName').textContent = dossier.name;
+  document.getElementById('notesDossierRamq').textContent = dossier.ramq || '';
+  renderNotes(key);
+  document.getElementById('notesOverlay').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeNotes(){
+  document.getElementById('notesOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+  document.getElementById('noteInput').value = '';
+}
+
+function renderNotes(key){
+  var notes = _notesStore[key] || [];
+
+  if(notes.length === 0){
+    document.getElementById('notesBody').innerHTML =
+      '<div style="text-align:center;color:#9ca3af;padding:40px">Aucune note</div>';
+    return;
+  }
+
+  document.getElementById('notesBody').innerHTML = notes.map(function(n){
+    return `
+      <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:14px">
+        <div style="font-size:11px;color:#6b7280;margin-bottom:6px">${n.date} • ${n.author}</div>
+        <div style="font-size:13px;line-height:1.5;white-space:pre-wrap">${n.text}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function submitNote(){
+  var key = document.getElementById('notesOverlay').dataset.key;
+  var txt = document.getElementById('noteInput').value.trim();
+  if(!txt) return;
+
+  if(!_notesStore[key]) _notesStore[key] = [];
+
+  _notesStore[key].push({
+    text: txt,
+    author: 'Vous',
+    date: new Date().toLocaleString()
+  });
+
+  document.getElementById('noteInput').value = '';
+  renderNotes(key);
+}
+
+// fermer en cliquant à l'extérieur
+document.getElementById('notesOverlay').addEventListener('click', function(e){
+  if(e.target === this) closeNotes();
+});
+</script>
