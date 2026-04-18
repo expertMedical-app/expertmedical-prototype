@@ -2204,11 +2204,12 @@ function renderKE(){
       return '⏱ ';
     }
 
-    function mkSelect(field, opts, current){
-      return '<select onchange="setPipeVal(\''+d.id+'\',\''+field+'\',this.value)" onclick="event.stopPropagation()" style="border:none;background:transparent;font-size:11px;cursor:pointer;outline:none;font-family:inherit;'+statusStyle(current)+'">'
-        + opts.map(function(o){ return '<option value="'+o+'"'+(o===current?' selected':'')+'>'+statusIcon(o)+o+'</option>'; }).join('')
-        + '</select>';
-    }
+    function mkSelect(field, opts, current, disabled){
+  const disabledStyle = disabled ? 'opacity:0.35;pointer-events:none;background:#f3f4f6;border-radius:4px;' : '';
+  return '<select onchange="setPipeVal(\''+d.id+'\',\''+field+'\',this.value)" onclick="event.stopPropagation()" '+(disabled?'disabled':'')+' style="border:none;background:transparent;font-size:11px;cursor:'+(disabled?'not-allowed':'pointer')+';outline:none;font-family:inherit;'+statusStyle(current)+disabledStyle+'">'
+    + opts.map(function(o){ return '<option value="'+o+'"'+(o===current?' selected':'')+'>'+statusIcon(o)+o+'</option>'; }).join('')
+    + '</select>';
+}
 
     function niveauBadge(val){
       const colors = {'Classification':'#e0e7ff;color:#3730a3','Classification et Extraction':'#fce7f3;color:#9d174d','Expertise médicale':'#d1fae5;color:#065f46'};
@@ -2220,11 +2221,13 @@ function renderKE(){
       + '<td><input type="checkbox" class="chk"></td>'
       + '<td style="font-family:monospace;font-size:11px;color:var(--mu)">'+(d.id||'')+'</td>'
       + '<td><div style="font-weight:600;font-size:12px">'+d.name+'</div><div style="font-size:10px;color:var(--mu);font-family:monospace">'+(d.ramq||'')+'</div></td>'
-      + '<td>'+niveauBadge(p.niveau)+'</td>'
+      + + '<td><select onchange="setPipeVal(\''+d.id+'\',\'niveau\',this.value)" onclick="event.stopPropagation()" style="border:1px solid var(--br);border-radius:6px;font-size:11px;cursor:pointer;outline:none;font-family:inherit;padding:3px 6px;background:white">'
+      + niveauOpts.map(function(o){ return '<option value="'+o+'"'+(o===p.niveau?' selected':'')+'>'+o+'</option>'; }).join('')
+      + '</select></td>'
       + '<td>'+mkSelect('analyseIA', analyseIAOpts, p.analyseIA)+'</td>'
       + '<td>'+mkSelect('classification', stepOpts, p.classification)+'</td>'
-      + '<td>'+mkSelect('extraction', stepOpts, p.extraction)+'</td>'
-      + '<td>'+mkSelect('expertise', stepOpts, p.expertise)+'</td>'
+      + '<td>'+mkSelect('extraction', stepOpts, p.extraction, p.niveau==='Classification')+'</td>'
+      + '<td>'+mkSelect('expertise', stepOpts, p.expertise, p.niveau==='Classification' || p.niveau==='Classification et Extraction')+'</td>'
       + '<td style="color:var(--mu);font-size:11px">'+p.rapport+'</td>'
       + '<td><button class="abtn" onclick="showCtx(event)" data-name="'+d.name+'" data-id="'+(d.id||'')+'" data-ramq="'+(d.ramq||'')+'" style="padding:3px 7px;font-size:13px;letter-spacing:1px">⋯</button></td>'
       + '</tr>';
@@ -2250,7 +2253,11 @@ function renderKE(){
 
 function setPipeVal(id, field, val){
   const d = DE.find(function(x){ return x.id===id; });
-  if(d){ if(!d._pipe) d._pipe={}; d._pipe[field]=val; }
+  if(d){
+    if(!d._pipe) d._pipe={};
+    d._pipe[field]=val;
+    if(field==='niveau') renderKE();
+  }
 }
 
 // ── GESTION MENU ─────────────────────────────────────────────────────────────
