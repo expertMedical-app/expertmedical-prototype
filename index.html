@@ -1517,8 +1517,14 @@ function filterE(q){document.querySelectorAll('#etable tbody tr').forEach(r=>{r.
 // CONTEXT MENU
 let ctxV=false;
 var _ctxDossier = null;
+var _ctxRow = null;
+
 function showCtx(e){
   e.stopPropagation();
+
+  // mémoriser la ligne active pour les actions comme "Assigner à"
+  _ctxRow = e.target.closest('tr');
+
   // Find the dossier data from the row
   var btn = e.target.closest('[data-ramq]') || e.target.closest('[data-name]');
   if(btn && btn.dataset.name){
@@ -1534,13 +1540,19 @@ function showCtx(e){
       _ctxDossier = { name: nameEl ? nameEl.textContent.trim() : '', id:'', ramq:'' };
     }
   }
+
   const m=document.getElementById('ctxMenu');
   m.style.left=Math.min(e.clientX,window.innerWidth-210)+'px';
   m.style.top=Math.min(e.clientY+4,window.innerHeight-280)+'px';
   m.classList.add('show');
   ctxV=true;
 }
-function hideCtx(){document.getElementById('ctxMenu').classList.remove('show');ctxV=false}
+
+function hideCtx(){
+  document.getElementById('ctxMenu').classList.remove('show');
+  ctxV=false;
+}
+
 document.addEventListener('click',()=>{if(ctxV)hideCtx()});
 
 // BATCH / CHECKBOXES
@@ -1554,7 +1566,6 @@ function openModal(){document.getElementById('movl').classList.add('show')}
 function closeModal(){document.getElementById('movl').classList.remove('show')}
 function closeModalOut(e){if(e.target===document.getElementById('movl'))closeModal()}
 
-
 function toggleAssignMenu(e){
   e.stopPropagation();
   const menu = document.getElementById('assignMenu');
@@ -1563,7 +1574,6 @@ function toggleAssignMenu(e){
   menu.style.left = rect.left + 'px';
   menu.style.top = (rect.top - menu.offsetHeight - 4) + 'px';
   menu.classList.toggle('show');
-  // position after show so offsetHeight is correct
   requestAnimationFrame(function(){
     const r2 = btn.getBoundingClientRect();
     const mh = menu.offsetHeight || 120;
@@ -1571,11 +1581,14 @@ function toggleAssignMenu(e){
     menu.style.top = (r2.top - mh - 4) + 'px';
   });
 }
+
 function doAssign(name){
   const menu = document.getElementById('assignMenu');
   menu.classList.remove('show');
+
   const checked = document.querySelectorAll('.row-chk:checked');
-  const n = checked.length;
+  const rows = [];
+
   const colorMap = {
     'Dr Lemay':    '#2563eb',
     'Mme Lavoie':  '#db2777',
@@ -1585,6 +1598,7 @@ function doAssign(name){
     'M. Gagné':    '#b45309',
     'Dr Tremblay': '#be123c'
   };
+
   const initialsMap = {
     'Dr Lemay':    'DL',
     'Mme Lavoie':  'ML',
@@ -1594,27 +1608,48 @@ function doAssign(name){
     'M. Gagné':    'MG',
     'Dr Tremblay': 'DT'
   };
+
   const col      = colorMap[name]    || '#6b7280';
   const initials = initialsMap[name] || name.slice(0,2).toUpperCase();
-  // update agent cell in each selected row
+
+  // Priorité aux lignes cochées
   checked.forEach(function(chk){
     const row = chk.closest('tr');
-    if(!row) return;
+    if(row) rows.push(row);
+  });
+
+  // Sinon utiliser la ligne du menu contextuel
+  if(rows.length === 0 && _ctxRow){
+    rows.push(_ctxRow);
+  }
+
+  // update agent cell
+  rows.forEach(function(row){
     const cells = row.querySelectorAll('td');
-    // agent column is index 7 (0-based)
     const agentCell = cells[7];
     if(agentCell){
-      agentCell.innerHTML = '<div style="display:flex;align-items:center;gap:5px"><div style="width:22px;height:22px;border-radius:50%;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0">'+initials+'</div><span style="font-size:11px;color:#6b7280">'+name+'</span></div>';
+      agentCell.innerHTML =
+        '<div style="display:flex;align-items:center;gap:5px">' +
+          '<div style="width:22px;height:22px;border-radius:50%;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0">'+initials+'</div>' +
+          '<span style="font-size:11px;color:#6b7280">'+name+'</span>' +
+        '</div>';
     }
   });
+
   // show toast
   const toast = document.getElementById('assignToast');
-  toast.textContent = n + ' dossier(s) assigné(s) à ' + name;
+  if(rows.length > 0){
+    toast.textContent = rows.length + ' dossier(s) assigné(s) à ' + name;
+  } else {
+    toast.textContent = 'Aucun dossier sélectionné';
+  }
   toast.classList.add('show');
   setTimeout(function(){ toast.classList.remove('show'); }, 2800);
-  // uncheck all
+
   clearSel();
+  _ctxRow = null;
 }
+
 document.addEventListener('click', function(e){
   const menu = document.getElementById('assignMenu');
   if(menu && !menu.contains(e.target) && e.target.id !== 'assignBatchBtn'){
@@ -1636,6 +1671,7 @@ function togglePriorityMenu(e){
     menu.style.top = (r.top - mh - 4) + 'px';
   });
 }
+
 function doPriority(label, cls, bg, textColor){
   const menu = document.getElementById('priorityMenu');
   menu.classList.remove('show');
@@ -1645,19 +1681,18 @@ function doPriority(label, cls, bg, textColor){
     const row = chk.closest('tr');
     if(!row) return;
     const cells = row.querySelectorAll('td');
-    // priority column is index 4 (0-based: chk=0, id=1, nom=2, statut=3, priorité=4)
     const prCell = cells[4];
     if(prCell){
       prCell.innerHTML = '<span class="badge" style="background:'+bg+';color:'+textColor+'">'+label+'</span>';
     }
   });
   const toast = document.getElementById('assignToast');
-  const icons = {'Urgent':'🔴','Prioritaire':'🟡','Normale':'🟢'};
   toast.textContent = n + ' dossier(s) — Priorité «' + label + '» appliquée';
   toast.classList.add('show');
   setTimeout(function(){ toast.classList.remove('show'); }, 2800);
   clearSel();
 }
+
 document.addEventListener('click', function(e){
   const pm = document.getElementById('priorityMenu');
   if(pm && !pm.contains(e.target) && e.target.id !== 'priorityBatchBtn'){
