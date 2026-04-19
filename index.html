@@ -2205,8 +2205,10 @@ function renderKE(){
     }
 
     function mkSelect(field, opts, current, disabled){
-  const disabledStyle = disabled ? 'opacity:0.35;pointer-events:none;background:#f3f4f6;border-radius:4px;' : '';
-  return '<select onchange="setPipeVal(\''+d.id+'\',\''+field+'\',this.value)" onclick="event.stopPropagation()" '+(disabled?'disabled':'')+' style="border:none;background:transparent;font-size:11px;cursor:'+(disabled?'not-allowed':'pointer')+';outline:none;font-family:inherit;'+statusStyle(current)+disabledStyle+'">'
+  if(disabled){
+    return '<span style="font-size:11px;color:#9ca3af;font-style:italic;opacity:0.6;background:#f3f4f6;border-radius:4px;padding:3px 8px;display:inline-block">Non applicable</span>';
+  }
+  return '<select onchange="setPipeVal(\''+d.id+'\',\''+field+'\',this.value)" onclick="event.stopPropagation()" style="border:none;background:transparent;font-size:11px;cursor:pointer;outline:none;font-family:inherit;'+statusStyle(current)+'">'
     + opts.map(function(o){ return '<option value="'+o+'"'+(o===current?' selected':'')+'>'+statusIcon(o)+o+'</option>'; }).join('')
     + '</select>';
 }
