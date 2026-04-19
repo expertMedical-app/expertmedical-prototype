@@ -2199,7 +2199,7 @@ function createUser(){
   });
   if(!email.includes('@')){ document.getElementById('nuEmail').classList.add('err'); valid=false; }
   if(!valid) return;
-  const STATUT_STYLE = {'Actif':{bg:'#e8f5ee',color:'#145f38'},'Suspendu':{bg:'#fef3c7',color:'#92400e'},'Congé':{bg:'#eff6ff',color:'#1e40af'},'Inactif':{bg:'#f3f4f6',color:'#6b7280'}};
+  const STATUT_STYLE = {'Actif':{bg:'#e8f5ee',color:'#145f38'},'Suspendu':{bg:'#fef3c7',color:'#92400e'},'En congé':{bg:'#eff6ff',color:'#1e40af'},'Congé':{bg:'#eff6ff',color:'#1e40af'},'Inactif':{bg:'#f3f4f6',color:'#6b7280'}};
   const s = STATUT_STYLE[statut]||{bg:'#f3f4f6',color:'#6b7280'};
   const avatarColors = {'A':'#1a7a4a','B':'#2563eb','C':'#0891b2','D':'#7c3aed','E':'#6366f1','F':'#d97706','G':'#059669','H':'#db2777','I':'#dc2626','J':'#b45309','K':'#6b7280','L':'#1a7a4a','M':'#2563eb','N':'#7c3aed','O':'#d97706','P':'#dc2626','Q':'#6b7280','R':'#0891b2','S':'#059669','T':'#db2777','U':'#6366f1','V':'#b45309','W':'#6b7280','X':'#1a7a4a','Y':'#2563eb','Z':'#7c3aed'};
   const avColor = avatarColors[prenom[0].toUpperCase()]||'#6b7280';
