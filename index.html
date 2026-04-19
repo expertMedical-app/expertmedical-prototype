@@ -1598,8 +1598,27 @@ function selectAssignTransferPerson(person) {
   _selectedPerson = person;
   if (_assignTransferMode === 'assign') {
     doAssign(person.name);
+    closeAssignTransferModal();
+  } else if (_assignTransferMode === 'transfer') {
+    closeAssignTransferModal();
+    openTransferConfirm();
   }
-  closeAssignTransferModal();
+}
+
+function openTransferConfirm() {
+  document.getElementById('transferConfirmOverlay').classList.add('show');
+}
+
+function closeTransferConfirm() {
+  document.getElementById('transferConfirmOverlay').classList.remove('show');
+}
+
+function confirmTransfer() {
+  closeTransferConfirm();
+  var toast = document.getElementById('assignToast');
+  toast.textContent = '✓ Dossier transféré à ' + (_selectedPerson ? _selectedPerson.name : '');
+  toast.classList.add('show');
+  setTimeout(function(){ toast.classList.remove('show'); }, 3000);
 }
 
 // BATCH / CHECKBOXES
@@ -3359,8 +3378,29 @@ renderE();renderA();renderK();renderAgents();
   </div>
 </div>
 
+<!-- TRANSFER CONFIRM MODAL -->
+<div class="del-overlay" id="transferConfirmOverlay">
+  <div class="del-modal">
+    <div class="del-modal-top">
+      <div class="del-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      </div>
+      <div class="del-title">Vous êtes sur le point de transférer ce dossier.</div>
+      <div class="del-body">Cette action est irréversible. Tous les accès à ce dossier vous seront retirés définitivement et ne pourront pas être récupérés sans autorisation.</div>
+      <div class="del-warning">&#9888; Souhaitez-vous confirmer le transfert ?</div>
+    </div>
+    <div class="del-ftr">
+      <button class="btn" onclick="closeTransferConfirm()">Annuler</button>
+      <button class="btn" style="background:#d97706;color:#fff;border-color:#d97706;font-weight:600" onclick="confirmTransfer()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        Confirmer le transfert
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- ASSIGN / TRANSFER MODAL -->
-<div class="modal-overlay" id="assignTransferModal" onclick="if(event.target===this)closeAssignTransferModal()">
+<div class="modal-overlay" id="assignTransferModal"
   <div class="modal-box" style="max-width:520px;width:95%">
     <div class="modal-hdr">
       <span id="atModalTitle">Assigner à</span>
