@@ -1526,11 +1526,7 @@ var _ctxRow = null;
 
 function showCtx(e){
   e.stopPropagation();
-
-  // mémoriser la ligne active pour les actions comme "Assigner à"
   _ctxRow = e.target.closest('tr');
-
-  // Find the dossier data from the row
   var btn = e.target.closest('[data-ramq]') || e.target.closest('[data-name]');
   if(btn && btn.dataset.name){
     _ctxDossier = {
@@ -1545,12 +1541,19 @@ function showCtx(e){
       _ctxDossier = { name: nameEl ? nameEl.textContent.trim() : '', id:'', ramq:'' };
     }
   }
-
-  const m=document.getElementById('ctxMenu');
-  m.style.left=Math.min(e.clientX,window.innerWidth-210)+'px';
-  m.style.top=Math.min(e.clientY+4,window.innerHeight-320)+'px';
+  const m = document.getElementById('ctxMenu');
+  m.style.left = '-9999px';
+  m.style.top  = '-9999px';
   m.classList.add('show');
-  ctxV=true;
+  requestAnimationFrame(function(){
+    const mh = m.offsetHeight;
+    const mw = m.offsetWidth;
+    const top  = (e.clientY + 4 + mh > window.innerHeight) ? e.clientY - mh : e.clientY + 4;
+    const left = Math.min(e.clientX, window.innerWidth - mw - 4);
+    m.style.top  = top  + 'px';
+    m.style.left = left + 'px';
+    ctxV = true;
+  });
 }
 
 function hideCtx(){
