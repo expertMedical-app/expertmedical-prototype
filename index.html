@@ -1726,12 +1726,19 @@ function doPriority(label, cls, bg, textColor){
     if(prCell){
       prCell.innerHTML = '<span class="badge" style="background:'+bg+';color:'+textColor+'">'+label+'</span>';
     }
+    const idCell = cells[1];
+    if(idCell){
+      const dosId = idCell.textContent.trim();
+      const dos = DA.find(function(x){ return x.id === dosId; });
+      if(dos){ dos.pr = {l:label, c:cls}; }
+    }
   });
   const toast = document.getElementById('assignToast');
   toast.textContent = n + ' dossier(s) — Priorité «' + label + '» appliquée';
   toast.classList.add('show');
   setTimeout(function(){ toast.classList.remove('show'); }, 2800);
   clearSel();
+  if(document.getElementById('pipelineViewE') && document.getElementById('pipelineViewE').style.display !== 'none') renderKE();
 }
 
 document.addEventListener('click', function(e){
