@@ -190,6 +190,13 @@ tr:hover td{background:#fafbfc}
 .priority-menu-hdr{padding:7px 14px 5px;font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e2e6ec;background:#fafafa}
 
 /* ASSIGN / TRANSFER MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,20,30,.52);z-index:11000;display:none;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.22);border:1px solid #e2e6ec;overflow:hidden}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #e2e6ec;font-size:14px;font-weight:700;color:#1a1d23}
+.modal-close{background:none;border:none;cursor:pointer;color:#6b7280;font-size:16px;padding:4px 6px;border-radius:5px;transition:background .12s}
+.modal-close:hover{background:#f3f4f6}
+.modal-body{overflow-y:auto;max-height:60vh}
 .at-row{cursor:pointer;border-bottom:1px solid #f1f5f9;transition:background .12s}
 .at-row:hover{background:#f0faf4}
 .at-row:last-child{border-bottom:none}
