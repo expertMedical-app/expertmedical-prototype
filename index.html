@@ -2211,9 +2211,12 @@ function renderKE(){
   if(disabled){
     return '<span style="font-size:11px;color:#9ca3af;font-style:italic;opacity:0.6;background:#f3f4f6;border-radius:4px;padding:3px 8px;display:inline-block">Non applicable</span>';
   }
-  return '<select onchange="setPipeVal(\''+d.id+'\',\''+field+'\',this.value)" onclick="event.stopPropagation()" style="border:none;background:transparent;font-size:11px;cursor:pointer;outline:none;font-family:inherit;'+statusStyle(current)+'">'
+  const colorMap = {'Complété':'#1a7a4a','En cours':'#d97706','En attente':'#dc2626'};
+  const col = colorMap[current]||'#374151';
+  return '<div style="display:inline-block;border-radius:4px;padding:1px 4px;background:'+(current==='Complété'?'#e8f5ee':current==='En cours'?'#fef3c7':current==='En attente'?'#fee2e2':'#f3f4f6')+'">'
+    + '<select onchange="setPipeVal(\''+d.id+'\',\''+field+'\',this.value);renderKE();" onclick="event.stopPropagation()" style="border:none;background:transparent;font-size:11px;cursor:pointer;outline:none;font-family:inherit;font-weight:600;color:'+col+'">'
     + opts.map(function(o){ return '<option value="'+o+'"'+(o===current?' selected':'')+'>'+statusIcon(o)+o+'</option>'; }).join('')
-    + '</select>';
+    + '</select></div>';
 }
 
     function niveauBadge(val){
