@@ -740,8 +740,8 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
         <div class="kc"><div class="kacc" style="background:var(--re)"></div><div class="klbl">Dossiers en retard</div><div class="kval" style="color:var(--re)">47</div><div class="ksub"><span class="kup">▼ -12</span> vs semaine passée</div></div>
       </div>
 
-      <div class="cr cr3">
-        <div class="cc" onclick="openChartZoom(this)">
+      <div class="cr">
+        <div class="cc cc-full" onclick="openChartZoom(this)">
           <div class="cct">Temps moyen par étape (min)</div>
           <div class="ccs">Durée de traitement</div>
           <div class="bchart">
@@ -1460,13 +1460,13 @@ function makeLine(containerId, labelsId, series, labels, opts){
 }
 
 // BUILD CHARTS
-const M=['Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc','Jan','Fév','Mar','Avr'];
+const M=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
 const S8=['S1','S2','S3','S4','S5','S6','S7','S8'];
 const S16=['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','S13','S14','S15','S16'];
 
 makeLine('chartRvC','labRvC',[
-  {data:[310,290,345,380,320,298,412,388,356,401,378,412],color:'#1a7a4a',fill:true},
-  {data:[285,305,320,360,310,280,390,400,345,385,395,398],color:'#2563eb',dash:'5,3'}
+  {data:[378,412,345,380,310,290,345,380,320,298,412,388],color:'#1a7a4a',fill:true},
+  {data:[395,398,320,360,285,305,320,360,310,280,390,400],color:'#2563eb',dash:'5,3'}
 ],M,{h:100});
 
 makeLine('chartSLA','labSLA',[
