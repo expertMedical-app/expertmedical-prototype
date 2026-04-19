@@ -2235,8 +2235,7 @@ function renderKE(){
     return '<tr>'
       + '<td><input type="checkbox" class="chk"></td>'
       + '<td style="font-family:monospace;font-size:11px;color:var(--mu)">'+(d.ramq||d.id||'')+'</td>'
-      + '<td><div style="font-weight:600;font-size:12px;padding:3px 6px;border-radius:4px;background:'+(d.pr.l==='Urgente'?'#fee2e2':d.pr.l==='Haute'?'#fef3c7':d.pr.l==='Normale'?'#e8f5ee':'#f3f4f6')+';color:'+(d.pr.l==='Urgente'?'#991b1b':d.pr.l==='Haute'?'#92400e':d.pr.l==='Normale'?'#145f38':'#374151')+'">'+d.name+'</div></td>'
-      + '<td><select onchange="setPipeVal(\''+d.id+'\',\'niveau\',this.value)" onclick="event.stopPropagation()" style="border:1px solid var(--br);border-radius:6px;font-size:11px;cursor:pointer;outline:none;font-family:inherit;padding:3px 6px;background:white">'
++ '<td><div style="font-weight:600;font-size:12px;padding:3px 6px;border-radius:4px;background:'+(d.pr.l==='Urgente'?'#fee2e2':d.pr.l==='Haute'?'#fef3c7':d.pr.l==='Normale'?'#e8f5ee':'#f3f4f6')+';color:'+(d.pr.l==='Urgente'?'#991b1b':d.pr.l==='Haute'?'#92400e':d.pr.l==='Normale'?'#145f38':'#374151')+'">'+d.name+'</div></td>'      + '<td><select onchange="setPipeVal(\''+d.id+'\',\'niveau\',this.value)" onclick="event.stopPropagation()" style="border:1px solid var(--br);border-radius:6px;font-size:11px;cursor:pointer;outline:none;font-family:inherit;padding:3px 6px;background:white">'
       + niveauOpts.map(function(o){ return '<option value="'+o+'"'+(o===p.niveau?' selected':'')+'>'+o+'</option>'; }).join('')
       + '</select></td>'
       + '<td>'+mkSelect('analyseIA', analyseIAOpts, p.analyseIA)+'</td>'
