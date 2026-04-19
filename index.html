@@ -1523,6 +1523,8 @@ function filterE(q){
 let ctxV=false;
 var _ctxDossier = null;
 var _ctxRow = null;
+var _assignTransferMode = null;
+var _selectedPerson = null;
 
 function showCtx(e){
   e.stopPropagation();
@@ -1562,6 +1564,26 @@ function hideCtx(){
 }
 
 document.addEventListener('click',()=>{if(ctxV)hideCtx()});
+
+function openAssignTransferModal(mode) {
+  hideCtx();
+  _assignTransferMode = mode;
+  _selectedPerson = null;
+  document.getElementById('atModalTitle').textContent = mode === 'assign' ? 'Assigner à' : 'Transférer à';
+  document.getElementById('assignTransferModal').classList.add('show');
+}
+
+function closeAssignTransferModal() {
+  document.getElementById('assignTransferModal').classList.remove('show');
+}
+
+function selectAssignTransferPerson(person) {
+  _selectedPerson = person;
+  if (_assignTransferMode === 'assign') {
+    doAssign(person.name);
+  }
+  closeAssignTransferModal();
+}
 
 // BATCH / CHECKBOXES
 function selAll(cb){document.querySelectorAll('.row-chk').forEach(c=>c.checked=cb.checked);updBatch()}
