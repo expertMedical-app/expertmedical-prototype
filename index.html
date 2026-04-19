@@ -2196,16 +2196,17 @@ function renderKE(){
     const dotColor = pd[d.pr.l]||'#9ca3af';
 
     function statusStyle(val){
-      if(val==='Complété') return 'color:#1a7a4a;font-weight:600';
-      if(val==='En cours') return 'color:#d97706;font-weight:600';
-      return 'color:#9ca3af';
-    }
+  if(val==='Complété') return 'color:#1a7a4a;font-weight:600';
+  if(val==='En cours') return 'color:#d97706;font-weight:600';
+  if(val==='En attente') return 'color:#dc2626;font-weight:600';
+  return 'color:#9ca3af';
+}
     function statusIcon(val){
-      if(val==='Complété') return '✓ ';
-      if(val==='En cours') return '⏳ ';
-      return '⏱ ';
-    }
-
+  if(val==='Complété') return '✓ ';
+  if(val==='En cours') return '⏳ ';
+  if(val==='En attente') return '⏱ ';
+  return '';
+}
     function mkSelect(field, opts, current, disabled){
   if(disabled){
     return '<span style="font-size:11px;color:#9ca3af;font-style:italic;opacity:0.6;background:#f3f4f6;border-radius:4px;padding:3px 8px;display:inline-block">Non applicable</span>';
