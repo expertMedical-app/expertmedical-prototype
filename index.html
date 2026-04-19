@@ -1512,8 +1512,10 @@ function sView(v){
 }
 
 // SEARCH
-function filterE(q){document.querySelectorAll('#etable tbody tr').forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(q.toLowerCase())?'':'none'})}
-
+function filterE(q){
+  document.querySelectorAll('#etable tbody tr').forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(q.toLowerCase())?'':'none'});
+  document.querySelectorAll('#kboardE tbody tr').forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(q.toLowerCase())?'':'none'});
+}
 // CONTEXT MENU
 let ctxV=false;
 var _ctxDossier = null;
