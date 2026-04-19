@@ -2462,6 +2462,17 @@ function applyPrMenu(label){
   _activePrBadge.style.background = s.bg;
   _activePrBadge.style.color = s.color;
   _activePrBadge.innerHTML = '<span style="width:7px;height:7px;border-radius:50%;background:'+s.dot+';flex-shrink:0;display:inline-block"></span>' + label + ' ▾';
+  const row = _activePrBadge.closest('tr');
+  if(row){
+    const idCell = row.querySelector('td');
+    if(idCell){
+      const dosId = idCell.textContent.trim();
+      const dos = DE.find(function(x){ return x.id===dosId||x.ramq===dosId; })
+               || DA.find(function(x){ return x.id===dosId||x.ramq===dosId; });
+      if(dos){ dos.pr = {l:label, c:(label==='Urgente'?'bdr':label==='Haute'?'bdo':'bdg')}; }
+    }
+  }
+  if(document.getElementById('pipelineViewE') && document.getElementById('pipelineViewE').style.display !== 'none') renderKE();
   const toast = document.getElementById('assignToast');
   toast.textContent = 'Priorité mise à jour: ' + label;
   toast.classList.add('show');
