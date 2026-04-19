@@ -2236,7 +2236,9 @@ function renderKE(){
       + '<td>'+mkSelect('classification', stepOpts, p.classification)+'</td>'
       + '<td>'+mkSelect('extraction', stepOpts, p.extraction, p.niveau==='Classification')+'</td>'
       + '<td>'+mkSelect('expertise', stepOpts, p.expertise, p.niveau==='Classification' || p.niveau==='Classification et Extraction')+'</td>'
-      + '<td style="color:var(--mu);font-size:11px">'+p.rapport+'</td>'
+      + '<td><span onclick="openPdfModal()" style="cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#dc2626;font-weight:600">'+
+        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'
+        +p.rapport+'</span></td>'
       + '<td><button class="abtn" onclick="showCtx(event)" data-name="'+d.name+'" data-id="'+(d.id||'')+'" data-ramq="'+(d.ramq||'')+'" style="padding:3px 7px;font-size:13px;letter-spacing:1px">⋯</button></td>'
       + '</tr>';
   }).join('');
@@ -2267,7 +2269,12 @@ function setPipeVal(id, field, val){
     if(field==='niveau') renderKE();
   }
 }
-
+function openPdfModal(){
+  document.getElementById('pdfModal').style.display='flex';
+}
+function closePdfModal(){
+  document.getElementById('pdfModal').style.display='none';
+}
 // ── GESTION MENU ─────────────────────────────────────────────────────────────
 var _activeGestionChip = null;
 function openGestionMenu(e, chip){
@@ -3226,6 +3233,18 @@ function confirmAddPdf(){
 renderE();renderA();renderK();renderAgents();
 </script>
 
+<div id="pdfModal" onclick="closePdfModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center">
+  <div onclick="event.stopPropagation()" style="background:white;border-radius:10px;width:80vw;max-width:900px;height:88vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #e5e7eb">
+      <div style="display:flex;align-items:center;gap:8px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span style="font-weight:600;font-size:14px">Rapport PDF — Expertise médicale</span>
+      </div>
+      <button onclick="closePdfModal()" style="border:1px solid #e5e7eb;background:white;border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer">Fermer</button>
+    </div>
+    <iframe id="pdfModalFrame" src="https://www.w3.org/WAI/WCAG21/Techniques/pdf/sample.pdf" style="flex:1;border:none;width:100%"></iframe>
+  </div>
+</div>
 <div class="assign-menu" id="assignMenu">
   <div class="assign-menu-hdr">Assigner à</div>
   <div class="assign-menu-item" onclick="doAssign('Dr Lemay')">
