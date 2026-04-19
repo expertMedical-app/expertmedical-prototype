@@ -2363,7 +2363,6 @@ document.addEventListener('click', function(e){
 });
 
 function filterEPriority(priority, btn){
-  // Toggle active state on buttons
   document.querySelectorAll('#tab-encours .btn[onclick*="filterEPriority"]').forEach(function(b){
     b.style.opacity = '1';
     b.style.outline = 'none';
@@ -2372,23 +2371,30 @@ function filterEPriority(priority, btn){
     btn.style.outline = '2px solid currentColor';
     btn.style.outlineOffset = '1px';
   }
-  // Filter table rows — priority badges use .st-badge, text is "Label ▾"
+
+  // Filtre vue Table
   var rows = document.querySelectorAll('#etbody tr');
   rows.forEach(function(row){
     if(!priority){ row.style.display = ''; return; }
-    // Look in all .st-badge elements (priority badge is the 2nd .st-badge in the row)
     var match = false;
     row.querySelectorAll('.st-badge').forEach(function(b){
-      // Remove the arrow and dot text, compare core label
-      var text = b.textContent.replace('▾','').trim();
-      // Remove the dot character (first child span text is empty, text node follows)
-      // Get only text nodes
       var label = '';
       b.childNodes.forEach(function(n){ if(n.nodeType===3) label += n.textContent; });
       label = label.replace('▾','').trim();
       if(label === priority) match = true;
     });
     row.style.display = match ? '' : 'none';
+  });
+
+  // Filtre vue Pipeline — basé sur la couleur de fond de la cellule Nom
+  const bgMap = {'Urgente':'#fee2e2','Haute':'#fef3c7','Normale':'#e8f5ee'};
+  var pipeRows = document.querySelectorAll('#kboardE tbody tr');
+  pipeRows.forEach(function(row){
+    if(!priority){ row.style.display = ''; return; }
+    var nameDiv = row.querySelector('td div[style*="border-radius"]');
+    if(!nameDiv){ row.style.display = 'none'; return; }
+    var bg = nameDiv.style.background;
+    row.style.display = (bg === bgMap[priority]) ? '' : 'none';
   });
 }
 
