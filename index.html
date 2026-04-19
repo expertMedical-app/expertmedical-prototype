@@ -3342,7 +3342,6 @@ renderE();renderA();renderK();renderAgents();
   </div>
 </div>
 
-<!-- NEW DOSSIER MODAL -->
 <!-- ASSIGN / TRANSFER MODAL -->
 <div class="modal-overlay" id="assignTransferModal" onclick="if(event.target===this)closeAssignTransferModal()">
   <div class="modal-box" style="max-width:520px;width:95%">
@@ -3397,6 +3396,12 @@ renderE();renderA();renderK();renderAgents();
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- NEW DOSSIER MODAL -->
+<div class="nd-overlay" id="ndOverlay" onclick="closeNdOut(event)">
   <div class="nd-modal">
     <div class="nd-hdr">
       <div class="nd-hdr-title">Nouveau dossier</div>
