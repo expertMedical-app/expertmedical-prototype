@@ -1,2 +1,2 @@
-# expertmedical-Dashbord CNESST
+# ExpertMedical-Dashbord CNESST
 Présentation client pour configuration avant contrat
