@@ -951,123 +951,48 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
         <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;margin-top:10px">
 
           <!-- SVG MAP -->
-         <!-- SVG MAP -->
           <div style="flex:1;min-width:360px;position:relative">
-            <svg id="qcMap" viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#d6eaf8;border-radius:10px">
-
-  <!-- 10 Nord-du-Québec — immense région du nord -->
-  <path id="reg-10" data-reg="10" onclick="selectRegion(null,'10')"
-    d="M120,20 L700,20 L700,180 L640,200 L580,190 L520,200 L460,210 L400,215 L340,218 L280,220 L220,225 L170,235 L140,250 L120,240 Z"
-    fill="#9ca3af" fill-opacity="0.55" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="420" y="110" text-anchor="middle" font-size="14" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">10</text>
-
-  <!-- 08 Abitibi-Témiscamingue — ouest, grande région carrée -->
-  <path id="reg-08" data-reg="08" onclick="selectRegion(null,'08')"
-    d="M120,240 L140,250 L170,235 L220,225 L225,285 L228,345 L220,385 L185,405 L148,412 L118,400 L100,370 L98,300 Z"
-    fill="#1a7a4a" fill-opacity="0.70" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="160" y="325" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">08</text>
-
-  <!-- 07 Outaouais — bas-ouest -->
-  <path id="reg-07" data-reg="07" onclick="selectRegion(null,'07')"
-    d="M98,370 L118,400 L148,412 L185,405 L220,385 L228,430 L218,468 L188,482 L155,488 L118,475 L95,448 L90,410 Z"
-    fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="158" y="438" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">07</text>
-
-  <!-- 02 Saguenay–Lac-Saint-Jean — centre-nord, grande triangulaire -->
-  <path id="reg-02" data-reg="02" onclick="selectRegion(null,'02')"
-    d="M280,220 L340,218 L400,215 L460,210 L520,200 L528,248 L520,295 L490,328 L450,348 L405,358 L358,360 L318,355 L290,338 L272,308 L268,268 Z"
-    fill="#d97706" fill-opacity="0.72" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="398" y="285" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">02</text>
-
-  <!-- 09 Côte-Nord — très grande, longe le fleuve au nord-est -->
-  <path id="reg-09" data-reg="09" onclick="selectRegion(null,'09')"
-    d="M460,210 L520,200 L580,190 L640,200 L700,180 L720,220 L718,268 L700,305 L668,332 L635,348 L598,355 L562,348 L530,328 L520,295 L528,248 Z"
-    fill="#1a7a4a" fill-opacity="0.65" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="608" y="270" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">09</text>
-
-  <!-- 01 Bas-Saint-Laurent — bande le long du fleuve -->
-  <path id="reg-01" data-reg="01" onclick="selectRegion(null,'01')"
-    d="M450,348 L490,328 L530,328 L562,348 L568,378 L548,402 L518,415 L485,418 L458,408 L442,385 Z"
-    fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="506" y="382" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">01</text>
-
-  <!-- 11 Gaspésie -->
-  <path id="reg-11" data-reg="11" onclick="selectRegion(null,'11')"
-    d="M562,348 L598,355 L635,348 L668,332 L688,358 L685,392 L660,415 L625,428 L592,422 L568,402 L568,378 Z"
-    fill="#1a7a4a" fill-opacity="0.65" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="628" y="385" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">11</text>
-
-  <!-- 03 Capitale-Nationale -->
-  <path id="reg-03" data-reg="03" onclick="selectRegion(null,'03')"
-    d="M358,360 L405,358 L450,348 L442,385 L428,408 L405,420 L378,422 L355,410 L342,390 Z"
-    fill="#dc2626" fill-opacity="0.78" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="396" y="392" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">03</text>
-
-  <!-- 12 Chaudière-Appalaches -->
-  <path id="reg-12" data-reg="12" onclick="selectRegion(null,'12')"
-    d="M405,420 L428,408 L442,385 L458,408 L462,438 L445,460 L420,470 L395,462 L382,442 L385,422 Z"
-    fill="#d97706" fill-opacity="0.75" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="422" y="440" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">12</text>
-
-  <!-- 04 Mauricie -->
-  <path id="reg-04" data-reg="04" onclick="selectRegion(null,'04')"
-    d="M268,308 L290,338 L318,355 L315,385 L298,405 L272,415 L248,408 L232,385 L228,355 L228,345 L228,345 Z"
-    fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="272" y="368" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">04</text>
-
-  <!-- 17 Centre-du-Québec -->
-  <path id="reg-17" data-reg="17" onclick="selectRegion(null,'17')"
-    d="M315,385 L342,390 L355,410 L348,435 L328,448 L305,445 L288,430 L285,410 L298,405 Z"
-    fill="#1a7a4a" fill-opacity="0.70" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="320" y="420" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">17</text>
-
-  <!-- 05 Estrie -->
-  <path id="reg-05" data-reg="05" onclick="selectRegion(null,'05')"
-    d="M305,445 L328,448 L348,435 L362,448 L382,442 L385,422 L395,462 L388,488 L365,502 L338,502 L315,490 L298,472 Z"
-    fill="#2563eb" fill-opacity="0.68" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="345" y="470" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">05</text>
-
-  <!-- 15 Laurentides -->
-  <path id="reg-15" data-reg="15" onclick="selectRegion(null,'15')"
-    d="M228,345 L228,385 L232,385 L248,408 L238,428 L218,438 L198,430 L180,412 L178,385 L182,355 Z"
-    fill="#d97706" fill-opacity="0.75" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="208" y="395" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">15</text>
-
-  <!-- 14 Lanaudière -->
-  <path id="reg-14" data-reg="14" onclick="selectRegion(null,'14')"
-    d="M248,408 L272,415 L285,410 L288,430 L278,448 L258,455 L238,448 L228,432 L238,428 Z"
-    fill="#d97706" fill-opacity="0.73" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="260" y="432" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">14</text>
-
-  <!-- 13 Laval — petite île -->
-  <path id="reg-13" data-reg="13" onclick="selectRegion(null,'13')"
-    d="M238,448 L258,455 L262,468 L248,475 L232,470 L228,458 Z"
-    fill="#dc2626" fill-opacity="0.85" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
-  <text x="245" y="464" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" opacity=".95" pointer-events="none">13</text>
-
-  <!-- 16 Montérégie -->
-  <path id="reg-16" data-reg="16" onclick="selectRegion(null,'16')"
-    d="M198,430 L218,438 L228,432 L228,458 L232,470 L248,475 L258,488 L252,512 L225,522 L195,518 L172,500 L165,475 L172,450 Z"
-    fill="#dc2626" fill-opacity="0.80" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
-  <text x="210" y="488" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">16</text>
-
-  <!-- 06 Montréal — petite île dense -->
-  <path id="reg-06" data-reg="06" onclick="selectRegion(null,'06')"
-    d="M232,470 L248,475 L252,486 L240,494 L225,490 L222,478 Z"
-    fill="#dc2626" fill-opacity="0.92" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
-  <text x="237" y="483" text-anchor="middle" font-size="8" font-weight="700" fill="#fff" opacity=".95" pointer-events="none">06</text>
-
-  <!-- Îles-de-la-Madeleine -->
-  <ellipse cx="740" cy="420" rx="18" ry="10"
-    fill="#1a7a4a" fill-opacity="0.65" stroke="#fff" stroke-width="1.5"
-    id="reg-11b" data-reg="11" onclick="selectRegion(null,'11')" style="cursor:pointer;transition:all .2s"/>
-  <text x="740" y="424" text-anchor="middle" font-size="7" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">11</text>
-
-  <!-- Fleuve Saint-Laurent -->
-  <text x="490" y="455" text-anchor="middle" font-size="10" fill="#5b9bd5" font-style="italic" opacity=".8" pointer-events="none">Fleuve Saint-Laurent</text>
-  <text x="680" y="300" text-anchor="middle" font-size="9" fill="#5b9bd5" font-style="italic" opacity=".8" pointer-events="none">Golfe du</text>
-  <text x="680" y="312" text-anchor="middle" font-size="9" fill="#5b9bd5" font-style="italic" opacity=".8" pointer-events="none">Saint-Laurent</text>
-
+            <svg id="qcMap" viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#d6eaf8;border-radius:10px">
+<path id="reg-06" data-reg="06" onclick="selectRegion(null,'06')" d="M 254.7,657.9 L 243.8,665.2 L 237.2,665.3 L 235.4,668.9 L 252.3,668.4 L 254.7,657.9 Z" fill="#dc2626" fill-opacity="0.92" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-13" data-reg="13" onclick="selectRegion(null,'13')" d="M 252.1,658.1 L 245.1,658.7 L 238.7,664.7 L 243.8,665.2 L 252.1,658.1 Z" fill="#dc2626" fill-opacity="0.85" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-15" data-reg="15" onclick="selectRegion(null,'15')" d="M 221.0,583.4 L 215.2,579.4 L 200.8,579.4 L 214.1,589.1 L 218.5,589.2 L 209.7,599.3 L 216.0,599.9 L 218.9,604.7 L 212.8,608.6 L 218.4,612.4 L 216.2,613.5 L 215.7,624.1 L 217.8,622.9 L 221.6,625.7 L 216.5,629.3 L 222.0,633.1 L 219.0,635.2 L 224.5,639.0 L 227.9,637.1 L 233.5,640.9 L 231.7,642.1 L 236.2,644.1 L 234.6,646.7 L 245.0,655.9 L 240.6,657.2 L 242.6,658.6 L 255.2,657.9 L 262.3,652.5 L 267.0,644.7 L 275.2,640.8 L 264.5,636.0 L 266.4,632.0 L 260.1,627.6 L 262.0,626.3 L 260.0,623.7 L 255.8,623.9 L 256.8,612.7 L 247.4,613.7 L 248.2,610.8 L 244.1,606.0 L 240.3,602.7 L 237.9,604.7 L 233.6,601.7 L 236.3,593.7 L 221.0,583.4 Z" fill="#d97706" fill-opacity="0.75" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-14" data-reg="14" onclick="selectRegion(null,'14')" d="M 195.1,579.4 L 175.9,579.6 L 180.8,586.1 L 182.5,584.6 L 184.9,587.6 L 173.9,601.5 L 171.9,597.8 L 166.4,596.4 L 154.6,601.5 L 153.6,611.5 L 162.5,615.5 L 168.1,614.4 L 169.7,634.8 L 165.6,634.9 L 165.6,638.1 L 167.5,645.7 L 170.0,645.7 L 166.7,648.1 L 181.1,647.6 L 181.1,642.9 L 189.9,642.6 L 193.8,638.4 L 193.2,642.7 L 198.9,642.6 L 204.2,648.7 L 208.1,647.7 L 203.9,660.4 L 235.4,667.1 L 244.4,659.2 L 240.6,657.2 L 245.0,655.9 L 234.6,646.7 L 236.2,644.1 L 231.7,642.1 L 233.5,640.9 L 227.9,637.1 L 223.5,638.4 L 219.0,635.2 L 222.0,633.1 L 216.5,629.3 L 221.6,625.7 L 217.8,622.9 L 215.7,624.1 L 216.2,613.5 L 218.4,612.4 L 212.8,608.6 L 218.9,604.7 L 216.0,599.9 L 209.7,599.1 L 214.1,596.5 L 218.5,589.2 L 214.1,589.1 L 200.8,579.4 L 195.1,579.4 Z" fill="#d97706" fill-opacity="0.73" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-07" data-reg="07" onclick="selectRegion(null,'07')" d="M 176.8,576.2 L 167.1,577.3 L 166.0,583.0 L 164.0,577.9 L 158.1,580.9 L 149.8,580.7 L 139.7,585.6 L 142.6,585.5 L 142.3,589.0 L 136.6,585.5 L 136.5,597.5 L 120.3,597.4 L 120.3,603.0 L 103.9,603.0 L 103.9,597.4 L 84.9,598.2 L 87.6,599.3 L 88.9,604.4 L 86.3,615.0 L 89.1,615.3 L 87.5,621.6 L 90.9,624.3 L 92.2,631.1 L 88.4,634.6 L 88.1,638.5 L 94.9,639.1 L 109.5,645.8 L 112.8,651.5 L 120.9,654.8 L 123.8,653.8 L 123.2,650.6 L 128.8,651.4 L 129.2,656.8 L 132.1,657.6 L 133.3,663.3 L 144.2,667.2 L 154.6,664.9 L 165.5,670.5 L 187.4,662.3 L 203.9,660.4 L 208.1,647.7 L 204.2,648.7 L 198.9,642.6 L 193.2,642.7 L 193.8,638.4 L 189.9,642.6 L 181.1,642.9 L 181.1,647.6 L 166.9,648.4 L 170.0,645.7 L 167.5,645.7 L 165.6,638.1 L 165.6,634.9 L 169.7,634.8 L 168.1,614.4 L 162.5,615.5 L 153.3,610.9 L 154.9,601.3 L 165.6,596.4 L 171.9,597.8 L 172.7,601.6 L 178.4,598.0 L 184.9,587.6 L 176.6,581.4 L 176.8,576.2 Z" fill="#d97706" fill-opacity="0.70" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-02" data-reg="02" onclick="selectRegion(null,'02')" d="M 386.0,386.4 L 378.7,391.0 L 380.2,392.9 L 378.4,393.9 L 380.7,395.1 L 377.9,396.8 L 380.5,397.4 L 376.1,402.1 L 378.3,402.1 L 376.6,404.6 L 346.0,410.0 L 339.5,415.5 L 341.1,416.6 L 334.6,423.9 L 327.1,425.1 L 327.0,436.7 L 320.2,443.2 L 315.9,443.0 L 315.9,445.6 L 311.6,446.8 L 310.2,450.9 L 305.3,453.6 L 305.0,457.0 L 303.7,455.0 L 300.9,456.0 L 294.4,464.4 L 289.1,465.7 L 289.2,460.5 L 286.2,465.8 L 282.3,463.0 L 278.1,463.3 L 271.2,469.3 L 271.9,467.6 L 267.2,465.6 L 263.2,467.9 L 255.3,480.2 L 250.2,478.8 L 247.2,485.7 L 243.2,486.4 L 242.7,492.3 L 234.1,504.3 L 227.8,506.4 L 224.9,512.9 L 219.7,514.2 L 218.2,520.0 L 222.8,522.5 L 225.6,521.3 L 226.0,524.2 L 222.1,535.3 L 216.7,534.4 L 272.1,570.5 L 334.6,572.3 L 333.3,570.6 L 338.0,570.4 L 377.1,570.7 L 380.6,565.7 L 388.8,568.2 L 391.4,561.9 L 384.2,560.8 L 386.8,556.8 L 386.0,386.4 Z" fill="#d97706" fill-opacity="0.72" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-11" data-reg="11" onclick="selectRegion(null,'11')" d="M 828.8,390.9 L 827.3,393.2 L 822.6,393.2 L 824.5,396.1 L 818.5,396.7 L 819.9,400.6 L 800.9,398.4 L 794.6,394.1 L 787.3,394.4 L 785.5,396.8 L 775.8,392.2 L 771.8,394.4 L 775.3,396.6 L 767.6,396.3 L 774.2,401.0 L 765.2,398.3 L 759.6,400.8 L 748.5,400.7 L 745.2,402.9 L 746.8,405.9 L 743.2,406.5 L 729.9,403.4 L 721.9,398.7 L 712.7,400.1 L 712.5,397.8 L 702.8,396.2 L 686.8,388.4 L 677.9,389.7 L 673.5,388.0 L 672.6,386.2 L 675.1,385.1 L 671.9,383.2 L 664.5,382.8 L 669.2,387.3 L 665.5,387.1 L 666.6,388.5 L 655.1,389.2 L 647.9,386.9 L 644.5,390.6 L 634.3,381.6 L 630.9,383.1 L 630.3,388.5 L 639.4,392.9 L 617.7,395.0 L 612.1,400.8 L 617.6,401.9 L 618.2,403.3 L 614.4,403.0 L 615.4,404.3 L 625.5,406.0 L 622.0,406.1 L 629.4,416.5 L 622.7,414.7 L 623.2,418.1 L 878.4,418.1 L 878.9,425.5 L 880.8,418.7 L 885.0,419.1 L 883.0,415.1 L 867.0,415.6 L 864.7,410.8 L 852.5,401.8 L 854.6,399.8 L 851.2,398.6 L 849.7,402.4 L 845.3,401.8 L 841.2,396.2 L 828.8,390.9 Z" fill="#1a7a4a" fill-opacity="0.65" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-16" data-reg="16" onclick="selectRegion(null,'16')" d="M 274.3,643.2 L 267.0,644.7 L 262.3,652.5 L 254.6,658.0 L 251.9,668.6 L 237.0,669.5 L 220.2,663.1 L 216.7,673.2 L 222.5,677.5 L 209.2,684.5 L 267.5,684.1 L 270.4,674.5 L 272.2,674.3 L 270.9,672.3 L 277.3,674.6 L 280.4,664.2 L 287.9,664.2 L 295.5,667.6 L 298.9,661.8 L 288.1,654.5 L 284.1,655.8 L 278.4,651.8 L 282.2,648.8 L 274.3,643.2 Z" fill="#dc2626" fill-opacity="0.80" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-03" data-reg="03" onclick="selectRegion(null,'03')" d="M 394.5,565.0 L 392.1,563.5 L 388.8,568.2 L 380.6,565.7 L 377.1,570.7 L 308.1,572.3 L 315.1,579.2 L 301.8,588.1 L 305.5,592.7 L 301.9,597.4 L 295.1,597.4 L 293.3,593.7 L 290.3,600.1 L 291.3,603.0 L 296.5,604.8 L 294.3,606.3 L 304.5,613.3 L 295.9,616.4 L 308.9,624.9 L 315.6,620.8 L 322.5,621.9 L 335.2,619.0 L 342.5,614.4 L 355.7,611.2 L 381.5,591.2 L 398.0,572.3 L 404.3,568.5 L 394.5,565.0 Z" fill="#dc2626" fill-opacity="0.78" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-08" data-reg="08" onclick="selectRegion(null,'08')" d="M 88.3,635.5 L 92.2,631.1 L 90.9,624.3 L 87.5,621.6 L 89.1,615.3 L 86.3,615.0 L 88.9,604.4 L 87.6,599.3 L 84.9,598.2 L 103.9,597.4 L 103.9,603.0 L 120.3,603.0 L 120.3,597.4 L 136.5,597.5 L 136.6,585.5 L 142.3,589.0 L 142.6,585.5 L 139.7,585.6 L 149.8,580.7 L 158.1,580.9 L 164.0,577.9 L 166.0,583.0 L 167.1,577.3 L 176.8,576.2 L 176.8,532.3 L 24.4,532.0 L 24.7,587.9 L 22.1,592.4 L 27.5,598.3 L 27.5,605.2 L 44.5,625.6 L 55.3,634.3 L 87.9,638.7 L 88.3,635.5 Z" fill="#1a7a4a" fill-opacity="0.70" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-05" data-reg="05" onclick="selectRegion(null,'05')" d="M 333.3,675.6 L 338.0,673.2 L 343.4,675.6 L 348.6,671.4 L 355.1,675.8 L 355.7,669.4 L 362.9,670.1 L 359.6,665.0 L 365.6,659.4 L 371.9,657.3 L 371.1,653.9 L 353.0,655.0 L 352.9,652.6 L 348.1,652.1 L 344.2,648.2 L 342.8,653.2 L 335.7,651.4 L 334.1,655.4 L 319.7,651.0 L 315.7,654.3 L 309.8,652.2 L 303.1,658.1 L 302.3,655.9 L 299.1,658.4 L 301.9,660.1 L 297.2,662.2 L 295.5,667.6 L 287.9,664.2 L 280.4,664.2 L 277.3,674.6 L 270.9,672.3 L 272.2,674.3 L 270.4,674.5 L 267.5,684.1 L 329.9,684.2 L 333.3,675.6 Z" fill="#2563eb" fill-opacity="0.68" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-11b" data-reg="11" onclick="selectRegion(null,'11')" d="M 633.8,535.0 L 609.5,520.1 L 583.4,509.7 L 559.4,505.3 L 531.4,506.9 L 519.2,511.2 L 495.6,525.1 L 507.8,532.9 L 512.2,532.0 L 512.7,536.0 L 519.1,533.9 L 541.5,548.8 L 502.4,558.9 L 507.7,564.8 L 505.2,562.8 L 506.0,565.2 L 495.7,568.0 L 490.9,569.2 L 487.2,563.0 L 476.0,566.0 L 479.2,568.7 L 478.3,572.9 L 487.0,576.3 L 488.1,574.4 L 499.0,572.9 L 503.3,574.5 L 504.4,571.0 L 525.0,567.0 L 528.0,569.2 L 545.0,569.6 L 554.6,572.9 L 557.2,576.9 L 573.4,573.4 L 599.7,562.0 L 623.7,562.0 L 654.4,603.2 L 680.6,614.6 L 714.9,614.6 L 716.7,608.1 L 730.4,595.9 L 739.1,592.4 L 752.8,579.5 L 750.3,545.0 L 653.9,545.0 L 633.8,535.0 Z" fill="#1a7a4a" fill-opacity="0.65" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-04" data-reg="04" onclick="selectRegion(null,'04')" d="M 210.7,533.5 L 176.8,532.3 L 176.7,579.4 L 215.2,579.4 L 236.3,593.7 L 233.6,601.7 L 237.9,604.7 L 240.3,602.7 L 244.1,606.0 L 248.2,610.8 L 247.4,613.7 L 256.8,612.7 L 255.8,623.9 L 260.0,623.7 L 262.0,626.3 L 260.1,627.6 L 266.4,632.0 L 264.5,636.0 L 271.3,640.6 L 288.4,635.6 L 307.8,624.9 L 295.9,616.4 L 304.5,613.3 L 294.3,606.3 L 295.9,604.0 L 290.2,601.2 L 293.3,593.7 L 295.1,597.4 L 301.9,597.4 L 305.5,592.7 L 301.8,588.1 L 315.1,579.2 L 306.7,570.9 L 272.1,570.5 L 213.6,532.3 L 210.7,533.5 Z" fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-17" data-reg="17" onclick="selectRegion(null,'17')" d="M 308.4,624.9 L 273.1,642.3 L 282.1,648.6 L 278.4,651.8 L 284.1,655.8 L 288.1,654.5 L 299.5,662.2 L 301.9,660.1 L 299.4,658.1 L 302.3,655.9 L 303.1,658.1 L 309.8,652.2 L 313.8,654.3 L 319.6,651.0 L 328.4,654.7 L 331.5,653.5 L 331.7,651.4 L 322.9,647.8 L 330.7,638.2 L 334.9,636.4 L 329.6,633.7 L 330.8,631.5 L 328.8,630.0 L 325.5,629.4 L 320.1,632.7 L 308.4,624.9 Z" fill="#1a7a4a" fill-opacity="0.70" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-10" data-reg="10" onclick="selectRegion(null,'10')" d="M 101.3,15.1 L 79.0,23.3 L 74.6,27.4 L 78.4,42.6 L 81.4,48.4 L 86.5,51.0 L 92.0,65.5 L 90.1,66.1 L 88.7,73.1 L 78.6,77.9 L 73.6,83.5 L 79.3,83.2 L 88.2,88.2 L 85.9,91.7 L 92.2,96.1 L 90.8,98.7 L 97.2,102.2 L 98.7,106.2 L 94.7,110.9 L 102.7,116.6 L 102.7,121.2 L 88.0,123.8 L 88.5,129.1 L 82.7,141.5 L 75.0,144.0 L 70.9,149.3 L 61.1,153.4 L 61.1,157.3 L 58.2,158.6 L 61.7,160.9 L 59.7,164.8 L 73.1,170.7 L 74.5,174.3 L 95.5,179.4 L 113.8,189.8 L 123.5,199.0 L 132.8,212.4 L 137.1,223.9 L 138.3,251.5 L 135.0,258.1 L 132.9,258.3 L 131.5,264.4 L 111.1,281.4 L 90.3,293.6 L 70.2,302.2 L 15.1,317.7 L 23.8,322.1 L 21.4,324.1 L 24.9,326.1 L 25.9,333.4 L 41.1,346.8 L 41.0,351.2 L 38.2,353.1 L 42.1,356.9 L 38.7,361.3 L 46.1,365.5 L 42.1,368.8 L 46.5,371.8 L 44.2,376.4 L 45.8,382.1 L 43.7,383.6 L 48.0,383.8 L 52.9,397.3 L 60.1,398.5 L 60.0,403.0 L 62.6,405.3 L 59.6,413.9 L 51.7,419.7 L 48.5,419.6 L 45.3,425.7 L 42.2,427.0 L 50.0,432.8 L 51.5,438.7 L 36.2,435.6 L 35.9,431.8 L 32.6,430.2 L 24.4,433.8 L 24.4,532.0 L 211.5,533.8 L 213.6,532.3 L 215.5,535.1 L 218.0,533.3 L 217.8,534.9 L 222.1,535.3 L 226.0,521.6 L 222.8,522.5 L 218.2,520.0 L 219.7,514.2 L 224.9,512.9 L 227.8,506.4 L 234.1,504.3 L 242.7,492.3 L 243.2,486.4 L 247.2,485.7 L 250.2,478.8 L 255.3,480.2 L 263.2,467.9 L 267.2,465.6 L 271.9,467.6 L 271.2,469.3 L 278.1,463.3 L 282.3,463.0 L 286.2,465.8 L 289.2,460.5 L 289.0,465.6 L 292.6,465.6 L 300.9,456.0 L 303.7,455.0 L 305.0,457.0 L 305.3,453.6 L 310.2,450.9 L 311.6,446.8 L 315.9,445.6 L 315.9,443.0 L 320.2,443.2 L 327.0,436.7 L 327.1,425.1 L 334.6,423.9 L 343.6,411.7 L 353.5,407.4 L 357.0,409.2 L 375.3,405.0 L 378.3,402.5 L 376.1,402.1 L 380.5,397.4 L 377.9,396.8 L 380.7,395.1 L 378.6,391.2 L 386.0,386.4 L 386.0,303.8 L 439.6,303.8 L 485.6,303.8 L 499.4,315.4 L 490.8,319.5 L 493.1,321.9 L 491.4,323.5 L 482.6,319.7 L 482.7,323.6 L 476.8,322.5 L 475.9,324.9 L 471.9,325.2 L 478.3,334.4 L 470.8,336.9 L 472.9,338.5 L 470.3,341.0 L 482.8,348.0 L 478.8,350.9 L 485.8,352.3 L 489.8,359.0 L 499.9,359.5 L 506.2,364.2 L 500.7,367.0 L 503.6,369.2 L 503.2,373.3 L 501.2,373.9 L 503.6,374.7 L 502.2,376.9 L 491.4,373.2 L 486.8,376.6 L 488.4,380.7 L 492.6,380.6 L 488.6,381.8 L 489.1,384.6 L 495.0,387.0 L 499.1,384.7 L 500.3,389.6 L 503.2,389.1 L 507.1,392.4 L 505.4,390.3 L 506.9,388.8 L 510.4,392.7 L 509.5,387.6 L 514.9,388.3 L 515.5,381.6 L 520.6,382.0 L 521.9,378.0 L 526.4,379.7 L 529.7,385.1 L 523.6,385.7 L 529.1,394.2 L 524.9,392.1 L 522.7,393.8 L 526.6,404.1 L 520.8,405.1 L 527.2,413.1 L 529.4,411.9 L 527.6,406.9 L 529.8,406.2 L 536.5,411.3 L 535.9,414.7 L 540.5,416.0 L 540.6,413.9 L 552.3,413.4 L 553.1,418.4 L 554.0,416.2 L 557.2,416.3 L 559.8,410.7 L 568.2,407.3 L 572.1,414.1 L 574.4,411.7 L 584.3,417.0 L 583.7,419.0 L 588.9,422.6 L 586.0,426.4 L 591.7,429.2 L 594.8,434.2 L 605.2,428.1 L 602.1,423.8 L 601.8,417.8 L 606.9,419.0 L 604.5,414.9 L 606.3,412.3 L 609.5,413.5 L 606.1,407.4 L 611.7,402.6 L 606.9,395.9 L 609.7,395.0 L 610.1,390.2 L 625.9,388.8 L 630.4,388.7 L 630.3,384.3 L 634.3,381.6 L 644.5,390.6 L 647.9,386.9 L 655.1,389.2 L 666.6,388.5 L 665.5,387.1 L 669.2,387.3 L 664.5,382.8 L 671.9,383.2 L 675.1,385.1 L 672.6,386.2 L 673.5,388.0 L 677.9,389.7 L 686.8,388.4 L 702.8,396.2 L 712.5,397.8 L 712.7,400.1 L 721.9,398.7 L 729.9,403.4 L 743.2,406.5 L 746.8,405.9 L 745.2,402.9 L 748.5,400.7 L 759.6,400.8 L 765.2,398.3 L 774.2,401.0 L 767.6,396.3 L 775.3,396.6 L 771.8,394.4 L 775.8,392.2 L 785.5,396.8 L 787.3,394.4 L 794.6,394.1 L 800.9,398.4 L 819.9,400.6 L 818.5,396.7 L 824.5,396.1 L 822.6,393.2 L 827.3,393.2 L 828.8,390.9 L 841.2,396.2 L 845.3,401.8 L 849.7,402.4 L 851.2,398.6 L 854.6,399.8 L 852.5,401.8 L 864.7,410.8 L 867.0,415.6 L 883.0,415.1 L 885.0,419.1 L 880.8,418.7 L 878.9,425.5 L 878.4,418.1 L 884.8,418.1 L 884.8,303.8 L 632.8,303.8 L 529.7,303.8 L 515.0,303.8 L 493.1,303.8 L 386.0,303.8 L 386.0,15.0 L 101.3,15.1 Z" fill="#9ca3af" fill-opacity="0.55" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-09" data-reg="09" onclick="selectRegion(null,'09')" d="M 439.6,303.8 L 386.0,303.8 L 386.8,556.8 L 384.2,560.8 L 391.0,561.7 L 392.9,564.5 L 404.3,568.5 L 445.5,541.5 L 495.6,525.1 L 525.2,508.7 L 544.1,505.1 L 568.1,506.4 L 591.0,512.1 L 653.9,545.0 L 750.3,545.0 L 750.0,540.6 L 808.6,500.0 L 854.5,456.2 L 878.0,448.6 L 878.4,418.1 L 623.2,418.1 L 622.7,414.7 L 629.4,416.5 L 622.0,406.1 L 625.5,406.0 L 615.4,404.3 L 614.4,403.0 L 618.2,403.3 L 617.6,401.9 L 612.1,400.8 L 617.7,395.0 L 639.4,392.9 L 630.3,388.5 L 630.9,383.1 L 634.3,381.6 L 644.5,390.6 L 647.9,386.9 L 655.1,389.2 L 666.6,388.5 L 665.5,387.1 L 669.2,387.3 L 664.5,382.8 L 671.9,383.2 L 675.1,385.1 L 672.6,386.2 L 673.5,388.0 L 677.9,389.7 L 686.8,388.4 L 702.8,396.2 L 712.5,397.8 L 712.7,400.1 L 721.9,398.7 L 729.9,403.4 L 743.2,406.5 L 746.8,405.9 L 745.2,402.9 L 748.5,400.7 L 828.8,390.9 L 884.8,418.1 L 884.8,303.8 L 632.8,303.8 L 529.7,303.8 L 515.0,303.8 L 493.1,303.8 L 439.6,303.8 Z" fill="#1a7a4a" fill-opacity="0.65" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-01" data-reg="01" onclick="selectRegion(null,'01')" d="M 505.0,531.1 L 495.6,525.1 L 445.5,541.5 L 398.9,571.5 L 379.6,592.8 L 401.4,606.0 L 416.6,591.0 L 423.6,592.2 L 423.3,597.1 L 441.5,592.3 L 448.7,587.5 L 448.7,573.6 L 458.7,573.6 L 458.7,570.4 L 478.7,570.4 L 476.0,565.9 L 487.2,563.0 L 490.9,569.2 L 497.6,567.5 L 506.0,565.2 L 505.2,562.8 L 507.7,564.8 L 502.4,558.9 L 541.5,548.8 L 519.1,533.9 L 512.7,536.0 L 512.2,532.0 L 505.0,531.1 Z" fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<path id="reg-12" data-reg="12" onclick="selectRegion(null,'12')" d="M 384.3,596.2 L 379.6,592.8 L 369.8,598.8 L 360.2,608.5 L 349.2,614.3 L 342.5,614.4 L 339.0,617.9 L 323.1,621.8 L 315.6,620.8 L 308.8,624.9 L 320.1,632.7 L 325.5,629.4 L 328.8,630.0 L 330.8,631.5 L 329.6,633.7 L 334.9,636.4 L 330.7,638.2 L 322.9,647.8 L 331.7,651.4 L 334.1,655.4 L 335.7,651.4 L 342.8,653.2 L 344.1,648.2 L 348.1,652.1 L 352.9,652.6 L 353.0,655.0 L 371.8,654.4 L 377.5,650.3 L 377.7,648.4 L 375.1,648.0 L 378.1,641.1 L 376.0,639.3 L 379.8,633.2 L 385.0,630.8 L 387.2,620.1 L 401.4,606.0 L 384.3,596.2 Z" fill="#d97706" fill-opacity="0.75" stroke="#fff" stroke-width="1.5" style="cursor:pointer;transition:all .2s"/>
+<g pointer-events="none">
+<text x="245" y="663" text-anchor="middle" font-size="8" font-weight="700" fill="#fff" opacity=".9">06</text>
+<text x="246" y="662" text-anchor="middle" font-size="7" font-weight="700" fill="#fff" opacity=".9">13</text>
+<text x="238" y="619" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9">15</text>
+<text x="199" y="623" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9">14</text>
+<text x="146" y="623" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9">07</text>
+<text x="304" y="479" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9">02</text>
+<text x="749" y="404" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9">11</text>
+<text x="260" y="664" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" opacity=".9">16</text>
+<text x="347" y="594" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9">03</text>
+<text x="99" y="585" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9">08</text>
+<text x="320" y="666" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9">05</text>
+<text x="614" y="560" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9">11</text>
+<text x="246" y="586" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9">04</text>
+<text x="304" y="644" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9">17</text>
+<text x="328" y="275" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" opacity=".9">10</text>
+<text x="631" y="436" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9">09</text>
+<text x="461" y="566" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9">01</text>
+<text x="355" y="624" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9">12</text>
+</g>
+<text x="650" y="500" text-anchor="middle" font-size="10" fill="#5b9bd5" font-style="italic" opacity=".8" pointer-events="none">Golfe du Saint-Laurent</text>
+<text x="480" y="610" text-anchor="middle" font-size="9" fill="#5b9bd5" font-style="italic" opacity=".7" pointer-events="none">Fleuve Saint-Laurent</text>
 </svg>
 
             <!-- Légende -->
