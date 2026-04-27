@@ -4466,7 +4466,7 @@ var _notesExempleHTML =
   '</div>';
 // ── CARTE QUÉBEC ─────────────────────────────────────────────────────────────
 const REGIONS_QC = [
-  { id:'01', nom:'Bas-Saint-Laurent',             dossiers:87,  urgents:8,  delai:'6.8h', sla:88 },
+  { id:'01', nom:'Bas-Saint-Laurent',              dossiers:87,
   { id:'02', nom:'Saguenay–Lac-Saint-Jean',       dossiers:134, urgents:14, delai:'7.1h', sla:85 },
   { id:'03', nom:'Capitale-Nationale',            dossiers:248, urgents:31, delai:'6.2h', sla:91 },
   { id:'04', nom:'Mauricie',                      dossiers:112, urgents:11, delai:'6.9h', sla:87 },
@@ -4485,111 +4485,7 @@ const REGIONS_QC = [
   { id:'17', nom:'Centre-du-Québec',              dossiers:71,  urgents:7,  delai:'7.3h', sla:86 },
 ];
 
-function getRegionColor(dossiers){
-  if(dossiers >= 200) return '#dc2626';
-  if(dossiers >= 100) return '#d97706';
-  if(dossiers >= 50)  return '#2563eb';
-  if(dossiers >= 20)  return '#1a7a4a';
-  return '#9ca3af';
-}
-function getRegionStroke(dossiers){
-  return '#fff';
-}
-function getRegionOpacity(dossiers){
-  if(dossiers >= 200) return '0.82';
-  if(dossiers >= 100) return '0.75';
-  if(dossiers >= 50)  return '0.70';
-  if(dossiers >= 20)  return '0.68';
-  return '0.52';
-}
-
 var _selectedMapReg = null;
-
-function initQcMap(){
-  REGIONS_QC.forEach(function(r){
-    var path = document.getElementById('reg-' + r.id);
-    if(path){
-      path.setAttribute('fill', getRegionColor(r.dossiers));
-      path.setAttribute('fill-opacity', getRegionOpacity(r.dossiers));
-      path.setAttribute('stroke', '#fff');
-      path.setAttribute('stroke-width', '1.8');
-    }
-  });
-  var ellipse = document.getElementById('reg-11b');
-  if(ellipse){
-    var r11 = REGIONS_QC.find(function(x){ return x.id==='11'; });
-    if(r11){
-      ellipse.setAttribute('fill', getRegionColor(r11.dossiers));
-      ellipse.setAttribute('fill-opacity', getRegionOpacity(r11.dossiers));
-      ellipse.setAttribute('stroke','#fff');
-      ellipse.setAttribute('stroke-width','1.5');
-    }
-  }
-
-  var list = document.getElementById('mapRegionList');
-  if(!list) return;
-  var sorted = REGIONS_QC.slice().sort(function(a,b){ return b.dossiers - a.dossiers; });
-  list.innerHTML = sorted.map(function(r){
-    var col = getRegionColor(r.dossiers);
-    var pct = Math.round(r.dossiers / 412 * 80);
-    return '<div id="listrow-'+r.id+'" onclick="selectRegion(null,\''+r.id+'\')" style="display:flex;align-items:center;gap:7px;padding:5px 7px;border-radius:6px;cursor:pointer;border:1px solid transparent;transition:all .15s">'
-      + '<span style="font-size:9px;font-weight:700;color:#fff;background:'+col+';padding:1px 5px;border-radius:4px;min-width:24px;text-align:center;opacity:0.9">'+r.id+'</span>'
-      + '<div style="flex:1;min-width:0">'
-      + '<div style="font-size:11px;font-weight:600;color:#1a1d23;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+r.nom+'</div>'
-      + '<div style="display:flex;align-items:center;gap:5px;margin-top:2px">'
-      + '<div style="height:4px;border-radius:2px;background:'+col+';width:'+pct+'px;max-width:80px;opacity:0.75"></div>'
-      + '</div></div>'
-      + '<span style="font-size:11px;font-weight:700;color:'+col+'">'+r.dossiers+'</span>'
-      + '</div>';
-  }).join('');
-}
-
-function selectRegion(e, regId){
-  if(e) e.stopPropagation();
-  if(!regId) return;
-  var r = REGIONS_QC.find(function(x){ return x.id === regId; });
-  if(!r) return;
-
-  // ── CARTE QUÉBEC ─────────────────────────────────────────────────────────────
-const REGIONS_QC = [
-  { id:'01', nom:'Bas-Saint-Laurent',              dossiers:87,  urgents:8,  delai:'6.8h', sla:88 },
-  { id:'02', nom:'Saguenay–Lac-Saint-Jean',        dossiers:134, urgents:14, delai:'7.1h', sla:85 },
-  { id:'03', nom:'Capitale-Nationale',             dossiers:248, urgents:31, delai:'6.2h', sla:91 },
-  { id:'04', nom:'Mauricie',                       dossiers:112, urgents:11, delai:'6.9h', sla:87 },
-  { id:'05', nom:'Estrie',                         dossiers:98,  urgents:12, delai:'8.1h', sla:82 },
-  { id:'06', nom:'Montréal',                       dossiers:412, urgents:52, delai:'5.8h', sla:93 },
-  { id:'07', nom:'Outaouais',                      dossiers:143, urgents:17, delai:'7.5h', sla:84 },
-  { id:'08', nom:'Abitibi-Témiscamingue',          dossiers:56,  urgents:5,  delai:'9.2h', sla:79 },
-  { id:'09', nom:'Côte-Nord',                      dossiers:44,  urgents:4,  delai:'9.8h', sla:76 },
-  { id:'10', nom:'Nord-du-Québec',                 dossiers:18,  urgents:2,  delai:'11.4h',sla:71 },
-  { id:'11', nom:'Gaspésie–Îles-de-la-Madeleine', dossiers:38,  urgents:3,  delai:'10.1h',sla:74 },
-  { id:'12', nom:'Chaudière-Appalaches',           dossiers:167, urgents:19, delai:'6.5h', sla:89 },
-  { id:'13', nom:'Laval',                          dossiers:189, urgents:22, delai:'6.1h', sla:92 },
-  { id:'14', nom:'Lanaudière',                     dossiers:154, urgents:16, delai:'6.7h', sla:88 },
-  { id:'15', nom:'Laurentides',                    dossiers:176, urgents:21, delai:'6.4h', sla:90 },
-  { id:'16', nom:'Montérégie',                     dossiers:287, urgents:35, delai:'6.3h', sla:91 },
-  { id:'17', nom:'Centre-du-Québec',               dossiers:71,  urgents:7,  delai:'7.3h', sla:86 },
-];
-
-var _selectedMapReg = null;
-
-function initQcMap(){
-  var list = document.getElementById('mapRegionList');
-  if(!list) return;
-  var sorted = REGIONS_QC.slice().sort(function(a,b){ return b.dossiers - a.dossiers; });
-  list.innerHTML = sorted.map(function(r){
-    var col = r.dossiers >= 200 ? '#dc2626' : r.dossiers >= 100 ? '#d97706' : r.dossiers >= 50 ? '#2563eb' : r.dossiers >= 20 ? '#1a7a4a' : '#9ca3af';
-    var pct = Math.round(r.dossiers / 412 * 80);
-    return '<div id="listrow-'+r.id+'" onclick="selectRegion(null,\''+r.id+'\')" style="display:flex;align-items:center;gap:7px;padding:5px 7px;border-radius:6px;cursor:pointer;border:1px solid transparent;transition:all .15s">'
-      + '<span style="font-size:9px;font-weight:700;color:#fff;background:'+col+';padding:1px 5px;border-radius:4px;min-width:26px;text-align:center">'+r.id+'</span>'
-      + '<div style="flex:1;min-width:0">'
-      + '<div style="font-size:11px;font-weight:600;color:#1a1d23;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+r.nom+'</div>'
-      + '<div style="height:4px;border-radius:2px;background:'+col+';width:'+pct+'px;max-width:80px;opacity:0.7;margin-top:3px"></div>'
-      + '</div>'
-      + '<span style="font-size:11px;font-weight:700;color:'+col+'">'+r.dossiers+'</span>'
-      + '</div>';
-  }).join('');
-}
 
 function selectRegion(e, regId){
   if(e) e.stopPropagation();
