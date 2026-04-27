@@ -4362,43 +4362,23 @@ var _notesExempleHTML =
   '</div>';
 // ── CARTE QUÉBEC ─────────────────────────────────────────────────────────────
 const REGIONS_QC = [
-  { id:'01', nom:'Bas-Saint-Laurent',              dossiers:87,  urgents:8,  delai:'6.8h', sla:88 },
-  { id:'02', nom:'Saguenay–Lac-Saint-Jean',        dossiers:134, urgents:14, delai:'7.1h', sla:85 },
-  { id:'03', nom:'Capitale-Nationale',             dossiers:248, urgents:31, delai:'6.2h', sla:91 },
-  { id:'04', nom:'Mauricie',                       dossiers:112, urgents:11, delai:'6.9h', sla:87 },
-  { id:'05', nom:'Estrie',                         dossiers:98,  urgents:12, delai:'8.1h', sla:82 },
-  { id:'06', nom:'Montréal',                       dossiers:412, urgents:52, delai:'5.8h', sla:93 },
-  { id:'07', nom:'Outaouais',                      dossiers:143, urgents:17, delai:'7.5h', sla:84 },
-  { id:'08', nom:'Abitibi-Témiscamingue',          dossiers:56,  urgents:5,  delai:'9.2h', sla:79 },
-  { id:'09', nom:'Côte-Nord',                      dossiers:44,  urgents:4,  delai:'9.8h', sla:76 },
-  { id:'10', nom:'Nord-du-Québec',                 dossiers:18,  urgents:2,  delai:'11.4h',sla:71 },
-  { id:'11', nom:'Gaspésie–Îles-de-la-Madeleine', dossiers:38,  urgents:3,  delai:'10.1h',sla:74 },
-  { id:'12', nom:'Chaudière-Appalaches',           dossiers:167, urgents:19, delai:'6.5h', sla:89 },
-  { id:'13', nom:'Laval',                          dossiers:189, urgents:22, delai:'6.1h', sla:92 },
-  { id:'14', nom:'Lanaudière',                     dossiers:154, urgents:16, delai:'6.7h', sla:88 },
-  { id:'15', nom:'Laurentides',                    dossiers:176, urgents:21, delai:'6.4h', sla:90 },
-  { id:'16', nom:'Montérégie',                     dossiers:287, urgents:35, delai:'6.3h', sla:91 },
-  { id:'17', nom:'Centre-du-Québec',               dossiers:71,  urgents:7,  delai:'7.3h', sla:86 },
-];
-
-const REGIONS_QC = [
-  { id:'01', nom:'Bas-Saint-Laurent',              dossiers:87,  urgents:8,  delai:'6.8h', sla:88 },
-  { id:'02', nom:'Saguenay–Lac-Saint-Jean',        dossiers:134, urgents:14, delai:'7.1h', sla:85 },
-  { id:'03', nom:'Capitale-Nationale',            dossiers:248, urgents:31, delai:'6.2h', sla:91 },
-  { id:'04', nom:'Mauricie',                      dossiers:112, urgents:11, delai:'6.9h', sla:87 },
-  { id:'05', nom:'Estrie',                        dossiers:98,  urgents:12, delai:'8.1h', sla:82 },
-  { id:'06', nom:'Montréal',                      dossiers:412, urgents:52, delai:'5.8h', sla:93 },
-  { id:'07', nom:'Outaouais',                     dossiers:143, urgents:17, delai:'7.5h', sla:84 },
-  { id:'08', nom:'Abitibi-Témiscamingue',         dossiers:56,  urgents:5,  delai:'9.2h', sla:79 },
-  { id:'09', nom:'Côte-Nord',                     dossiers:44,  urgents:4,  delai:'9.8h', sla:76 },
-  { id:'10', nom:'Nord-du-Québec',                dossiers:18,  urgents:2,  delai:'11.4h',sla:71 },
-  { id:'11', nom:'Gaspésie–Îles-de-la-Madeleine',dossiers:38,  urgents:3,  delai:'10.1h',sla:74 },
-  { id:'12', nom:'Chaudière-Appalaches',          dossiers:167, urgents:19, delai:'6.5h', sla:89 },
-  { id:'13', nom:'Laval',                         dossiers:189, urgents:22, delai:'6.1h', sla:92 },
-  { id:'14', nom:'Lanaudière',                    dossiers:154, urgents:16, delai:'6.7h', sla:88 },
-  { id:'15', nom:'Laurentides',                   dossiers:176, urgents:21, delai:'6.4h', sla:90 },
-  { id:'16', nom:'Montérégie',                    dossiers:287, urgents:35, delai:'6.3h', sla:91 },
-  { id:'17', nom:'Centre-du-Québec',              dossiers:71,  urgents:7,  delai:'7.3h', sla:86 },
+  { id:'01', nom:'Bas-Saint-Laurent',              dossiers:87,  urgents:8,  delai:'6.8h', sla:88, attente:23, traites:64,  nouveaux:31  },
+  { id:'02', nom:'Saguenay–Lac-Saint-Jean',        dossiers:134, urgents:14, delai:'7.1h', sla:85, attente:41, traites:98,  nouveaux:47  },
+  { id:'03', nom:'Capitale-Nationale',             dossiers:248, urgents:31, delai:'6.2h', sla:91, attente:72, traites:189, nouveaux:88  },
+  { id:'04', nom:'Mauricie',                       dossiers:112, urgents:11, delai:'6.9h', sla:87, attente:34, traites:81,  nouveaux:39  },
+  { id:'05', nom:'Estrie',                         dossiers:98,  urgents:12, delai:'8.1h', sla:82, attente:31, traites:71,  nouveaux:34  },
+  { id:'06', nom:'Montréal',                       dossiers:412, urgents:52, delai:'5.8h', sla:93, attente:118,traites:312, nouveaux:144 },
+  { id:'07', nom:'Outaouais',                      dossiers:143, urgents:17, delai:'7.5h', sla:84, attente:44, traites:104, nouveaux:51  },
+  { id:'08', nom:'Abitibi-Témiscamingue',          dossiers:56,  urgents:5,  delai:'9.2h', sla:79, attente:18, traites:41,  nouveaux:20  },
+  { id:'09', nom:'Côte-Nord',                      dossiers:44,  urgents:4,  delai:'9.8h', sla:76, attente:14, traites:32,  nouveaux:16  },
+  { id:'10', nom:'Nord-du-Québec',                 dossiers:18,  urgents:2,  delai:'11.4h',sla:71, attente:6,  traites:13,  nouveaux:7   },
+  { id:'11', nom:'Gaspésie–Îles-de-la-Madeleine', dossiers:38,  urgents:3,  delai:'10.1h',sla:74, attente:12, traites:28,  nouveaux:14  },
+  { id:'12', nom:'Chaudière-Appalaches',           dossiers:167, urgents:19, delai:'6.5h', sla:89, attente:51, traites:122, nouveaux:58  },
+  { id:'13', nom:'Laval',                          dossiers:189, urgents:22, delai:'6.1h', sla:92, attente:55, traites:139, nouveaux:66  },
+  { id:'14', nom:'Lanaudière',                     dossiers:154, urgents:16, delai:'6.7h', sla:88, attente:47, traites:113, nouveaux:54  },
+  { id:'15', nom:'Laurentides',                    dossiers:176, urgents:21, delai:'6.4h', sla:90, attente:53, traites:129, nouveaux:62  },
+  { id:'16', nom:'Montérégie',                     dossiers:287, urgents:35, delai:'6.3h', sla:91, attente:83, traites:211, nouveaux:99  },
+  { id:'17', nom:'Centre-du-Québec',               dossiers:71,  urgents:7,  delai:'7.3h', sla:86, attente:22, traites:52,  nouveaux:25  },
 ];
 
 function initQcMap(){
@@ -4460,7 +4440,9 @@ function selectRegion(e, regId){
   document.getElementById('mrdName').textContent = r.nom;
   document.getElementById('mrdTotal').textContent = r.dossiers;
   document.getElementById('mrdUrgent').textContent = r.urgents;
-  document.getElementById('mrdDelai').textContent = r.delai;
+  document.getElementById('mrdAttente').textContent = r.attente;
+  document.getElementById('mrdTraites').textContent = r.traites;
+  document.getElementById('mrdNouveaux').textContent = r.nouveaux;
   document.getElementById('mrdSla').textContent = r.sla + '%';
   document.getElementById('mrdSla').style.color = r.sla >= 90 ? '#1a7a4a' : r.sla >= 80 ? '#d97706' : '#dc2626';
   document.getElementById('mapRegionDetail').style.display = 'block';
@@ -4468,6 +4450,7 @@ function selectRegion(e, regId){
 
 document.addEventListener('DOMContentLoaded', function(){ initQcMap(); });
 if(document.readyState !== 'loading') initQcMap();
+setTimeout(function(){ initQcMap(); }, 300);
 
 function renderNotes(key){
   var notes = _notesStore[key] || [];
