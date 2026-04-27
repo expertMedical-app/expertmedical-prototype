@@ -743,15 +743,6 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
       </div>
 
       <div class="cr" style="grid-template-columns:1fr">
-        <div class="cc cc-full" onclick="openChartZoom(this)">
-          <div class="cct">Temps moyen par étape (min)</div>
-          <div class="ccs">Durée de traitement</div>
-          <div class="bchart">
-            <div class="brow"><span class="blbl">Analyse IA</span><div class="btrack"><div class="bfill" style="width:42%;background:#7c3aed"></div></div><span class="bval">42m</span></div>
-            <div class="brow"><span class="blbl">Expertise médicale</span><div class="btrack"><div class="bfill" style="width:74%;background:#0891b2"></div></div><span class="bval">74m</span></div>
-            <div class="brow"><span class="blbl">Rapport</span><div class="btrack"><div class="bfill" style="width:90%;background:#dc2626"></div></div><span class="bval">90m</span></div>
-          </div>
-        </div>
         <div class="cc" onclick="openChartZoom(this)">
           <div class="cct">Conformité SLA — 16 semaines</div>
           <div class="ccs">% conformité (objectif 85%)</div>
@@ -1026,6 +1017,17 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
 
       <div class="stitle">Répartition par type de gestion <div class="stline"></div></div>
       <div class="cr" style="grid-template-columns:1fr;gap:18px">
+
+        <!-- Temps moyen par étape -->
+        <div class="cc" onclick="openChartZoom(this)">
+          <div class="cct">Temps moyen par étape (min)</div>
+          <div class="ccs">Durée de traitement</div>
+          <div class="bchart">
+            <div class="brow"><span class="blbl">Analyse IA</span><div class="btrack"><div class="bfill" style="width:42%;background:#7c3aed"></div></div><span class="bval">42m</span></div>
+            <div class="brow"><span class="blbl">Expertise médicale</span><div class="btrack"><div class="bfill" style="width:74%;background:#0891b2"></div></div><span class="bval">74m</span></div>
+            <div class="brow"><span class="blbl">Rapport</span><div class="btrack"><div class="bfill" style="width:90%;background:#dc2626"></div></div><span class="bval">90m</span></div>
+          </div>
+        </div>
 
         <!-- Bar breakdown -->
         <div class="cc" onclick="openChartZoom(this)">
