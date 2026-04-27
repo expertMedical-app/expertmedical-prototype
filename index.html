@@ -1495,7 +1495,8 @@ function prBadge(label){const s=PR_STYLES[label]||{bg:'#f3f4f6',color:'#374151',
 const ST_STYLES={'À traiter':{bg:'#f3f4f6',color:'#374151',dot:'#9ca3af'},'Analyse IA en cours':{bg:'#f5f3ff',color:'#5b21b6',dot:'#7c3aed'},'En attente validation':{bg:'#fef3c7',color:'#92400e',dot:'#d97706'},'Complété':{bg:'#e8f5ee',color:'#145f38',dot:'#1a7a4a'}};
 function stBadge(label){const s=ST_STYLES[label]||{bg:'#f3f4f6',color:'#374151',dot:'#9ca3af'};return '<span class="st-badge" style="background:'+s.bg+';color:'+s.color+'" onclick="openStMenu(event,this)"><span style="width:7px;height:7px;border-radius:50%;background:'+s.dot+';flex-shrink:0;display:inline-block"></span>'+label+' ▾</span>';}
 function renderE(){
-  document.getElementById('etbody').innerHTML=DE.map(d=>`<tr><td><input type="checkbox" class="chk"></td><td><div style="font-weight:600;font-size:12px">${d.name}</div><div style="font-size:10px;color:var(--mu);font-family:monospace">${d.ramq}</div></td><td>${stBadge(d.st.l)}</td><td>${prBadge(d.pr.l)}</td><td style="color:var(--mu)">${d.rec}</td><td><div class="ech-cell" onclick="openEchMenu(event,this,'${d.rec}')"><span class="ech-date" style="color:${d.late?'var(--re)':'inherit'};font-weight:${d.late?600:400}">${d.ech}${d.late?' ⚠':''}</span><span class="ech-arrow">▾</span></div></td><td>${d.pages}</td><td><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:22px;height:22px;font-size:9px">${d.agent.split(' ').map(x=>x[0]).join('').slice(0,2)}</div><span style="font-size:11px;color:var(--mu)">${d.agent}</span></div></td><td><button class="abtn" data-name="${d.name}" data-id="${d.id}" data-ramq="${d.ramq}" onclick="showCtx(event)">Actions ▾</button></td></tr>`).join('');
+  document.getElementById('etbody').innerHTML=DE.map(d=>`<tr data-priority="${d.pr.l}"><td><input type="checkbox" class="chk"></td><td><div style="font-weight:600;font-size:12px;color:${d.pr.l==='Urgente'?'#991b1b':d.pr.l==='Haute'?'#92400e':'#145f38'}">${d.name}</div><div style="font-size:10px;color:var(--mu);font-family:monospace">${d.ramq}</div></td><td>${stBadge(d.st.l)}</td><td>${prBadge(d.pr.l)}</td><td style="color:var(--mu)">${d.rec}</td><td><div class="ech-cell" onclick="openEchMenu(event,this,'${d.rec}')"><span class="ech-date" style="color:${d.late?'var(--re)':'inherit'};font-weight:${d.late?600:400}">${d.ech}${d.late?' ⚠':''}</span><span class="ech-arrow">▾</span></div></td><td>${d.pages}</td><td><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:22px;height:22px;font-size:9px">${d.agent.split(' ').map(x=>x[0]).join('').slice(0,2)}</div><span style="font-size:11px;color:var(--mu)">${d.agent}</span></div></td><td><button class="abtn" data-name="${d.name}" data-id="${d.id}" data-ramq="${d.ramq}" onclick="showCtx(event)">Actions ▾</button></td></tr>`).join('');
+  applyEPriorityFilter();
 }
 const ic={'Analysé':'bdg','En cours':'bdb','En attente':'bdo','Erreur':'bdr'};
 function renderA(){
@@ -2310,7 +2311,7 @@ function renderKE(){
       return '<span style="background:'+c.split(';')[0]+';'+c.split(';')[1]+';padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600">'+val+'</span>';
     }
 
-    return '<tr>'
+    return '<tr data-priority="'+d.pr.l+'">'
       + '<td><input type="checkbox" class="chk"></td>'
       + '<td style="font-family:monospace;font-size:11px;color:var(--mu)">'+(d.ramq||d.id||'')+'</td>'
 + '<td><div style="font-weight:600;font-size:12px;padding:3px 6px;border-radius:4px;background:'+(d.pr.l==='Urgente'?'#fee2e2':d.pr.l==='Haute'?'#fef3c7':d.pr.l==='Normale'?'#e8f5ee':'#f3f4f6')+';color:'+(d.pr.l==='Urgente'?'#991b1b':d.pr.l==='Haute'?'#92400e':d.pr.l==='Normale'?'#145f38':'#374151')+'">'+d.name+'</div></td>'      + '<td><select onchange="setPipeVal(\''+d.id+'\',\'niveau\',this.value)" onclick="event.stopPropagation()" style="border:1px solid var(--br);border-radius:6px;font-size:11px;cursor:pointer;outline:none;font-family:inherit;padding:3px 6px;background:white">'
@@ -2446,39 +2447,50 @@ document.addEventListener('click', function(e){
   if(gm && !gm.contains(e.target)) gm.classList.remove('show');
 });
 
+var _activePriorityFilter = null;
+
 function filterEPriority(priority, btn){
-  document.querySelectorAll('#tab-encours .btn[onclick*="filterEPriority"]').forEach(function(b){
-    b.style.opacity = '1';
-    b.style.outline = 'none';
-  });
-  if(btn && priority){
-    btn.style.outline = '2px solid currentColor';
-    btn.style.outlineOffset = '1px';
+  // Toggle : deuxième clic sur le même bouton = réinitialise
+  if(_activePriorityFilter === priority){
+    _activePriorityFilter = null;
+  } else {
+    _activePriorityFilter = priority;
   }
 
-  // Filtre vue Table
-  var rows = document.querySelectorAll('#etbody tr');
-  rows.forEach(function(row){
-    if(!priority){ row.style.display = ''; return; }
-    var match = false;
-    row.querySelectorAll('.st-badge').forEach(function(b){
-      var label = '';
-      b.childNodes.forEach(function(n){ if(n.nodeType===3) label += n.textContent; });
-      label = label.replace('▾','').trim();
-      if(label === priority) match = true;
-    });
-    row.style.display = match ? '' : 'none';
+  // État visuel des boutons
+  document.querySelectorAll('#tab-encours .btn[onclick*="filterEPriority"]').forEach(function(b){
+    b.style.outline = 'none';
+    b.style.outlineOffset = '';
+    b.style.fontWeight = '';
+  });
+  if(_activePriorityFilter && btn){
+    btn.style.outline = '2px solid currentColor';
+    btn.style.outlineOffset = '1px';
+    btn.style.fontWeight = '700';
+  }
+
+  applyEPriorityFilter();
+}
+
+function applyEPriorityFilter(){
+  var priority = _activePriorityFilter;
+
+  // Filtre vue Table — basé sur data-priority
+  document.querySelectorAll('#etbody tr').forEach(function(row){
+    if(!priority){
+      row.style.display = '';
+    } else {
+      row.style.display = (row.dataset.priority === priority) ? '' : 'none';
+    }
   });
 
-  // Filtre vue Pipeline — basé sur la couleur de fond de la cellule Nom
-  const bgMap = {'Urgente':'#fee2e2','Haute':'#fef3c7','Normale':'#e8f5ee'};
-  var pipeRows = document.querySelectorAll('#kboardE tbody tr');
-  pipeRows.forEach(function(row){
-    if(!priority){ row.style.display = ''; return; }
-    var nameDiv = row.querySelector('td div[style*="border-radius"]');
-    if(!nameDiv){ row.style.display = 'none'; return; }
-    var bg = nameDiv.style.background;
-    row.style.display = (bg === bgMap[priority]) ? '' : 'none';
+  // Filtre vue Pipeline — basé sur data-priority
+  document.querySelectorAll('#kboardE tbody tr').forEach(function(row){
+    if(!priority){
+      row.style.display = '';
+    } else {
+      row.style.display = (row.dataset.priority === priority) ? '' : 'none';
+    }
   });
 }
 
