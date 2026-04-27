@@ -944,6 +944,170 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
           </div>
         </div>
       </div>
+     <!-- CARTE QUÉBEC — DOSSIERS EN COURS PAR RÉGION -->
+      <div class="cc cc-full" style="margin-bottom:14px;cursor:default" onclick="">
+        <div class="cct">Dossiers en cours — Carte des régions administratives</div>
+        <div class="ccs">Québec — Avril 2025 · Cliquez sur une région pour le détail</div>
+        <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;margin-top:10px">
+
+          <!-- SVG MAP -->
+          <div style="flex:1;min-width:360px;position:relative">
+            <svg id="qcMap" viewBox="0 0 700 640" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
+              <defs>
+                <filter id="dropshadow2"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#00000018"/></filter>
+              </defs>
+
+              <!-- 10 Nord-du-Québec (grande région du nord) -->
+              <path id="reg-10" data-reg="10" onclick="selectRegion(null,'10')"
+                d="M60,30 L560,30 L560,120 L500,140 L450,135 L400,155 L360,165 L310,170 L250,168 L195,175 L155,195 L110,210 L75,235 L60,220 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 08 Abitibi-Témiscamingue -->
+              <path id="reg-08" data-reg="08" onclick="selectRegion(null,'08')"
+                d="M60,220 L75,235 L110,210 L155,195 L195,175 L200,230 L205,285 L200,320 L170,340 L130,348 L90,338 L65,310 L60,270 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 07 Outaouais -->
+              <path id="reg-07" data-reg="07" onclick="selectRegion(null,'07')"
+                d="M60,310 L65,310 L90,338 L130,348 L170,340 L200,320 L205,360 L195,390 L170,408 L140,415 L100,405 L70,385 L58,355 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 02 Saguenay–Lac-Saint-Jean -->
+              <path id="reg-02" data-reg="02" onclick="selectRegion(null,'02')"
+                d="M250,168 L310,170 L360,165 L400,155 L450,135 L460,165 L455,205 L430,235 L395,255 L355,268 L310,272 L270,268 L240,252 L230,225 L235,195 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 09 Côte-Nord -->
+              <path id="reg-09" data-reg="09" onclick="selectRegion(null,'09')"
+                d="M400,155 L450,135 L500,140 L560,120 L590,145 L600,185 L585,225 L560,258 L530,278 L495,285 L460,275 L430,255 L455,205 L460,165 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 01 Bas-Saint-Laurent -->
+              <path id="reg-01" data-reg="01" onclick="selectRegion(null,'01')"
+                d="M395,258 L430,255 L460,275 L495,285 L510,305 L500,332 L475,348 L445,352 L415,342 L395,318 L385,295 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 11 Gaspésie–Îles-de-la-Madeleine -->
+              <path id="reg-11" data-reg="11" onclick="selectRegion(null,'11')"
+                d="M495,285 L530,278 L560,258 L585,275 L595,308 L575,338 L545,355 L512,360 L495,340 L500,332 L510,305 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 03 Capitale-Nationale -->
+              <path id="reg-03" data-reg="03" onclick="selectRegion(null,'03')"
+                d="M310,272 L355,268 L395,258 L385,295 L375,318 L355,330 L330,332 L308,320 L298,300 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 12 Chaudière-Appalaches -->
+              <path id="reg-12" data-reg="12" onclick="selectRegion(null,'12')"
+                d="M355,330 L375,318 L395,318 L415,342 L410,368 L388,382 L362,385 L342,372 L338,350 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 04 Mauricie -->
+              <path id="reg-04" data-reg="04" onclick="selectRegion(null,'04')"
+                d="M240,252 L270,268 L310,272 L298,300 L285,325 L262,338 L238,335 L218,318 L215,290 L225,268 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 17 Centre-du-Québec -->
+              <path id="reg-17" data-reg="17" onclick="selectRegion(null,'17')"
+                d="M285,325 L308,320 L338,350 L332,375 L312,385 L288,380 L272,362 L270,342 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 05 Estrie -->
+              <path id="reg-05" data-reg="05" onclick="selectRegion(null,'05')"
+                d="M288,380 L312,385 L332,375 L342,372 L362,385 L355,412 L330,428 L302,432 L278,420 L268,400 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 15 Laurentides -->
+              <path id="reg-15" data-reg="15" onclick="selectRegion(null,'15')"
+                d="M200,320 L205,360 L215,290 L218,318 L238,335 L235,360 L220,375 L198,378 L180,362 L178,338 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 14 Lanaudière -->
+              <path id="reg-14" data-reg="14" onclick="selectRegion(null,'14')"
+                d="M238,335 L262,338 L270,342 L272,362 L258,378 L238,382 L220,375 L235,360 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 13 Laval -->
+              <path id="reg-13" data-reg="13" onclick="selectRegion(null,'13')"
+                d="M218,378 L232,374 L242,382 L238,393 L222,396 L212,388 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 16 Montérégie -->
+              <path id="reg-16" data-reg="16" onclick="selectRegion(null,'16')"
+                d="M198,378 L220,375 L238,382 L242,382 L258,378 L268,400 L278,420 L265,440 L238,450 L208,445 L185,428 L182,405 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- 06 Montréal -->
+              <path id="reg-06" data-reg="06" onclick="selectRegion(null,'06')"
+                d="M212,388 L222,396 L238,393 L242,404 L228,412 L212,408 L205,398 Z"
+                style="cursor:pointer;transition:all .2s"/>
+
+              <!-- Îles-de-la-Madeleine (partie de 11) -->
+              <ellipse cx="615" cy="355" rx="14" ry="8" id="reg-11b" data-reg="11" onclick="selectRegion(null,'11')" style="cursor:pointer;transition:all .2s"/>
+
+              <!-- Labels numéros -->
+              <text x="310" y="95" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">10</text>
+              <text x="138" y="278" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">08</text>
+              <text x="125" y="370" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">07</text>
+              <text x="355" y="218" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">02</text>
+              <text x="515" y="205" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">09</text>
+              <text x="448" y="312" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">01</text>
+              <text x="545" y="318" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">11</text>
+              <text x="348" y="298" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">03</text>
+              <text x="382" y="358" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">12</text>
+              <text x="255" y="298" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">04</text>
+              <text x="310" y="355" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">17</text>
+              <text x="318" y="408" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">05</text>
+              <text x="190" y="345" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">15</text>
+              <text x="252" y="360" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">14</text>
+              <text x="227" y="388" text-anchor="middle" font-size="7" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">13</text>
+              <text x="228" y="420" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">16</text>
+              <text x="222" y="402" text-anchor="middle" font-size="7" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">06</text>
+
+            </svg>
+
+            <!-- Légende -->
+            <div style="display:flex;gap:14px;margin-top:8px;font-size:10px;color:var(--mu);flex-wrap:wrap;padding:0 4px;align-items:center">
+              <span style="font-weight:600;color:var(--tx)">Dossiers en cours :</span>
+              <span><span style="display:inline-block;width:12px;height:12px;background:#dc2626;border-radius:3px;margin-right:4px;vertical-align:middle"></span>≥ 200</span>
+              <span><span style="display:inline-block;width:12px;height:12px;background:#d97706;border-radius:3px;margin-right:4px;vertical-align:middle"></span>100–199</span>
+              <span><span style="display:inline-block;width:12px;height:12px;background:#2563eb;border-radius:3px;margin-right:4px;vertical-align:middle"></span>50–99</span>
+              <span><span style="display:inline-block;width:12px;height:12px;background:#1a7a4a;border-radius:3px;margin-right:4px;vertical-align:middle"></span>20–49</span>
+              <span><span style="display:inline-block;width:12px;height:12px;background:#9ca3af;border-radius:3px;margin-right:4px;vertical-align:middle"></span>&lt; 20</span>
+            </div>
+          </div>
+
+          <!-- PANNEAU DROIT -->
+          <div style="width:240px;flex-shrink:0;display:flex;flex-direction:column;gap:10px">
+            <div id="mapRegionList" style="display:flex;flex-direction:column;gap:2px;max-height:340px;overflow-y:auto;padding-right:2px"></div>
+            <div id="mapRegionDetail" style="display:none;background:#f8fafb;border:1px solid var(--bd);border-radius:10px;padding:14px">
+              <div id="mrdName" style="font-size:12px;font-weight:700;color:var(--tx);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--bd)"></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div style="background:#fff;border:1px solid var(--bd);border-radius:8px;padding:10px;text-align:center">
+                  <div id="mrdTotal" style="font-size:22px;font-weight:800;color:#1a7a4a"></div>
+                  <div style="font-size:9px;color:var(--mu);margin-top:2px">En cours</div>
+                </div>
+                <div style="background:#fff;border:1px solid var(--bd);border-radius:8px;padding:10px;text-align:center">
+                  <div id="mrdUrgent" style="font-size:22px;font-weight:800;color:#dc2626"></div>
+                  <div style="font-size:9px;color:var(--mu);margin-top:2px">Urgents</div>
+                </div>
+                <div style="background:#fff;border:1px solid var(--bd);border-radius:8px;padding:10px;text-align:center">
+                  <div id="mrdDelai" style="font-size:22px;font-weight:800;color:#d97706"></div>
+                  <div style="font-size:9px;color:var(--mu);margin-top:2px">Délai moy.</div>
+                </div>
+                <div style="background:#fff;border:1px solid var(--bd);border-radius:8px;padding:10px;text-align:center">
+                  <div id="mrdSla" style="font-size:22px;font-weight:800"></div>
+                  <div style="font-size:9px;color:var(--mu);margin-top:2px">SLA %</div>
+                </div>
+              </div>
+              <button onclick="selectRegion(null,_selectedMapReg)" style="margin-top:10px;width:100%;padding:6px;border:1px solid var(--bd);border-radius:6px;background:var(--w);font-size:11px;cursor:pointer;color:var(--mu)">✕ Fermer</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      </div>
+
       <div class="cr">
         <div class="cc">
           <div class="cct">Coûts cumulés 2025 vs 2024</div>
