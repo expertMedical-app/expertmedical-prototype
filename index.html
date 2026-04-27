@@ -953,125 +953,122 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
           <!-- SVG MAP -->
          <!-- SVG MAP -->
           <div style="flex:1;min-width:360px;position:relative">
-            <svg id="qcMap" viewBox="0 0 700 580" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#eaf4fb;border-radius:10px">
+            <svg id="qcMap" viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#d6eaf8;border-radius:10px">
 
-              <!-- 10 Nord-du-Québec — gris (18 dossiers) -->
-              <path id="reg-10" data-reg="10" onclick="selectRegion(null,'10')"
-                d="M55,25 L565,25 L565,115 L505,132 L455,128 L402,148 L362,158 L312,163 L252,161 L197,168 L157,188 L112,204 L77,228 L55,215 Z"
-                fill="#9ca3af" fill-opacity="0.55" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 10 Nord-du-Québec — immense région du nord -->
+  <path id="reg-10" data-reg="10" onclick="selectRegion(null,'10')"
+    d="M120,20 L700,20 L700,180 L640,200 L580,190 L520,200 L460,210 L400,215 L340,218 L280,220 L220,225 L170,235 L140,250 L120,240 Z"
+    fill="#9ca3af" fill-opacity="0.55" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="420" y="110" text-anchor="middle" font-size="14" font-weight="700" fill="#fff" opacity=".85" pointer-events="none">10</text>
 
-              <!-- 08 Abitibi-Témiscamingue — vert (56 dossiers) -->
-             <path id="reg-08" data-reg="08" onclick="selectRegion(null,'08')"
-                d="M55,215 L77,228 L112,204 L157,188 L197,168 L202,224 L207,280 L202,315 L172,334 L132,342 L92,332 L67,304 L55,265 Z"
-                fill="#1a7a4a" fill-opacity="0.70" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 08 Abitibi-Témiscamingue — ouest, grande région carrée -->
+  <path id="reg-08" data-reg="08" onclick="selectRegion(null,'08')"
+    d="M120,240 L140,250 L170,235 L220,225 L225,285 L228,345 L220,385 L185,405 L148,412 L118,400 L100,370 L98,300 Z"
+    fill="#1a7a4a" fill-opacity="0.70" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="160" y="325" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">08</text>
 
-              <!-- 07 Outaouais — bleu (143 dossiers) -->
-              <path id="reg-07" data-reg="07" onclick="selectRegion(null,'07')"
-                d="M55,304 L67,304 L92,332 L132,342 L172,334 L202,315 L207,354 L197,384 L172,402 L142,409 L102,399 L72,379 L55,350 Z"
-                fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 07 Outaouais — bas-ouest -->
+  <path id="reg-07" data-reg="07" onclick="selectRegion(null,'07')"
+    d="M98,370 L118,400 L148,412 L185,405 L220,385 L228,430 L218,468 L188,482 L155,488 L118,475 L95,448 L90,410 Z"
+    fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="158" y="438" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">07</text>
 
-              <!-- 02 Saguenay–Lac-Saint-Jean — orange (134 dossiers) -->
-              <path id="reg-02" data-reg="02" onclick="selectRegion(null,'02')"
-                d="M252,161 L312,163 L362,158 L402,148 L455,128 L462,160 L458,200 L432,228 L397,248 L357,261 L312,265 L272,261 L242,245 L232,218 L237,188 Z"
-                fill="#d97706" fill-opacity="0.72" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 02 Saguenay–Lac-Saint-Jean — centre-nord, grande triangulaire -->
+  <path id="reg-02" data-reg="02" onclick="selectRegion(null,'02')"
+    d="M280,220 L340,218 L400,215 L460,210 L520,200 L528,248 L520,295 L490,328 L450,348 L405,358 L358,360 L318,355 L290,338 L272,308 L268,268 Z"
+    fill="#d97706" fill-opacity="0.72" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="398" y="285" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">02</text>
 
-              <!-- 09 Côte-Nord — vert (44 dossiers) -->
-              <path id="reg-09" data-reg="09" onclick="selectRegion(null,'09')"
-                d="M402,148 L455,128 L505,132 L565,115 L592,138 L602,178 L588,218 L562,251 L532,271 L497,278 L462,268 L432,248 L458,200 L462,160 Z"
-                fill="#1a7a4a" fill-opacity="0.68" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 09 Côte-Nord — très grande, longe le fleuve au nord-est -->
+  <path id="reg-09" data-reg="09" onclick="selectRegion(null,'09')"
+    d="M460,210 L520,200 L580,190 L640,200 L700,180 L720,220 L718,268 L700,305 L668,332 L635,348 L598,355 L562,348 L530,328 L520,295 L528,248 Z"
+    fill="#1a7a4a" fill-opacity="0.65" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="608" y="270" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">09</text>
 
-              <!-- 01 Bas-Saint-Laurent — bleu (87 dossiers) -->
-              <path id="reg-01" data-reg="01" onclick="selectRegion(null,'01')"
-                d="M397,248 L432,248 L462,268 L497,278 L512,298 L502,325 L477,341 L447,345 L417,335 L397,311 L387,288 Z"
-                fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 01 Bas-Saint-Laurent — bande le long du fleuve -->
+  <path id="reg-01" data-reg="01" onclick="selectRegion(null,'01')"
+    d="M450,348 L490,328 L530,328 L562,348 L568,378 L548,402 L518,415 L485,418 L458,408 L442,385 Z"
+    fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="506" y="382" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">01</text>
 
-              <!-- 11 Gaspésie — vert (38 dossiers) -->
-              <path id="reg-11" data-reg="11" onclick="selectRegion(null,'11')"
-                d="M497,278 L532,271 L562,251 L587,268 L597,301 L577,331 L547,348 L514,353 L497,333 L502,325 L512,298 Z"
-                fill="#1a7a4a" fill-opacity="0.68" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 11 Gaspésie -->
+  <path id="reg-11" data-reg="11" onclick="selectRegion(null,'11')"
+    d="M562,348 L598,355 L635,348 L668,332 L688,358 L685,392 L660,415 L625,428 L592,422 L568,402 L568,378 Z"
+    fill="#1a7a4a" fill-opacity="0.65" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="628" y="385" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">11</text>
 
-              <!-- 03 Capitale-Nationale — rouge (248 dossiers) -->
-              <path id="reg-03" data-reg="03" onclick="selectRegion(null,'03')"
-                d="M312,265 L357,261 L397,248 L387,288 L377,311 L357,323 L332,325 L310,313 L300,293 Z"
-                fill="#dc2626" fill-opacity="0.78" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 03 Capitale-Nationale -->
+  <path id="reg-03" data-reg="03" onclick="selectRegion(null,'03')"
+    d="M358,360 L405,358 L450,348 L442,385 L428,408 L405,420 L378,422 L355,410 L342,390 Z"
+    fill="#dc2626" fill-opacity="0.78" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="396" y="392" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">03</text>
 
-              <!-- 12 Chaudière-Appalaches — orange (167 dossiers) -->
-              <path id="reg-12" data-reg="12" onclick="selectRegion(null,'12')"
-                d="M357,323 L377,311 L397,311 L417,335 L412,361 L390,375 L364,378 L344,365 L340,343 Z"
-                fill="#d97706" fill-opacity="0.75" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 12 Chaudière-Appalaches -->
+  <path id="reg-12" data-reg="12" onclick="selectRegion(null,'12')"
+    d="M405,420 L428,408 L442,385 L458,408 L462,438 L445,460 L420,470 L395,462 L382,442 L385,422 Z"
+    fill="#d97706" fill-opacity="0.75" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="422" y="440" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">12</text>
 
-              <!-- 04 Mauricie — bleu (112 dossiers) -->
-              <path id="reg-04" data-reg="04" onclick="selectRegion(null,'04')"
-                d="M242,245 L272,261 L312,265 L300,293 L287,318 L264,331 L240,328 L220,311 L217,283 L227,261 Z"
-                fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 04 Mauricie -->
+  <path id="reg-04" data-reg="04" onclick="selectRegion(null,'04')"
+    d="M268,308 L290,338 L318,355 L315,385 L298,405 L272,415 L248,408 L232,385 L228,355 L228,345 L228,345 Z"
+    fill="#2563eb" fill-opacity="0.70" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="272" y="368" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">04</text>
 
-              <!-- 17 Centre-du-Québec — vert (71 dossiers) -->
-              <path id="reg-17" data-reg="17" onclick="selectRegion(null,'17')"
-                d="M287,318 L310,313 L340,343 L334,368 L314,378 L290,373 L274,355 L272,335 Z"
-                fill="#1a7a4a" fill-opacity="0.70" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 17 Centre-du-Québec -->
+  <path id="reg-17" data-reg="17" onclick="selectRegion(null,'17')"
+    d="M315,385 L342,390 L355,410 L348,435 L328,448 L305,445 L288,430 L285,410 L298,405 Z"
+    fill="#1a7a4a" fill-opacity="0.70" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="320" y="420" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">17</text>
 
-              <!-- 05 Estrie — bleu (98 dossiers) -->
-              <path id="reg-05" data-reg="05" onclick="selectRegion(null,'05')"
-                d="M290,373 L314,378 L334,368 L344,365 L364,378 L357,405 L332,421 L304,425 L280,413 L270,393 Z"
-                fill="#2563eb" fill-opacity="0.68" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 05 Estrie -->
+  <path id="reg-05" data-reg="05" onclick="selectRegion(null,'05')"
+    d="M305,445 L328,448 L348,435 L362,448 L382,442 L385,422 L395,462 L388,488 L365,502 L338,502 L315,490 L298,472 Z"
+    fill="#2563eb" fill-opacity="0.68" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="345" y="470" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">05</text>
 
-              <!-- 15 Laurentides — orange (176 dossiers) -->
-              <path id="reg-15" data-reg="15" onclick="selectRegion(null,'15')"
-                d="M202,315 L207,354 L217,283 L220,311 L240,328 L237,353 L222,368 L200,371 L182,355 L180,331 Z"
-                fill="#d97706" fill-opacity="0.75" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 15 Laurentides -->
+  <path id="reg-15" data-reg="15" onclick="selectRegion(null,'15')"
+    d="M228,345 L228,385 L232,385 L248,408 L238,428 L218,438 L198,430 L180,412 L178,385 L182,355 Z"
+    fill="#d97706" fill-opacity="0.75" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="208" y="395" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">15</text>
 
-              <!-- 14 Lanaudière — orange (154 dossiers) -->
-              <path id="reg-14" data-reg="14" onclick="selectRegion(null,'14')"
-                d="M240,328 L264,331 L272,335 L274,355 L260,371 L240,375 L222,368 L237,353 Z"
-                fill="#d97706" fill-opacity="0.73" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 14 Lanaudière -->
+  <path id="reg-14" data-reg="14" onclick="selectRegion(null,'14')"
+    d="M248,408 L272,415 L285,410 L288,430 L278,448 L258,455 L238,448 L228,432 L238,428 Z"
+    fill="#d97706" fill-opacity="0.73" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="260" y="432" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">14</text>
 
-              <!-- 13 Laval — rouge (189 dossiers) -->
-              <path id="reg-13" data-reg="13" onclick="selectRegion(null,'13')"
-                d="M220,371 L234,367 L244,375 L240,386 L224,389 L214,381 Z"
-                fill="#dc2626" fill-opacity="0.82" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 13 Laval — petite île -->
+  <path id="reg-13" data-reg="13" onclick="selectRegion(null,'13')"
+    d="M238,448 L258,455 L262,468 L248,475 L232,470 L228,458 Z"
+    fill="#dc2626" fill-opacity="0.85" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <text x="245" y="464" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" opacity=".95" pointer-events="none">13</text>
 
-              <!-- 16 Montérégie — rouge (287 dossiers) -->
-              <path id="reg-16" data-reg="16" onclick="selectRegion(null,'16')"
-                d="M200,371 L222,368 L240,375 L244,375 L260,371 L270,393 L280,413 L267,433 L240,443 L210,438 L187,421 L184,398 Z"
-                fill="#dc2626" fill-opacity="0.80" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 16 Montérégie -->
+  <path id="reg-16" data-reg="16" onclick="selectRegion(null,'16')"
+    d="M198,430 L218,438 L228,432 L228,458 L232,470 L248,475 L258,488 L252,512 L225,522 L195,518 L172,500 L165,475 L172,450 Z"
+    fill="#dc2626" fill-opacity="0.80" stroke="#fff" stroke-width="2.5" style="cursor:pointer;transition:all .2s"/>
+  <text x="210" y="488" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">16</text>
 
-              <!-- 06 Montréal — rouge vif (412 dossiers) -->
-              <path id="reg-06" data-reg="06" onclick="selectRegion(null,'06')"
-                d="M214,381 L224,389 L240,386 L244,397 L230,405 L214,401 L207,391 Z"
-                fill="#dc2626" fill-opacity="0.90" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <!-- 06 Montréal — petite île dense -->
+  <path id="reg-06" data-reg="06" onclick="selectRegion(null,'06')"
+    d="M232,470 L248,475 L252,486 L240,494 L225,490 L222,478 Z"
+    fill="#dc2626" fill-opacity="0.92" stroke="#fff" stroke-width="2" style="cursor:pointer;transition:all .2s"/>
+  <text x="237" y="483" text-anchor="middle" font-size="8" font-weight="700" fill="#fff" opacity=".95" pointer-events="none">06</text>
 
-              <!-- Îles-de-la-Madeleine (11) -->
-              <ellipse cx="618" cy="348" rx="15" ry="9"
-                fill="#1a7a4a" fill-opacity="0.68" stroke="#fff" stroke-width="1.5"
-                id="reg-11b" data-reg="11" onclick="selectRegion(null,'11')" style="cursor:pointer;transition:all .2s"/>
+  <!-- Îles-de-la-Madeleine -->
+  <ellipse cx="740" cy="420" rx="18" ry="10"
+    fill="#1a7a4a" fill-opacity="0.65" stroke="#fff" stroke-width="1.5"
+    id="reg-11b" data-reg="11" onclick="selectRegion(null,'11')" style="cursor:pointer;transition:all .2s"/>
+  <text x="740" y="424" text-anchor="middle" font-size="7" font-weight="700" fill="#fff" opacity=".9" pointer-events="none">11</text>
 
-              <!-- Texte océan -->
-              <text x="630" y="200" font-size="9" fill="#7cb9d6" font-style="italic" pointer-events="none">Golfe du</text>
-              <text x="630" y="211" font-size="9" fill="#7cb9d6" font-style="italic" pointer-events="none">Saint-Laurent</text>
+  <!-- Fleuve Saint-Laurent -->
+  <text x="490" y="455" text-anchor="middle" font-size="10" fill="#5b9bd5" font-style="italic" opacity=".8" pointer-events="none">Fleuve Saint-Laurent</text>
+  <text x="680" y="300" text-anchor="middle" font-size="9" fill="#5b9bd5" font-style="italic" opacity=".8" pointer-events="none">Golfe du</text>
+  <text x="680" y="312" text-anchor="middle" font-size="9" fill="#5b9bd5" font-style="italic" opacity=".8" pointer-events="none">Saint-Laurent</text>
 
-              <!-- Numéros des régions -->
-              <g pointer-events="none">
-                <text x="310" y="92"  text-anchor="middle" font-size="12" font-weight="700" fill="#fff" opacity=".9">10</text>
-                <text x="138" y="272" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9">08</text>
-                <text x="122" y="364" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9">07</text>
-                <text x="357" y="212" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9">02</text>
-                <text x="518" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" opacity=".9">09</text>
-                <text x="448" y="305" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9">01</text>
-                <text x="548" y="312" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9">11</text>
-                <text x="348" y="292" text-anchor="middle" font-size="9"  font-weight="700" fill="#fff" opacity=".9">03</text>
-                <text x="383" y="351" text-anchor="middle" font-size="9"  font-weight="700" fill="#fff" opacity=".9">12</text>
-                <text x="255" y="292" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity=".9">04</text>
-                <text x="308" y="348" text-anchor="middle" font-size="9"  font-weight="700" fill="#fff" opacity=".9">17</text>
-                <text x="318" y="401" text-anchor="middle" font-size="9"  font-weight="700" fill="#fff" opacity=".9">05</text>
-                <text x="192" y="340" text-anchor="middle" font-size="9"  font-weight="700" fill="#fff" opacity=".9">15</text>
-                <text x="250" y="354" text-anchor="middle" font-size="9"  font-weight="700" fill="#fff" opacity=".9">14</text>
-                <text x="228" y="382" text-anchor="middle" font-size="7"  font-weight="700" fill="#fff" opacity=".95">13</text>
-                <text x="228" y="414" text-anchor="middle" font-size="9"  font-weight="700" fill="#fff" opacity=".9">16</text>
-                <text x="224" y="395" text-anchor="middle" font-size="7"  font-weight="700" fill="#fff" opacity=".95">06</text>
-                <text x="618" y="351" text-anchor="middle" font-size="6"  font-weight="700" fill="#fff" opacity=".9">11</text>
-              </g>
-
-           </svg>
+</svg>
 
             <!-- Légende -->
             <div style="display:flex;gap:14px;margin-top:8px;font-size:10px;color:var(--mu);flex-wrap:wrap;padding:0 4px;align-items:center">
