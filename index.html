@@ -4361,6 +4361,24 @@ var _notesExempleHTML =
 
   '</div>';
 // ── CARTE QUÉBEC ─────────────────────────────────────────────────────────────
+function initQcMap(){
+  var list = document.getElementById('mapRegionList');
+  if(!list) return;
+  var sorted = REGIONS_QC.slice().sort(function(a,b){ return b.dossiers - a.dossiers; });
+  list.innerHTML = sorted.map(function(r){
+    var col = r.dossiers >= 200 ? '#dc2626' : r.dossiers >= 100 ? '#d97706' : r.dossiers >= 50 ? '#2563eb' : r.dossiers >= 20 ? '#1a7a4a' : '#9ca3af';
+    var pct = Math.round(r.dossiers / 412 * 80);
+    return '<div id="listrow-'+r.id+'" onclick="selectRegion(null,\''+r.id+'\')" style="display:flex;align-items:center;gap:7px;padding:5px 7px;border-radius:6px;cursor:pointer;border:1px solid transparent;transition:all .15s">'
+      + '<span style="font-size:9px;font-weight:700;color:#fff;background:'+col+';padding:1px 5px;border-radius:4px;min-width:26px;text-align:center">'+r.id+'</span>'
+      + '<div style="flex:1;min-width:0">'
+      + '<div style="font-size:11px;font-weight:600;color:#1a1d23;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+r.nom+'</div>'
+      + '<div style="height:4px;border-radius:2px;background:'+col+';width:'+pct+'px;max-width:80px;opacity:0.7;margin-top:3px"></div>'
+      + '</div>'
+      + '<span style="font-size:11px;font-weight:700;color:'+col+'">'+r.dossiers+'</span>'
+      + '</div>';
+  }).join('');
+}
+
 const REGIONS_QC = [
   { id:'01', nom:'Bas-Saint-Laurent',              dossiers:87,
   { id:'02', nom:'Saguenay–Lac-Saint-Jean',       dossiers:134, urgents:14, delai:'7.1h', sla:85 },
