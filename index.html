@@ -1219,10 +1219,25 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
     <!-- TAB AGENTS -->
     <div class="tc" id="tab-agents">
       <div class="tw">
-        <div class="th" style="justify-content:space-between">
-          <div class="sb" style="max-width:360px">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="agentSearch" placeholder="Rechercher par nom ou prénom..." oninput="filterAgents(this.value)">
+      <div class="th" style="justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:8px;flex:1">
+            <div class="sb" style="max-width:360px">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="agentSearch" placeholder="Rechercher par nom ou prénom..." oninput="filterAgents()">
+            </div>
+            <select id="agentFiltRole" onchange="filterAgents()" style="height:32px;border:1px solid var(--bd);border-radius:7px;font-size:12px;padding:0 10px;color:var(--tx);background:var(--w);cursor:pointer">
+              <option value="">Rôle — Tous</option>
+              <option>Médecin</option>
+              <option>Agente administrative</option>
+              <option>Gestionnaire</option>
+            </select>
+            <select id="agentFiltStatut" onchange="filterAgents()" style="height:32px;border:1px solid var(--bd);border-radius:7px;font-size:12px;padding:0 10px;color:var(--tx);background:var(--w);cursor:pointer">
+              <option value="">Statut — Tous</option>
+              <option>Actif</option>
+              <option>Inactif</option>
+              <option>Surchargé</option>
+              <option>Congé</option>
+            </select>
           </div>
           <div style="display:flex;gap:7px">
             <button class="btn btng" onclick="openNu()">
@@ -2075,12 +2090,17 @@ function renderAgents(data){
   }).join('');
 }
 
-function filterAgents(q){
-  const lower = q.toLowerCase();
+function filterAgents(){
+  const q = (document.getElementById('agentSearch').value||'').toLowerCase();
+  const role = (document.getElementById('agentFiltRole')||{}).value||'';
+  const statut = (document.getElementById('agentFiltStatut')||{}).value||'';
   const filtered = AGENTS_DATA.filter(function(a){
-    return (a.prenom+' '+a.nom).toLowerCase().includes(lower) ||
-           a.email.toLowerCase().includes(lower) ||
-           a.role.toLowerCase().includes(lower);
+    const matchQ = (a.prenom+' '+a.nom).toLowerCase().includes(q) ||
+                   a.email.toLowerCase().includes(q) ||
+                   a.role.toLowerCase().includes(q);
+    const matchRole = !role || a.role === role;
+    const matchStatut = !statut || a.statut === statut;
+    return matchQ && matchRole && matchStatut;
   });
   renderAgents(filtered);
 }
