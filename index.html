@@ -1225,10 +1225,12 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <input type="text" id="agentSearch" placeholder="Rechercher par nom ou prénom..." oninput="filterAgents()">
             </div>
-            <select id="agentFiltRole" onchange="filterAgents()" style="height:32px;border:1px solid var(--bd);border-radius:7px;font-size:12px;padding:0 10px;color:var(--tx);background:var(--w);cursor:pointer">
+           <select id="agentFiltRole" onchange="filterAgents()" style="height:32px;border:1px solid var(--bd);border-radius:7px;font-size:12px;padding:0 10px;color:var(--tx);background:var(--w);cursor:pointer">
               <option value="">Rôle — Tous</option>
-              <option>Médecin</option>
+              <option>Médecin conseils</option>
+              <option>Médecin expert</option>
               <option>Agente administrative</option>
+              <option>Secrétaire médicale</option>
               <option>Gestionnaire</option>
             </select>
             <select id="agentFiltStatut" onchange="filterAgents()" style="height:32px;border:1px solid var(--bd);border-radius:7px;font-size:12px;padding:0 10px;color:var(--tx);background:var(--w);cursor:pointer">
@@ -2034,18 +2036,18 @@ function creerDossier(){
 
 // ── AGENTS & ÉQUIPES ───────────────────────────────────────────────────────
 const AGENTS_DATA = [
-  {nom:'Martin',prenom:'David',role:'Médecin',email:'David.Martin@cnesst.gouv.qc.ca',statut:'Actif',dossiers:84},
+  {nom:'Martin',prenom:'David',role:'Médecin conseils',email:'David.Martin@cnesst.gouv.qc.ca',statut:'Actif',dossiers:84},
   {nom:'Bouchard',prenom:'Sylvie',role:'Agente administrative',email:'Sylvie.Bouchard@cnesst.gouv.qc.ca',statut:'Actif',dossiers:92},
-  {nom:'Tremblay',prenom:'Marc',role:'Médecin',email:'Marc.Tremblay@cnesst.gouv.qc.ca',statut:'Actif',dossiers:67},
+  {nom:'Tremblay',prenom:'Marc',role:'Médecin expert',email:'Marc.Tremblay@cnesst.gouv.qc.ca',statut:'Actif',dossiers:67},
   {nom:'Lavoie',prenom:'Isabelle',role:'Gestionnaire',email:'Isabelle.Lavoie@cnesst.gouv.qc.ca',statut:'Actif',dossiers:78},
   {nom:'Gagné',prenom:'François',role:'Agente administrative',email:'Francois.Gagne@cnesst.gouv.qc.ca',statut:'Surchargé',dossiers:104},
-  {nom:'Côté',prenom:'Jean-Pierre',role:'Médecin',email:'Jean-Pierre.Cote@cnesst.gouv.qc.ca',statut:'Actif',dossiers:55},
+  {nom:'Côté',prenom:'Jean-Pierre',role:'Médecin expert',email:'Jean-Pierre.Cote@cnesst.gouv.qc.ca',statut:'Actif',dossiers:55},
   {nom:'Roy',prenom:'Nathalie',role:'Agente administrative',email:'Nathalie.Roy@cnesst.gouv.qc.ca',statut:'Actif',dossiers:88},
   {nom:'Lemay',prenom:'Patrick',role:'Agente administrative',email:'Patrick.Lemay@cnesst.gouv.qc.ca',statut:'Actif',dossiers:71},
   {nom:'Fortin',prenom:'Caroline',role:'Gestionnaire',email:'Caroline.Fortin@cnesst.gouv.qc.ca',statut:'Congé',dossiers:0},
-  {nom:'Bergeron',prenom:'Michel',role:'Médecin',email:'Michel.Bergeron@cnesst.gouv.qc.ca',statut:'Actif',dossiers:63},
+  {nom:'Bergeron',prenom:'Michel',role:'Médecin conseils',email:'Michel.Bergeron@cnesst.gouv.qc.ca',statut:'Actif',dossiers:63},
   {nom:'Pelletier',prenom:'Julie',role:'Agente administrative',email:'Julie.Pelletier@cnesst.gouv.qc.ca',statut:'Actif',dossiers:49},
-  {nom:'Savard',prenom:'Éric',role:'Agente administrative',email:'Eric.Savard@cnesst.gouv.qc.ca',statut:'Inactif',dossiers:0},
+  {nom:'Savard',prenom:'Éric',role:'Secrétaire médicale',email:'Eric.Savard@cnesst.gouv.qc.ca',statut:'Inactif',dossiers:0},
 ];
 
 const STATUT_STYLE = {
