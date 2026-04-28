@@ -3550,7 +3550,7 @@ renderE();renderA();renderK();renderAgents();
         <tbody>
           <tr class="at-row" onclick="selectAssignTransferPerson({name:'Dr Lemay'})">
             <td style="padding:10px 14px;display:flex;align-items:center;gap:8px;font-weight:500;color:#1a1d23"><div style="width:26px;height:26px;border-radius:50%;background:#2563eb;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0">DL</div>Dr Lemay</td>
-            <td style="padding:10px 14px;color:#374151">Médecin</td>
+            <td style="padding:10px 14px;color:#374151">Médecin conseils</td>
             <td style="padding:10px 14px"><span class="at-status at-actif">Actif</span></td>
           </tr>
           <tr class="at-row" onclick="selectAssignTransferPerson({name:'Mme Lavoie'})">
@@ -3560,17 +3560,17 @@ renderE();renderA();renderK();renderAgents();
           </tr>
           <tr class="at-row" onclick="selectAssignTransferPerson({name:'Dr Côté'})">
             <td style="padding:10px 14px;display:flex;align-items:center;gap:8px;font-weight:500;color:#1a1d23"><div style="width:26px;height:26px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0">DC</div>Dr Côté</td>
-            <td style="padding:10px 14px;color:#374151">Médecin</td>
+            <td style="padding:10px 14px;color:#374151">Médecin expert</td>
             <td style="padding:10px 14px"><span class="at-status at-dispo">Non disponible</span></td>
           </tr>
           <tr class="at-row" onclick="selectAssignTransferPerson({name:'Dr Martin'})">
             <td style="padding:10px 14px;display:flex;align-items:center;gap:8px;font-weight:500;color:#1a1d23"><div style="width:26px;height:26px;border-radius:50%;background:#0891b2;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0">DM</div>Dr Martin</td>
-            <td style="padding:10px 14px;color:#374151">Médecin</td>
+            <td style="padding:10px 14px;color:#374151">Médecin conseils</td>
             <td style="padding:10px 14px"><span class="at-status at-actif">Actif</span></td>
           </tr>
           <tr class="at-row" onclick="selectAssignTransferPerson({name:'Dr Bouchard'})">
             <td style="padding:10px 14px;display:flex;align-items:center;gap:8px;font-weight:500;color:#1a1d23"><div style="width:26px;height:26px;border-radius:50%;background:#1a7a4a;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0">DB</div>Dr Bouchard</td>
-            <td style="padding:10px 14px;color:#374151">Médecin</td>
+            <td style="padding:10px 14px;color:#374151">Médecin expert</td>
             <td style="padding:10px 14px"><span class="at-status at-suspendu">Suspendu</span></td>
           </tr>
           <tr class="at-row" onclick="selectAssignTransferPerson({name:'M. Gagné'})">
@@ -3763,9 +3763,13 @@ renderE();renderA();renderK();renderAgents();
 <!-- ROLE DROPDOWN MENU -->
 <div class="role-menu" id="roleMenu">
   <div class="role-menu-hdr">Changer le rôle</div>
-  <div class="role-menu-item" onclick="applyRole('Médecin')">
+<div class="role-menu-item" onclick="applyRole('Médecin conseils')">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-    Médecin
+    Médecin conseils
+  </div>
+  <div class="role-menu-item" onclick="applyRole('Médecin expert')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    Médecin expert
   </div>
   <div class="role-menu-item" onclick="applyRole('Agente administrative')">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
