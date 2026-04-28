@@ -1569,24 +1569,26 @@ const M=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','D�
 const S8=['S1','S2','S3','S4','S5','S6','S7','S8'];
 const S16=['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','S13','S14','S15','S16'];
 
-makeLine('chartRvC','labRvC',[
-  {data:[378,412,345,380,310,290,345,380,320,298,412,388],color:'#1a7a4a',fill:true},
-  {data:[395,398,320,360,285,305,320,360,310,280,390,400],color:'#2563eb',dash:'5,3'}
-],M,{h:100});
+function initDashboardCharts(){
+  makeLine('chartRvC','labRvC',[
+    {data:[378,412,345,380,310,290,345,380,320,298,412,388],color:'#1a7a4a',fill:true},
+    {data:[395,398,320,360,285,305,320,360,310,280,390,400],color:'#2563eb',dash:'5,3'}
+  ],M,{h:100});
 
-makeLine('chartSLA','labSLA',[
-  {data:[84,87,83,91,88,86,90,92,89,91,93,90,92,91,89,90],color:'#1a7a4a',fill:true},
-  {data:Array(16).fill(85),color:'#dc2626',dash:'4,3'}
-],S16,{h:90,min:75,max:100,yFmt:v=>v+'%',refVal:85,refColor:'#dc2626'});
+  makeLine('chartSLA','labSLA',[
+    {data:[84,87,83,91,88,86,90,92,89,91,93,90,92,91,89,90],color:'#1a7a4a',fill:true},
+    {data:Array(16).fill(85),color:'#dc2626',dash:'4,3'}
+  ],S16,{h:90,min:75,max:100,yFmt:v=>v+'%',refVal:85,refColor:'#dc2626'});
 
-makeLine('chartAvg','labAvg',[
-  {data:[7.2,6.8,7.5,6.1,6.9,6.4,6.2,6.3],color:'#d97706',fill:true}
-],S8,{h:90,yFmt:v=>v+'h'});
+  makeLine('chartAvg','labAvg',[
+    {data:[7.2,6.8,7.5,6.1,6.9,6.4,6.2,6.3],color:'#d97706',fill:true}
+  ],S8,{h:90,yFmt:v=>v+'h'});
 
-makeLine('chartRisk','labRisk',[
-  {data:[82,78,91,88,73,69,85,79,74,66,71,63,58,54,50,47],color:'#dc2626',fill:true},
-  {data:Array(16).fill(40),color:'#1a7a4a',dash:'5,3'}
-],S16,{h:100,refVal:40,refColor:'#1a7a4a'});
+  makeLine('chartRisk','labRisk',[
+    {data:[82,78,91,88,73,69,85,79,74,66,71,63,58,54,50,47],color:'#dc2626',fill:true},
+    {data:Array(16).fill(40),color:'#1a7a4a',dash:'5,3'}
+  ],S16,{h:100,refVal:40,refColor:'#1a7a4a'});
+}
 
 
 
@@ -1627,6 +1629,7 @@ function goTab(id,navEl){
   const c=tabCfg[id]||{t:id,s:''};
   document.getElementById('tbTitle').textContent=c.t;
   document.getElementById('tbSub').textContent=c.s;
+  if(id==='dashboard') initDashboardCharts();
 }
 
 // VIEW TOGGLE
