@@ -1234,9 +1234,8 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
             <select id="agentFiltStatut" onchange="filterAgents()" style="height:32px;border:1px solid var(--bd);border-radius:7px;font-size:12px;padding:0 10px;color:var(--tx);background:var(--w);cursor:pointer">
               <option value="">Statut — Tous</option>
               <option>Actif</option>
-              <option>Inactif</option>
-              <option>Surchargé</option>
-              <option>Congé</option>
+              <option>Suspendu</option>
+              <option>En congé</option>
             </select>
           </div>
           <div style="display:flex;gap:7px">
@@ -3876,7 +3875,8 @@ renderE();renderA();renderK();renderAgents();
           <div class="nu-lbl">Rôle<span class="req">*</span></div>
           <select class="nu-select" id="nuRole">
             <option value="">— Sélectionner —</option>
-            <option>Médecin</option>
+            <option>Médecin conseils</option>
+            <option>Médecin expert</option>
             <option>Agente administrative</option>
             <option>Secrétaire médicale</option>
             <option>Gestionnaire</option>
