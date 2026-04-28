@@ -1046,7 +1046,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
       </div>
       </div>
 
-      <div class="cr" id="kpi-rapports-only" style="display:none">
+      <div class="cr" id="kpi-rapports-only" style="display:none" data-show-in="tab-rapports">
         <div class="cc">
           <div class="cct">Coûts cumulés 2025 vs 2024</div>
           <div class="ccs">Dollars CAD — économies de $9 550 à ce jour</div>
@@ -1626,6 +1626,7 @@ function renderK(){
 const tabCfg={dashboard:{t:'Tableau de bord',s:'Vue globale — Avril 2025'},encours:{t:'Mes dossiers',s:'Anne-Marie Lajoie'},tous:{t:'Dossiers généraux',s:'2334 dossiers actifs'},rapports:{t:'Rapports & KPIs',s:'Analyse de performance — 2025'},ia:{t:'Analytiques IA',s:'Performance CNESST-IA v3.1'},agents:{t:'Agents & équipes',s:'Gestion des utilisateurs'},params:{t:'Paramètres',s:'Préférences et configuration du compte'}};
 function goTab(id,navEl){
   document.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('[data-show-in]').forEach(el=>el.style.display=el.dataset.showIn===id?'grid':'none');
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   const tab=document.getElementById('tab-'+id);
   if(tab)tab.classList.add('active');
