@@ -3203,17 +3203,13 @@ function openChartZoom(card){
   var sub   = card.querySelector('.ccs') ? card.querySelector('.ccs').textContent.trim() : '';
   document.getElementById('chartZoomTitle').textContent = title;
   document.getElementById('chartZoomSub').textContent   = sub;
-  // Clone the card's inner content (excluding title/sub) and scale it up
   var body = document.getElementById('chartZoomBody');
   body.innerHTML = '';
   var clone = card.cloneNode(true);
-  // Remove title and subtitle from clone
   var t = clone.querySelector('.cct'); if(t) t.remove();
   var s = clone.querySelector('.ccs'); if(s) s.remove();
-  // Style the clone for large display
   clone.style.cssText = 'border:none;padding:0;cursor:default;transform:none;box-shadow:none;background:transparent';
   clone.removeAttribute('onclick');
-  // Scale SVGs to fill space
   clone.querySelectorAll('svg:not(.donut-svg)').forEach(function(svg){
     svg.style.width  = '100%';
     svg.style.height = '260px';
