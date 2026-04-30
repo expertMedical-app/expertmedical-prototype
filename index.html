@@ -849,7 +849,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
             <tbody id="etbody"></tbody>
           </table>
         </div>
-        <div id="pipelineViewE" style="display:none;padding:12px;overflow-x:auto">
+        <div id="pipelineViewE" style="display:none;padding:12px;overflow-x:hidden">
   <div id="kboardE"></div>
 </div>
       </div>
@@ -2452,7 +2452,7 @@ function renderKE(){
   }).join('');
 
   document.getElementById('kboardE').innerHTML =
-    '<table style="width:100%;border-collapse:collapse;font-size:12px">'
+    '<table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed">'
     + '<thead><tr style="border-bottom:2px solid var(--br)">'
     + '<th style="width:36px;padding:8px 6px"><input type="checkbox" class="chk" onchange="selAllE(this)"></th>'
     + '<th style="padding:8px 6px;text-align:left;color:var(--mu);font-weight:600">ID dossier</th>'
