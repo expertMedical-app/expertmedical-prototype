@@ -3472,7 +3472,7 @@ function clearPdfFile(){
   document.getElementById('addPdfDropLabel').innerHTML = 'Glissez un fichier PDF ici ou <span style="color:#1a7a4a;text-decoration:underline;cursor:pointer">cliquez pour parcourir</span>';
   updateAddPdfBtn();
 }
-
+  
 function updateAddPdfBtn(){
   var hasFile = !!_addPdfFile;
   var hasName = !!document.getElementById('addPdfName').value.trim();
@@ -3496,7 +3496,7 @@ function confirmAddPdf(){
   if(saved && saved !== 'fr'){ setTimeout(function(){ setLang(saved); }, 50); }
 })();
 // INIT
-renderE();renderA();renderK();renderAgents();
+renderE();renderA();renderAgents();
 </script>
 
 <div id="pdfModal" onclick="closePdfModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center">
