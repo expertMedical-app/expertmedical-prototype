@@ -1664,6 +1664,7 @@ function sView(v){
   document.getElementById('pipelineView').style.display=v==='pipeline'?'block':'none';
   document.getElementById('btnT').classList.toggle('active',v==='table');
   document.getElementById('btnP').classList.toggle('active',v==='pipeline');
+  if(v==='pipeline') renderK();
 }
 
 // SEARCH
