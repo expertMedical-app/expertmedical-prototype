@@ -209,8 +209,7 @@ tr:hover td{background:#fafbfc}
 
 /* KANBAN */
 .kw{display:flex;flex-wrap:nowrap;gap:9px;overflow-x:auto;padding-bottom:8px;min-height:400px}
-.kcol{width:165px;min-width:165px;max-width:165px;background:#fafbfc;border:1px solid var(--bd);border-radius:var(--r);flex-shrink:0;flex-grow:0;display:flex;flex-direction:column}
-.kh{padding:9px 11px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.kcol{width:165px;min-width:165px;max-width:165px;background:#fafbfc;border:1px solid var(--bd);border-radius:var(--r);flex-shrink:0;flex-grow:0;display:flex;flex-direction:column;align-self:flex-start}
 .kt{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
 .kn{background:var(--bg);border:1px solid var(--bd);font-size:10px;padding:1px 6px;border-radius:9px;color:var(--mu);font-weight:700}
 .kb{padding:7px;flex:1;display:flex;flex-direction:column;flex-wrap:nowrap;gap:6px;overflow-y:auto;overflow-x:hidden;min-width:0}
@@ -888,7 +887,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
             <tbody id="atbody"></tbody>
           </table>
         </div>
-        <div id="pipelineView" style="display:none;padding:12px;overflow-x:auto">
+       <div id="pipelineView" style="display:none;padding:12px;overflow-x:auto;overflow-y:hidden">
           <div class="kw" id="kboard"></div>
         </div>
       </div>
