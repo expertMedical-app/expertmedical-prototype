@@ -3300,19 +3300,11 @@ function applyAFilters(){
   if(assign === 'asc')  rows.sort(function(a,b){ return a.agent.localeCompare(b.agent); });
   if(assign === 'desc') rows.sort(function(a,b){ return b.agent.localeCompare(a.agent); });
 
- // Filtrer la vue Pipeline (Dossiers généraux) par les mêmes critères
+// Filtrer la vue Pipeline (Dossiers généraux)
   var matchIds = {};
   rows.forEach(function(d){ matchIds[d.id] = true; });
   document.querySelectorAll('#kboard .kcard').forEach(function(card){
-    var cid = card.dataset.id || '';
-    card.style.display = matchIds[cid] ? '' : 'none';
-  });
-
-  // Filtrer la vue Pipeline (Dossiers généraux)
-  var matchIds = {};
-  rows.forEach(function(d){ matchIds[d.id] = true; });
-  document.querySelectorAll('#kboard .kcard').forEach(function(card){
-    card.style.display = matchIds[card.dataset.id] ? '' : 'none';
+    card.style.display = matchIds[card.dataset.id || ''] ? '' : 'none';
   });
 
   // Re-render tbody with filtered/sorted rows
