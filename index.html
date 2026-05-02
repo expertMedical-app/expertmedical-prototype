@@ -4461,7 +4461,7 @@ renderE();renderA();renderAgents();
 function openGererKPI(){
   var d=_ctxDossier||{};
   var nom=d.name||'—';
-  var id=d.id||'—';
+  var id=d.ramq||'—';
   document.getElementById('kpiHdrSub').textContent='Dossier : '+nom+' | ID : '+id;
   document.getElementById('kpiOverlay').classList.add('show');
 }
