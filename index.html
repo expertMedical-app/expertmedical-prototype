@@ -1659,7 +1659,7 @@ function renderE(){
 }
 const ic={'Analysé':'bdg','En cours':'bdb','En attente':'bdo','Erreur':'bdr'};
 function renderA(){
-  document.getElementById('atbody').innerHTML=DA.map(d=>`<tr><td><input type="checkbox" class="chk row-chk" onchange="updBatch()"></td><td style="font-family:monospace;font-size:11px;color:var(--mu)">${d.id}</td><td><div style="font-weight:600;font-size:12px">${d.name}</div></td><td><span class="badge ${d.st.c}">${d.st.l}</span></td><td><span class="badge ${d.pr.c}">${d.pr.l}</span></td><td style="color:var(--mu)">${d.rec}</td><td>${d.pages}</td><td style="font-size:11px;color:var(--mu)">${d.agent.split(' ').slice(-1)[0]}</td><td style="font-size:11px">${d.etape}</td><td><span class="badge ${ic[d.ias]||'bdx'}" style="font-size:9px">${d.ias}${d.ias==='Analysé'?' '+d.conf+'%':''}</span></td><td><button class="abtn" onclick="showCtx(event)">⋯</button></td></tr>`).join('');
+  document.getElementById('atbody').innerHTML=DA.map(d=>`<tr><td><input type="checkbox" class="chk row-chk" onchange="updBatch()"></td><td style="font-family:monospace;font-size:11px;color:var(--mu)">${d.id}</td><td><div style="font-weight:600;font-size:12px">${d.name}</div></td><td><span class="badge ${d.st.c}">${d.st.l}</span></td><td><span class="badge ${d.pr.c}">${d.pr.l}</span></td><td style="color:var(--mu)">${d.rec}</td><td>${d.pages}</td><td style="font-size:11px;color:var(--mu)">${d.agent.split(' ').slice(-1)[0]}</td><td style="font-size:11px">${d.etape}</td><td><span class="badge ${ic[d.ias]||'bdx'}" style="font-size:9px">${d.ias}${d.ias==='Analysé'?' '+d.conf+'%':''}</span></td><td><button class="abtn" data-name="${d.name}" data-id="${d.id}" data-ramq="${d.ramq}" onclick="showCtx(event)">⋯</button></td></tr>`).join('');
 }
 function renderK(){
   const cols = ET.map(e => ({name: e, cards: []}));
@@ -4460,9 +4460,9 @@ renderE();renderA();renderAgents();
 <script>
 function openGererKPI(){
   var d=_ctxDossier||{};
-  var nom=(d.prenom||'—')+' '+(d.nom||'');
-  var id=d.id||'5'+Math.floor(10000000+Math.random()*89999999);
-  document.getElementById('kpiHdrSub').textContent='Dossier : '+nom.trim()+' | ID : '+id;
+  var nom=d.name||'—';
+  var id=d.id||'—';
+  document.getElementById('kpiHdrSub').textContent='Dossier : '+nom+' | ID : '+id;
   document.getElementById('kpiOverlay').classList.add('show');
 }
 function closeKpiModal(){
