@@ -1421,6 +1421,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
   </div>
 </div>
 
+<!-- CONTEXT MENU -->
 <div class="ctx" id="ctxMenu">
   <div class="cxi" onclick="hideCtx();window.open('https://staging.expertmedical.ai/','_blank')">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span data-i18n="action.lancer">Lancer l'analyse IA</span>
@@ -1434,20 +1435,12 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
   <div class="cxi" onclick="openAssignTransferModal('assign')">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="action.assigner">Assigner à</span>
   </div>
-  <div class="cxi" onclick="openAssignTransferModal('transfer')">
+<div class="cxi" onclick="openAssignTransferModal('transfer')">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><span data-i18n="action.transferer">Transférer à</span>
   </div>
   <div class="cxi" onclick="hideCtx();openNotes(_ctxDossier)">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span data-i18n="action.note">Notes administratives</span>
   </div>
-
-  <!-- DIVIDER + GÉRER LES KPI -->
-  <div class="cxd"></div>
-  <div class="cxi" onclick="hideCtx();alert('Gérer les KPI')">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Gérer les KPI
-  </div>
-
-  <div class="cxd"></div>
   <div class="cxi cxr" onclick="hideCtx();openDeleteDossier()">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg><span data-i18n="action.supprimer">Supprimer</span>
   </div>
@@ -1456,6 +1449,8 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span data-i18n="action.archiver">Archiver</span>
   </div>
 </div>
+
+<!-- MODAL DOSSIER -->
 <div class="movl" id="movl" onclick="closeModalOut(event)">
   <div class="modal">
     <div class="mhdr">
