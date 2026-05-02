@@ -732,6 +732,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
         <div class="kc"><div class="kacc" style="background:var(--g)"></div><div class="klbl">Temps moyen global</div><div class="kval" style="font-size:18px">6h 20m</div><div class="ksub"><span class="kup">Amélioré de 18min</span></div></div>
         <div class="kc"><div class="kacc" style="background:var(--or)"></div><div class="klbl">Temps médian</div><div class="kval" style="font-size:18px">5h 02m</div><div class="ksub">P95: 14h 30m</div></div>
         <div class="kc"><div class="kacc" style="background:var(--g)"></div><div class="klbl">Respect SLA</div><div class="kval" style="color:var(--g)">90.4%</div><div class="ksub">Objectif: 85% — <span class="kup">Dépassé</span></div><div class="kpb"><div class="kpf" style="width:90%;background:var(--g)"></div></div></div>
+        <div class="kc"><div class="kacc" style="background:var(--re)"></div><div class="klbl">Dossiers en retard</div><div class="kval" style="color:var(--re)">47</div><div class="ksub"><span class="kup">▼ -12</span> vs semaine passée</div></div>
       </div>
 
       <div class="cr" style="grid-template-columns:1fr">
@@ -857,7 +858,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
             <button class="vb active" id="btnT" onclick="sView('table')">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Table
             </button>
-            <button class="vb" id="btnP" onclick="sView('Analyse en cours')">
+            <button class="vb" id="btnP" onclick="sView('pipeline')">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="18" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg> Pipeline
             </button>
           </div>
