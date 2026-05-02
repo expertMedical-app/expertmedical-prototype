@@ -1615,29 +1615,73 @@ function renderA(){
 function renderK(){
   const cols = ET.map(e => ({name: e, cards: []}));
   DA.forEach(d => cols[d.ei].cards.push(d));
-  const pd = {'Urgente':'dr','Haute':'do2','Normale':'dbl','Basse':'dgr'};
+  const pd = {'Urgente':'#dc2626','Haute':'#d97706','Normale':'#1a7a4a','Basse':'#9ca3af'};
   const calEtapes = ['Classification','Extraction','Analyse médicale'];
+
+  const iaColor  = {'Analysé':'#1a7a4a','En cours':'#2563eb','En attente':'#d97706','Erreur':'#dc2626'};
+  const iaBg     = {'Analysé':'#e8f5ee','En cours':'#eff6ff','En attente':'#fef3c7','Erreur':'#fee2e2'};
+  const stColor  = {'À traiter':'#374151','Analyse IA en cours':'#5b21b6','En attente validation':'#92400e','Complété':'#145f38'};
+  const stBg     = {'À traiter':'#f3f4f6','Analyse IA en cours':'#f5f3ff','En attente validation':'#fef3c7','Complété':'#e8f5ee'};
+
+  const classifLabels = ['Rapport Médical','Image IRM','Rapport Neuro','Rapport Pathologie','Image CT Scan','Rapport d\'évolution'];
+
   document.getElementById('kboard').innerHTML = cols.map(col => {
     const isCal = calEtapes.includes(col.name);
     return '<div class="kcol">'
       + '<div class="kh"><span class="kt">' + col.name + '</span><span class="kn">' + col.cards.length + '</span></div>'
       + '<div class="kb">'
-      + col.cards.map(d =>
-          '<div class="kcard"'
-          + ' data-id="' + d.id + '"'
-          + ' data-col="' + col.name + '"'
-          + ' data-name="' + d.name + '"'
-          + ' onclick="' + (isCal ? 'openCal(event,this.dataset.col,this.dataset.id,this.dataset.name)' : 'showCtx(event)') + '">'
-          + '<div class="kid">' + d.id + '</div>'
-          + '<div class="knm">' + d.name + '</div>'
-          + '<div class="kft">'
-          + '<div class="pdot ' + (pd[d.pr.l] || 'dgr') + '"></div>'
-          + '<div class="cbar"><div class="cfill" style="width:' + d.conf + '%"></div></div>'
-          + '<span class="cft">' + d.conf + '%</span>'
-          + '</div>'
-          + (isCal ? '<svg style="margin-left:auto;flex-shrink:0" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#1a7a4a" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' : '')
-          + '</div></div>'
-        ).join('')
+      + col.cards.map((d, i) => {
+          const prDot  = pd[d.pr.l] || '#9ca3af';
+          const iaBgC  = iaBg[d.ias]   || '#f3f4f6';
+          const iaC    = iaColor[d.ias] || '#6b7280';
+          const stBgC  = stBg[d.st.l]  || '#f3f4f6';
+          const stC    = stColor[d.st.l]|| '#374151';
+          const confBarColor = d.conf >= 85 ? '#1a7a4a' : d.conf >= 65 ? '#d97706' : '#dc2626';
+          const classif = classifLabels[i % classifLabels.length];
+          const agentInitials = d.agent.split(' ').map(x=>x[0]).join('').slice(0,2);
+
+          return '<div class="kcard"'
+            + ' data-id="' + d.id + '"'
+            + ' data-col="' + col.name + '"'
+            + ' data-name="' + d.name + '"'
+            + ' onclick="' + (isCal ? 'openCal(event,this.dataset.col,this.dataset.id,this.dataset.name)' : 'showCtx(event)') + '">'
+
+            // ID + nom
+            + '<div class="kid">' + d.id + '</div>'
+            + '<div class="knm">' + d.name + '</div>'
+
+            // Badge statut
+            + '<div style="margin:5px 0 4px">'
+            + '<span style="background:' + stBgC + ';color:' + stC + ';font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px">' + d.st.l + '</span>'
+            + '</div>'
+
+            // Badge IA + %
+            + '<div style="display:flex;align-items:center;gap:5px;margin-bottom:5px">'
+            + '<span style="background:' + iaBgC + ';color:' + iaC + ';font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px">' + d.conf + '%</span>'
+            + '<span style="font-size:9px;color:' + iaC + ';font-weight:500">' + d.ias + '</span>'
+            + '</div>'
+
+            // Classification (sauf colonne Dossier/Gestion)
+            + (col.name !== 'Dossier' && col.name !== 'Gestion' ?
+              '<div style="font-size:9px;color:#6b7280;margin-bottom:5px;background:#f3f4f6;padding:2px 6px;border-radius:4px;display:inline-block">' + classif + '</div><br>'
+              : '')
+
+            // Barre de confiance + priorité dot
+            + '<div class="kft" style="margin-top:4px">'
+            + '<div class="pdot" style="background:' + prDot + ';border-radius:50%;width:6px;height:6px;flex-shrink:0"></div>'
+            + '<div class="cbar"><div class="cfill" style="width:' + d.conf + '%;background:' + confBarColor + '"></div></div>'
+            + '<span class="cft">' + d.conf + '%</span>'
+            + '</div>'
+
+            // Agent assigné
+            + '<div style="display:flex;align-items:center;gap:4px;margin-top:6px">'
+            + '<div style="width:18px;height:18px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#374151;flex-shrink:0">' + agentInitials + '</div>'
+            + '<span style="font-size:9px;color:#9ca3af;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + d.agent.split(' ').slice(-1)[0] + '</span>'
+            + (isCal ? '<svg style="margin-left:auto;flex-shrink:0" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#1a7a4a" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' : '')
+            + '</div>'
+
+            + '</div>';
+        }).join('')
       + '</div></div>';
   }).join('');
 }
