@@ -1860,8 +1860,13 @@ function openTransmettreModal() {
   document.getElementById('trOrgAutre').value = '';
   document.getElementById('trDate').value = new Date().toLocaleDateString('fr-CA');
   var u = document.querySelector('.uname');
+  var role = document.querySelector('.urole');
   document.getElementById('trBy').value = u ? u.textContent.trim() : 'Dr Martin';
+  document.getElementById('trRespTitre').value = role ? role.textContent.trim() : 'Médecin désigné';
+  document.getElementById('trRespTel').value = '1 844 838-0808';
+  document.getElementById('trRespCourriel').value = 'transmission@cnesst.gouv.qc.ca';
   document.getElementById('trQrBox').style.display = 'none';
+  document.getElementById('trPreviewBox').style.display = 'none';
   trToggleMode();
   trToggleRole();
   trToggleOrgAutre();
@@ -1888,56 +1893,151 @@ function trToggleOrgAutre() {
   document.getElementById('trOrgAutre').style.display = (v === 'autre') ? '' : 'none';
 }
 
-function trGenerateQR() {
+function trEsc(s){
+  return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+  });
+}
+
+function trBuildUrl() {
   var d = _ctxDossier || {};
   var ref = d.ramq || d.id || d.name || 'dossier';
-  var url = 'https://staging.expertmedical.ai/telecharger?dossier=' + encodeURIComponent(ref) + '&t=' + Date.now().toString(36);
+  return 'https://staging.expertmedical.ai/telecharger?dossier=' + encodeURIComponent(ref) + '&t=' + Date.now().toString(36);
+}
+
+function trQrDataURL(url) {
   // Génération locale autonome (lib QR embarquée, aucune connexion requise)
   var qr = qrcode(0, 'M');
   qr.addData(url);
   qr.make();
-  document.getElementById('trQrImg').src = qr.createDataURL(6, 2);
+  return qr.createDataURL(6, 2);
+}
+
+function trGenerateQR() {
+  var url = trBuildUrl();
+  document.getElementById('trQrImg').src = trQrDataURL(url);
   document.getElementById('trQrUrl').textContent = url;
   document.getElementById('trQrBox').style.display = 'block';
 }
 
-function trSubmit() {
+// Collecte + validation de tous les champs. Renvoie un objet, ou null si invalide.
+function trCollect() {
   var prenom = document.getElementById('trPrenom').value.trim();
   var nom    = document.getElementById('trNom').value.trim();
   var mode   = document.getElementById('trMode').value;
   var role   = document.getElementById('trRole').value;
-  if (!prenom || !nom) { alert('Veuillez renseigner le prénom et le nom du destinataire.'); return; }
+  if (!prenom || !nom) { alert('Veuillez renseigner le prénom et le nom du destinataire.'); return null; }
 
-  // Coordonnées selon le mode d'envoi
   var contact;
   if (mode === 'email') {
     contact = document.getElementById('trEmail').value.trim();
-    if (!contact) { alert('Veuillez renseigner le courriel.'); return; }
+    if (!contact) { alert('Veuillez renseigner le courriel.'); return null; }
   } else {
     var numero = document.getElementById('trNumero').value.trim();
     var rue    = document.getElementById('trRue').value.trim();
     var ville  = document.getElementById('trVille').value.trim();
     var prov   = document.getElementById('trProvince').value.trim();
     var cp     = document.getElementById('trCodePostal').value.trim();
-    if (!numero || !rue || !ville || !prov || !cp) { alert('Veuillez compléter l\'adresse postale (numéro, rue, ville, province, code postal).'); return; }
+    if (!numero || !rue || !ville || !prov || !cp) { alert('Veuillez compléter l\'adresse postale (numéro, rue, ville, province, code postal).'); return null; }
     contact = numero + ' ' + rue + ', ' + ville + ' (' + prov + ') ' + cp;
   }
 
-  // Rôle / organisation
-  var roleLabel;
+  var roleLabel, org = '';
   if (role === 'organisation') {
-    var org = document.getElementById('trOrg').value;
+    org = document.getElementById('trOrg').value;
     if (org === 'autre') {
       org = document.getElementById('trOrgAutre').value.trim();
-      if (!org) { alert('Veuillez inscrire le nom de l\'organisation.'); return; }
+      if (!org) { alert('Veuillez inscrire le nom de l\'organisation.'); return null; }
     }
     roleLabel = 'Organisation — ' + org;
   } else {
     roleLabel = { medecin:'Médecin', ips:'IPS', infirmiere:'Infirmière' }[role] || role;
   }
 
-  var canal = (mode === 'email') ? 'par courriel' : 'par voie postale';
-  var agent = document.getElementById('trBy').value.trim() || 'Vous';
+  var titre = document.getElementById('trRespTitre').value.trim();
+  var tel   = document.getElementById('trRespTel').value.trim();
+  var courriel = document.getElementById('trRespCourriel').value.trim();
+  if (!titre || !tel || !courriel) { alert('Veuillez compléter les coordonnées du responsable (titre, téléphone, courriel).'); return null; }
+
+  var d = _ctxDossier || {};
+  return {
+    prenom: prenom, nom: nom, mode: mode, role: role, roleLabel: roleLabel, org: org,
+    contact: contact, canal: (mode === 'email') ? 'par courriel' : 'par voie postale',
+    agent: document.getElementById('trBy').value.trim() || 'Vous',
+    date: document.getElementById('trDate').value,
+    titre: titre, tel: tel, courriel: courriel,
+    travailleur: d.name || '', codeDossier: d.ramq || d.id || '',
+    url: trBuildUrl()
+  };
+}
+
+function trPreview() {
+  var c = trCollect();
+  if (!c) return;
+  var qrImg = trQrDataURL(c.url);
+  var typeDoc = (c.mode === 'email') ? 'Courriel' : 'Lettre';
+  var destLigne = (c.mode === 'email')
+    ? 'Courriel : ' + trEsc(c.contact)
+    : 'Adresse : ' + trEsc(c.contact);
+
+  var html =
+    '<div style="background:#fff;border:1px solid #d1d5db;border-radius:8px;padding:26px 30px;max-width:100%;font-size:12.5px;line-height:1.6;color:#1f2937">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #1a7a4a;padding-bottom:10px;margin-bottom:16px">' +
+        '<div style="font-weight:800;color:#1a7a4a;font-size:15px">CNESST</div>' +
+        '<div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px">Aperçu — ' + typeDoc + '</div>' +
+      '</div>' +
+
+      '<div style="background:#f8fafc;border:1px solid #e2e6ec;border-radius:6px;padding:10px 12px;margin-bottom:16px;font-size:11.5px;color:#374151">' +
+        '<div><strong>Destinataire :</strong> ' + trEsc(c.prenom + ' ' + c.nom) + ' — ' + trEsc(c.roleLabel) + '</div>' +
+        '<div>' + destLigne + '</div>' +
+        '<div><strong>Travailleur concerné :</strong> ' + trEsc(c.travailleur) + (c.codeDossier ? ' &nbsp;·&nbsp; Dossier : ' + trEsc(c.codeDossier) : '') + '</div>' +
+        '<div><strong>Date :</strong> ' + trEsc(c.date) + '</div>' +
+      '</div>' +
+
+      '<p style="margin:0 0 4px"><strong>Objet</strong></p>' +
+      '<p style="margin:0 0 12px">Transmission sécurisée du dossier relatif à la réclamation du travailleur identifié ci-dessus.</p>' +
+
+      '<p style="margin:0 0 12px">Madame, Monsieur,</p>' +
+      '<p style="margin:0 0 12px">Dans le cadre du traitement du dossier de réclamation du travailleur identifié ci-dessus, la Commission des normes, de l’équité, de la santé et de la sécurité du travail (CNESST) vous transmet les documents requis pour l’exécution de votre mandat ou pour le traitement administratif du dossier.</p>' +
+      '<p style="margin:0 0 6px">Les documents transmis peuvent comprendre, selon le contexte :</p>' +
+      '<ul style="margin:0 0 12px 18px;padding:0">' +
+        '<li>le mandat d’évaluation;</li>' +
+        '<li>les documents médicaux pertinents;</li>' +
+        '<li>les rapports d’expertise;</li>' +
+        '<li>les rapports d’imagerie;</li>' +
+        '<li>les notes cliniques;</li>' +
+        '<li>les documents administratifs associés à la réclamation.</li>' +
+      '</ul>' +
+
+      '<p style="margin:0 0 4px;font-weight:700;color:#1a7a4a">Accès au dossier numérique sécurisé</p>' +
+      '<p style="margin:0 0 10px">Veuillez utiliser le code QR ci-dessous pour accéder au dossier électronique sécurisé.</p>' +
+      '<div style="text-align:center;margin:0 0 12px"><img src="' + qrImg + '" width="150" height="150" style="background:#fff;padding:6px;border:1px solid #e2e6ec;border-radius:6px" alt="Code QR"></div>' +
+      '<p style="margin:0 0 4px">Lien sécurisé : <span style="color:#2563eb;word-break:break-all">' + trEsc(c.url) + '</span></p>' +
+      '<p style="margin:0 0 14px">Code d’accès (si applicable) : ' + trEsc(c.codeDossier || '—') + '</p>' +
+
+      '<p style="margin:0 0 4px;font-weight:700;color:#1a7a4a">Confidentialité</p>' +
+      '<p style="margin:0 0 10px">Les renseignements contenus dans ce dossier sont confidentiels et sont transmis uniquement aux fins prévues par le mandat ou les obligations administratives applicables. Toute utilisation, reproduction ou communication non autorisée de ces renseignements est interdite.</p>' +
+      '<p style="margin:0 0 14px">Si vous avez reçu cette transmission par erreur, veuillez en aviser immédiatement la CNESST et détruire toute copie des documents reçus.</p>' +
+
+      '<div style="border-top:1px solid #e2e6ec;padding-top:12px;margin-top:14px;font-size:11.5px;color:#374151">' +
+        '<div style="font-weight:700">Commission des normes, de l’équité, de la santé et de la sécurité du travail (CNESST)</div>' +
+        '<div>Nom du responsable : ' + trEsc(c.agent) + '</div>' +
+        '<div>Titre : ' + trEsc(c.titre) + '</div>' +
+        '<div>Téléphone : ' + trEsc(c.tel) + '</div>' +
+        '<div>Courriel : ' + trEsc(c.courriel) + '</div>' +
+        '<div style="margin-top:8px;font-style:italic;color:#9ca3af">Document généré électroniquement. Aucune signature manuscrite requise.</div>' +
+      '</div>' +
+    '</div>';
+
+  var box = document.getElementById('trPreviewBox');
+  box.innerHTML = html;
+  box.style.display = 'block';
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function trSubmit() {
+  var c = trCollect();
+  if (!c) return;
 
   // Note administrative confirmant l'envoi
   var d = _ctxDossier || {};
@@ -1946,18 +2046,18 @@ function trSubmit() {
     if (!_notesStore[key]) _notesStore[key] = [];
     var noteTxt =
       'CONFIRMATION DE TRANSMISSION\n' +
-      'Dossier transmis ' + canal + ' à ' + prenom + ' ' + nom + ' (' + roleLabel + ').\n' +
-      'Coordonnées : ' + contact + '\n' +
-      'Date de transmission : ' + document.getElementById('trDate').value + '\n' +
-      'Transmis par : ' + agent;
+      'Dossier transmis ' + c.canal + ' à ' + c.prenom + ' ' + c.nom + ' (' + c.roleLabel + ').\n' +
+      'Coordonnées : ' + c.contact + '\n' +
+      'Date de transmission : ' + c.date + '\n' +
+      'Transmis par : ' + c.agent;
     _notesStore[key].push({
       text: noteTxt,
-      author: agent,
+      author: c.agent,
       date: new Date().toLocaleString('fr-CA')
     });
   }
 
-  alert('Dossier transmis ' + canal + ' à ' + prenom + ' ' + nom + ' (' + roleLabel + ') — ' + contact + '.\nUne note administrative de confirmation a été ajoutée.');
+  alert('Dossier transmis ' + c.canal + ' à ' + c.prenom + ' ' + c.nom + ' (' + c.roleLabel + ') — ' + c.contact + '.\nUne note administrative de confirmation a été ajoutée.');
   closeTransmettreModal();
 }
 
@@ -3917,16 +4017,41 @@ renderE();renderA();renderAgents();
         </div>
       </div>
 
+      <div style="border-top:1px solid #e2e6ec;padding-top:14px;margin-bottom:4px">
+        <div style="font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Coordonnées du responsable (CNESST)</div>
+        <div style="margin-bottom:12px">
+          <label class="tr-lbl req">Titre</label>
+          <input id="trRespTitre" class="tr-in" type="text" placeholder="Ex. : Médecin désigné">
+        </div>
+        <div style="display:flex;gap:12px;margin-bottom:12px">
+          <div style="flex:1">
+            <label class="tr-lbl req">Téléphone</label>
+            <input id="trRespTel" class="tr-in" type="text" placeholder="000 000-0000">
+          </div>
+          <div style="flex:1">
+            <label class="tr-lbl req">Courriel</label>
+            <input id="trRespCourriel" class="tr-in" type="email" placeholder="responsable@cnesst.gouv.qc.ca">
+          </div>
+        </div>
+      </div>
+
       <div style="border-top:1px solid #e2e6ec;padding-top:14px">
-        <button class="btn" onclick="trGenerateQR()" style="gap:6px">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="14" y2="14"/><line x1="21" y1="14" x2="21" y2="14"/><line x1="14" y1="21" x2="21" y2="21"/><line x1="21" y1="17" x2="21" y2="21"/></svg>
-          Générer le code QR
-        </button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn" onclick="trGenerateQR()" style="gap:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="14" y2="14"/><line x1="21" y1="14" x2="21" y2="14"/><line x1="14" y1="21" x2="21" y2="21"/><line x1="21" y1="17" x2="21" y2="21"/></svg>
+            Générer le code QR
+          </button>
+          <button class="btn" onclick="trPreview()" style="gap:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Aperçu
+          </button>
+        </div>
         <div id="trQrBox" style="display:none;margin-top:14px;text-align:center;background:#f8fafc;border:1px solid #e2e6ec;border-radius:9px;padding:16px">
           <img id="trQrImg" alt="Code QR du dossier" width="170" height="170" style="background:#fff;padding:6px;border-radius:6px">
           <div style="font-size:11px;color:#6b7280;margin-top:8px;line-height:1.4">Ce code QR accompagnera le courriel ou la lettre.<br>Le destinataire peut le scanner pour télécharger le dossier.</div>
           <div id="trQrUrl" style="font-size:10px;color:#9ca3af;margin-top:6px;word-break:break-all"></div>
         </div>
+        <div id="trPreviewBox" style="display:none;margin-top:14px"></div>
       </div>
 
     </div>
