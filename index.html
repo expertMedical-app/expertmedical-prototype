@@ -1937,7 +1937,27 @@ function trSubmit() {
   }
 
   var canal = (mode === 'email') ? 'par courriel' : 'par voie postale';
-  alert('Dossier transmis ' + canal + ' à ' + prenom + ' ' + nom + ' (' + roleLabel + ') — ' + contact + '.');
+  var agent = document.getElementById('trBy').value.trim() || 'Vous';
+
+  // Note administrative confirmant l'envoi
+  var d = _ctxDossier || {};
+  var key = d.id || d.name;
+  if (key) {
+    if (!_notesStore[key]) _notesStore[key] = [];
+    var noteTxt =
+      'CONFIRMATION DE TRANSMISSION\n' +
+      'Dossier transmis ' + canal + ' à ' + prenom + ' ' + nom + ' (' + roleLabel + ').\n' +
+      'Coordonnées : ' + contact + '\n' +
+      'Date de transmission : ' + document.getElementById('trDate').value + '\n' +
+      'Transmis par : ' + agent;
+    _notesStore[key].push({
+      text: noteTxt,
+      author: agent,
+      date: new Date().toLocaleString('fr-CA')
+    });
+  }
+
+  alert('Dossier transmis ' + canal + ' à ' + prenom + ' ' + nom + ' (' + roleLabel + ') — ' + contact + '.\nUne note administrative de confirmation a été ajoutée.');
   closeTransmettreModal();
 }
 
