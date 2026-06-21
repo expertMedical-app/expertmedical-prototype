@@ -1850,13 +1850,21 @@ function openTransmettreModal() {
   document.getElementById('trNom').value = '';
   document.getElementById('trMode').value = 'email';
   document.getElementById('trEmail').value = '';
-  document.getElementById('trAdresse').value = '';
-  document.getElementById('trOrg').value = '';
+  document.getElementById('trNumero').value = '';
+  document.getElementById('trRue').value = '';
+  document.getElementById('trVille').value = '';
+  document.getElementById('trProvince').value = '';
+  document.getElementById('trCodePostal').value = '';
+  document.getElementById('trRole').value = 'medecin';
+  document.getElementById('trOrg').value = 'DuCore Expertise';
+  document.getElementById('trOrgAutre').value = '';
   document.getElementById('trDate').value = new Date().toLocaleDateString('fr-CA');
   var u = document.querySelector('.uname');
   document.getElementById('trBy').value = u ? u.textContent.trim() : 'Dr Martin';
   document.getElementById('trQrBox').style.display = 'none';
   trToggleMode();
+  trToggleRole();
+  trToggleOrgAutre();
   document.getElementById('transmettreModal').classList.add('show');
 }
 
@@ -1868,6 +1876,16 @@ function trToggleMode() {
   var mode = document.getElementById('trMode').value;
   document.getElementById('trEmailField').style.display  = (mode === 'email')  ? '' : 'none';
   document.getElementById('trPostalField').style.display = (mode === 'postal') ? '' : 'none';
+}
+
+function trToggleRole() {
+  var role = document.getElementById('trRole').value;
+  document.getElementById('trOrgField').style.display = (role === 'organisation') ? '' : 'none';
+}
+
+function trToggleOrgAutre() {
+  var v = document.getElementById('trOrg').value;
+  document.getElementById('trOrgAutre').style.display = (v === 'autre') ? '' : 'none';
 }
 
 function trGenerateQR() {
@@ -1887,15 +1905,39 @@ function trSubmit() {
   var prenom = document.getElementById('trPrenom').value.trim();
   var nom    = document.getElementById('trNom').value.trim();
   var mode   = document.getElementById('trMode').value;
-  var org    = document.getElementById('trOrg').value.trim();
-  var contact = (mode === 'email')
-    ? document.getElementById('trEmail').value.trim()
-    : document.getElementById('trAdresse').value.trim();
+  var role   = document.getElementById('trRole').value;
   if (!prenom || !nom) { alert('Veuillez renseigner le prénom et le nom du destinataire.'); return; }
-  if (!contact) { alert(mode === 'email' ? 'Veuillez renseigner le courriel.' : 'Veuillez renseigner l\'adresse postale.'); return; }
-  if (!org) { alert('Veuillez renseigner l\'organisation de destination.'); return; }
+
+  // Coordonnées selon le mode d'envoi
+  var contact;
+  if (mode === 'email') {
+    contact = document.getElementById('trEmail').value.trim();
+    if (!contact) { alert('Veuillez renseigner le courriel.'); return; }
+  } else {
+    var numero = document.getElementById('trNumero').value.trim();
+    var rue    = document.getElementById('trRue').value.trim();
+    var ville  = document.getElementById('trVille').value.trim();
+    var prov   = document.getElementById('trProvince').value.trim();
+    var cp     = document.getElementById('trCodePostal').value.trim();
+    if (!numero || !rue || !ville || !prov || !cp) { alert('Veuillez compléter l\'adresse postale (numéro, rue, ville, province, code postal).'); return; }
+    contact = numero + ' ' + rue + ', ' + ville + ' (' + prov + ') ' + cp;
+  }
+
+  // Rôle / organisation
+  var roleLabel;
+  if (role === 'organisation') {
+    var org = document.getElementById('trOrg').value;
+    if (org === 'autre') {
+      org = document.getElementById('trOrgAutre').value.trim();
+      if (!org) { alert('Veuillez inscrire le nom de l\'organisation.'); return; }
+    }
+    roleLabel = 'Organisation — ' + org;
+  } else {
+    roleLabel = { medecin:'Médecin', ips:'IPS', infirmiere:'Infirmière' }[role] || role;
+  }
+
   var canal = (mode === 'email') ? 'par courriel' : 'par voie postale';
-  alert('Dossier transmis ' + canal + ' à ' + prenom + ' ' + nom + ' (' + org + ').');
+  alert('Dossier transmis ' + canal + ' à ' + prenom + ' ' + nom + ' (' + roleLabel + ') — ' + contact + '.');
   closeTransmettreModal();
 }
 
@@ -3799,12 +3841,49 @@ renderE();renderA();renderAgents();
 
       <div id="trPostalField" style="margin-bottom:12px;display:none">
         <label class="tr-lbl req">Adresse postale</label>
-        <textarea id="trAdresse" class="tr-in" rows="3" placeholder="Numéro et rue, ville, province, code postal"></textarea>
+        <div style="display:flex;gap:10px;margin-bottom:10px">
+          <div style="flex:0 0 90px">
+            <input id="trNumero" class="tr-in" type="text" placeholder="Numéro">
+          </div>
+          <div style="flex:1">
+            <input id="trRue" class="tr-in" type="text" placeholder="Rue">
+          </div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <div style="flex:1.2">
+            <input id="trVille" class="tr-in" type="text" placeholder="Ville">
+          </div>
+          <div style="flex:1">
+            <input id="trProvince" class="tr-in" type="text" placeholder="Province">
+          </div>
+          <div style="flex:0 0 110px">
+            <input id="trCodePostal" class="tr-in" type="text" placeholder="Code postal">
+          </div>
+        </div>
       </div>
 
       <div style="margin-bottom:12px">
-        <label class="tr-lbl req">Organisation</label>
-        <input id="trOrg" class="tr-in" type="text" placeholder="Organisation de destination (saisie libre)">
+        <label class="tr-lbl req">Rôle</label>
+        <select id="trRole" class="tr-in" onchange="trToggleRole()">
+          <option value="medecin">Médecin</option>
+          <option value="ips">IPS</option>
+          <option value="infirmiere">Infirmière</option>
+          <option value="organisation">Organisation</option>
+        </select>
+      </div>
+
+      <div id="trOrgField" style="margin-bottom:12px;display:none">
+        <label class="tr-lbl req">Nom de l'organisation</label>
+        <select id="trOrg" class="tr-in" onchange="trToggleOrgAutre()">
+          <option value="DuCore Expertise">DuCore Expertise</option>
+          <option value="Cyclone santé">Cyclone santé</option>
+          <option value="FFA">FFA</option>
+          <option value="La Cité Médicale">La Cité Médicale</option>
+          <option value="Médigestal">Médigestal</option>
+          <option value="Assesmed">Assesmed</option>
+          <option value="autre">Autre…</option>
+        </select>
+        <input id="trOrgAutre" class="tr-in" type="text" placeholder="Nom de l'organisation" style="margin-top:8px;display:none">
       </div>
 
       <div style="display:flex;gap:12px;margin-bottom:14px">
