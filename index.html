@@ -1957,13 +1957,21 @@ function trCollect() {
   var courriel = 'transmission@cnesst.gouv.qc.ca';
 
   var d = _ctxDossier || {};
+
+  // Numéro de dossier = le nombre à 9 chiffres de la ligne du travailleur
+  var code = d.ramq;
+  if (!code || code === 'undefined') {
+    if (_ctxRow) { var mm = (_ctxRow.textContent || '').match(/\b\d{9}\b/); if (mm) code = mm[0]; }
+  }
+  if (!code || code === 'undefined') code = d.id || '';
+
   return {
     prenom: prenom, nom: nom, mode: mode, role: role, roleLabel: roleLabel, org: org,
     contact: contact, canal: (mode === 'email') ? 'par courriel' : 'par voie postale',
     agent: document.getElementById('trBy').value.trim() || 'Vous',
     date: document.getElementById('trDate').value,
     titre: titre, tel: tel, courriel: courriel,
-    travailleur: d.name || '', codeDossier: d.ramq || d.id || '',
+    travailleur: d.name || '', codeDossier: code,
     url: trBuildUrl()
   };
 }
@@ -1973,9 +1981,7 @@ function trPreview() {
   if (!c) return;
   var qrImg = trQrDataURL(c.url);
   var typeDoc = (c.mode === 'email') ? 'Courriel' : 'Lettre';
-  var destLigne = (c.mode === 'email')
-    ? 'Courriel : ' + trEsc(c.contact)
-    : 'Adresse : ' + trEsc(c.contact);
+  var contactLabel = (c.mode === 'email') ? 'Courriel' : 'Adresse';
 
   var html =
     '<div style="background:#fff;border:1px solid #d1d5db;border-radius:8px;padding:26px 30px;max-width:100%;font-size:12.5px;line-height:1.6;color:#1f2937">' +
@@ -1985,10 +1991,11 @@ function trPreview() {
       '</div>' +
 
       '<div style="background:#f8fafc;border:1px solid #e2e6ec;border-radius:6px;padding:10px 12px;margin-bottom:16px;font-size:11.5px;color:#374151">' +
-        '<div><strong>Destinataire :</strong> ' + trEsc(c.prenom + ' ' + c.nom) + ' — ' + trEsc(c.roleLabel) + '</div>' +
-        '<div>' + destLigne + '</div>' +
-        '<div><strong>Travailleur concerné :</strong> ' + trEsc(c.travailleur) + (c.codeDossier ? ' &nbsp;·&nbsp; Dossier : ' + trEsc(c.codeDossier) : '') + '</div>' +
-        '<div><strong>Date :</strong> ' + trEsc(c.date) + '</div>' +
+        '<div style="margin-bottom:4px"><strong>Destinataire :</strong> ' + trEsc(c.prenom + ' ' + c.nom) + ' — ' + trEsc(c.roleLabel) + '</div>' +
+        '<div style="margin-bottom:4px"><strong>' + contactLabel + ' :</strong> ' + trEsc(c.contact) + '</div>' +
+        '<div style="margin-bottom:4px"><strong>Travailleur concerné :</strong> ' + trEsc(c.travailleur) + '</div>' +
+        '<div style="margin-bottom:4px"><strong>Date :</strong> ' + trEsc(c.date) + '</div>' +
+        '<div><strong>Dossier :</strong> ' + trEsc(c.codeDossier || '—') + '</div>' +
       '</div>' +
 
       '<p style="margin:0 0 4px"><strong>Objet</strong></p>' +
