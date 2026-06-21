@@ -1878,20 +1878,28 @@ function closeTransmettreModal() {
   document.getElementById('transmettreModal').classList.remove('show');
 }
 
+function trHidePreview() {
+  var b = document.getElementById('trPreviewBox');
+  if (b) b.style.display = 'none';
+}
+
 function trToggleMode() {
   var mode = document.getElementById('trMode').value;
   document.getElementById('trEmailField').style.display  = (mode === 'email')  ? '' : 'none';
   document.getElementById('trPostalField').style.display = (mode === 'postal') ? '' : 'none';
+  trHidePreview();
 }
 
 function trToggleRole() {
   var role = document.getElementById('trRole').value;
   document.getElementById('trOrgField').style.display = (role === 'organisation') ? '' : 'none';
+  trHidePreview();
 }
 
 function trToggleOrgAutre() {
   var v = document.getElementById('trOrg').value;
   document.getElementById('trOrgAutre').style.display = (v === 'autre') ? '' : 'none';
+  trHidePreview();
 }
 
 function trEsc(s){
@@ -1950,7 +1958,7 @@ function trCollect() {
       org = document.getElementById('trOrgAutre').value.trim();
       if (!org) { alert('Veuillez inscrire le nom de l\'organisation.'); return null; }
     }
-    roleLabel = 'Organisation — ' + org;
+    roleLabel = 'Organisation';
   } else {
     roleLabel = { medecin:'Médecin', ips:'IPS', infirmiere:'Infirmière' }[role] || role;
   }
@@ -1997,6 +2005,7 @@ function trPreview() {
 
       '<div style="background:#f8fafc;border:1px solid #e2e6ec;border-radius:6px;padding:10px 12px;margin-bottom:16px;font-size:11.5px;color:#374151">' +
         '<div style="margin-bottom:4px"><strong>Destinataire :</strong> ' + trEsc(c.prenom + ' ' + c.nom) + ' — ' + trEsc(c.roleLabel) + '</div>' +
+        (c.role === 'organisation' && c.org ? '<div style="margin-bottom:4px"><strong>Organisation :</strong> ' + trEsc(c.org) + '</div>' : '') +
         '<div style="margin-bottom:4px"><strong>' + contactLabel + ' :</strong> ' + trEsc(c.contact) + '</div>' +
         '<div style="margin-bottom:4px"><strong>Travailleur concerné :</strong> ' + trEsc(c.travailleur) + '</div>' +
         '<div style="margin-bottom:4px"><strong>Date :</strong> ' + trEsc(c.date) + '</div>' +
@@ -2049,13 +2058,15 @@ function trSubmit() {
   if (!c) return;
 
   // Note administrative confirmant l'envoi
+  var destLabel = c.prenom + ' ' + c.nom + ' (' + c.roleLabel + (c.role === 'organisation' && c.org ? ' — ' + c.org : '') + ')';
+
   var d = _ctxDossier || {};
   var key = d.id || d.name;
   if (key) {
     if (!_notesStore[key]) _notesStore[key] = [];
     var noteTxt =
       'CONFIRMATION DE TRANSMISSION DU DOSSIER PDF\n' +
-      'Dossier transmis ' + c.canal + ' à ' + c.prenom + ' ' + c.nom + ' (' + c.roleLabel + ').\n' +
+      'Dossier transmis ' + c.canal + ' à ' + destLabel + '.\n' +
       'Coordonnées : ' + c.contact + '\n' +
       'Date de transmission : ' + c.date + '\n' +
       'Transmis par : ' + c.agent;
@@ -2066,7 +2077,7 @@ function trSubmit() {
     });
   }
 
-  alert('Dossier transmis ' + c.canal + ' à ' + c.prenom + ' ' + c.nom + ' (' + c.roleLabel + ') — ' + c.contact + '.\nUne note administrative de confirmation a été ajoutée.');
+  alert('Dossier transmis ' + c.canal + ' à ' + destLabel + ' — ' + c.contact + '.\nUne note administrative de confirmation a été ajoutée.');
   closeTransmettreModal();
 }
 
