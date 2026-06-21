@@ -4003,14 +4003,10 @@ function updateSlider(key, val){
   var pct = ((val-50)/50*100).toFixed(0);
   var el = key==='classif' ? document.getElementById('sliderClassif') : document.getElementById('sliderExtract');
   var lbl = document.getElementById('val'+(key==='classif'?'Classif':'Extract'));
+  if(!el || !lbl) return;
   el.style.setProperty('--pct', pct+'%');
   lbl.textContent = val + ' %';
 }
-// Init sliders
-document.addEventListener('DOMContentLoaded', function(){
-  updateSlider('classif', 85);
-  updateSlider('extract', 90);
-});
 
 // ── CHART ZOOM ────────────────────────────────────────────────────────────────
 function openChartZoom(card){
