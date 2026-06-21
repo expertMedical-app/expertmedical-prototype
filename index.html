@@ -1860,11 +1860,7 @@ function openTransmettreModal() {
   document.getElementById('trOrgAutre').value = '';
   document.getElementById('trDate').value = new Date().toLocaleDateString('fr-CA');
   var u = document.querySelector('.uname');
-  var role = document.querySelector('.urole');
-  document.getElementById('trBy').value = u ? u.textContent.trim() : 'Dr Martin';
-  document.getElementById('trRespTitre').value = role ? role.textContent.trim() : 'Médecin désigné';
-  document.getElementById('trRespTel').value = '1 844 838-0808';
-  document.getElementById('trRespCourriel').value = 'transmission@cnesst.gouv.qc.ca';
+  document.getElementById('trBy').value = u ? u.textContent.trim() : 'Anne-Marie Lajoie';
   document.getElementById('trQrBox').style.display = 'none';
   document.getElementById('trPreviewBox').style.display = 'none';
   trToggleMode();
@@ -1954,10 +1950,11 @@ function trCollect() {
     roleLabel = { medecin:'Médecin', ips:'IPS', infirmiere:'Infirmière' }[role] || role;
   }
 
-  var titre = document.getElementById('trRespTitre').value.trim();
-  var tel   = document.getElementById('trRespTel').value.trim();
-  var courriel = document.getElementById('trRespCourriel').value.trim();
-  if (!titre || !tel || !courriel) { alert('Veuillez compléter les coordonnées du responsable (titre, téléphone, courriel).'); return null; }
+  // Coordonnées du responsable : appliquées automatiquement depuis le compte connecté
+  var roleEl = document.querySelector('.urole');
+  var titre = roleEl ? roleEl.textContent.trim() : 'Adjointe administrative';
+  var tel = '1 844 838-0808';
+  var courriel = 'transmission@cnesst.gouv.qc.ca';
 
   var d = _ctxDossier || {};
   return {
@@ -4014,24 +4011,6 @@ renderE();renderA();renderAgents();
         <div style="flex:1">
           <label class="tr-lbl">Transmis par</label>
           <input id="trBy" class="tr-in" type="text" readonly style="background:#f3f4f6;color:#6b7280">
-        </div>
-      </div>
-
-      <div style="border-top:1px solid #e2e6ec;padding-top:14px;margin-bottom:4px">
-        <div style="font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Coordonnées du responsable (CNESST)</div>
-        <div style="margin-bottom:12px">
-          <label class="tr-lbl req">Titre</label>
-          <input id="trRespTitre" class="tr-in" type="text" placeholder="Ex. : Médecin désigné">
-        </div>
-        <div style="display:flex;gap:12px;margin-bottom:12px">
-          <div style="flex:1">
-            <label class="tr-lbl req">Téléphone</label>
-            <input id="trRespTel" class="tr-in" type="text" placeholder="000 000-0000">
-          </div>
-          <div style="flex:1">
-            <label class="tr-lbl req">Courriel</label>
-            <input id="trRespCourriel" class="tr-in" type="email" placeholder="responsable@cnesst.gouv.qc.ca">
-          </div>
         </div>
       </div>
 
