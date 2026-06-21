@@ -3803,6 +3803,9 @@ var FR2EN = {
   "Dossiers actifs":"Active files",
   "Dossiers en cours :":"Active files:",
   "Causes des retards":"Causes of delays",
+  "Documents manquants":"Missing documents",
+  "Autres":"Other",
+  "Autre":"Other",
   "Valider et classer":"Validate and classify",
   "Transmettre le dossier —":"Transmit the file —",
   "Dossier initial":"Initial file",
@@ -3828,6 +3831,7 @@ function _i18nMap(key){
   if((m=key.match(/^Moins de (\d+) mois$/)))  return 'Less than '+m[1]+' months';
   if((m=key.match(/^([\d.,]+) jours?$/)))     return m[1]+' days';
   if((m=key.match(/^Dossier (CNS-.+)$/)))     return 'File '+m[1];
+  if((m=key.match(/^S(\d{1,2})$/)))           return 'W'+m[1];
   var mois={Janvier:'January',"Février":'February',Mars:'March',Avril:'April',Mai:'May',Juin:'June',Juillet:'July',"Août":'August',Septembre:'September',Octobre:'October',Novembre:'November',"Décembre":'December'};
   if((m=key.match(/^(Janvier|Février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre)\b([\s\S]*)$/)))
     return mois[m[1]] + m[2];
