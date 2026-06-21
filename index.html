@@ -3803,9 +3803,34 @@ var FR2EN = {
   "Dossiers actifs":"Active files",
   "Dossiers en cours :":"Active files:",
   "Causes des retards":"Causes of delays",
+  "Causes retard":"Delay causes",
   "Documents manquants":"Missing documents",
   "Autres":"Other",
   "Autre":"Other",
+  "En retard":"Overdue",
+  "Analyse en cours":"Analysis in progress",
+  "Analyse IA":"AI Analysis",
+  "Validation IA":"AI Validation",
+  "Accident travail":"Work accident",
+  "Accident du travail":"Work accident",
+  "Maladie prof.":"Occupational disease",
+  "Maladie professionnelle":"Occupational disease",
+  "Rechute":"Relapse",
+  "Réadaptation":"Rehabilitation",
+  "✕ Fermer":"✕ Close",
+  "Fermer":"Close",
+  "Enregistrer":"Save",
+  "Confiance IA moyenne":"Average AI confidence",
+  "Confiance globale":"Overall confidence",
+  "Analyse IA — CNESST-IA v3.1":"AI Analysis — CNESST-AI v3.1",
+  "Langue du travailleur":"Worker's language",
+  "Type de gestion":"Management type",
+  "Nom du fichier":"File name",
+  "Glissez un fichier PDF ici ou":"Drag a PDF file here or",
+  "Remplissez les informations du nouveau membre":"Fill in the new member's information",
+  "📈 % confiance IA":"📈 % AI confidence",
+  "⚠ Souhaitez-vous confirmer la suppression ?":"⚠ Do you want to confirm the deletion?",
+  "⚠ Souhaitez-vous confirmer le transfert ?":"⚠ Do you want to confirm the transfer?",
   "Valider et classer":"Validate and classify",
   "Transmettre le dossier —":"Transmit the file —",
   "Dossier initial":"Initial file",
@@ -3832,6 +3857,13 @@ function _i18nMap(key){
   if((m=key.match(/^([\d.,]+) jours?$/)))     return m[1]+' days';
   if((m=key.match(/^Dossier (CNS-.+)$/)))     return 'File '+m[1];
   if((m=key.match(/^S(\d{1,2})$/)))           return 'W'+m[1];
+  if((m=key.match(/^(\d+) sélectionné\(s\)$/))) return m[1]+' selected';
+  if((m=key.match(/^— seuil (\d+%)$/)))       return '— threshold '+m[1];
+  if((m=key.match(/^(.+) — (Accident du travail|Accident travail|Maladie professionnelle|Maladie prof\.|Rechute|Réadaptation)$/))){
+    var tp={"Accident du travail":"Work accident","Accident travail":"Work accident","Maladie professionnelle":"Occupational disease","Maladie prof.":"Occupational disease","Rechute":"Relapse","Réadaptation":"Rehabilitation"};
+    return m[1]+' — '+tp[m[2]];
+  }
+  if((m=key.match(/⚠ En retard$/)))           return key.replace(/En retard$/,'Overdue');
   var mois={Janvier:'January',"Février":'February',Mars:'March',Avril:'April',Mai:'May',Juin:'June',Juillet:'July',"Août":'August',Septembre:'September',Octobre:'October',Novembre:'November',"Décembre":'December'};
   if((m=key.match(/^(Janvier|Février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre)\b([\s\S]*)$/)))
     return mois[m[1]] + m[2];
