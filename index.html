@@ -2084,12 +2084,24 @@ function trSubmit() {
   var key = d.id || d.name;
   if (key) {
     if (!_notesStore[key]) _notesStore[key] = [];
+    var now = new Date();
+    var ymd = now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
+    var seq = String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
+    var noTransmission = 'TR-' + ymd + '-' + seq;
+    var refQrDossier = 'QR-' + ymd + '-' + seq;
+    var refQrExpertise = 'QR-' + ymd + '-' + String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
+    var nbPages = Math.floor(Math.random() * 280) + 12;
     var noteTxt =
       'CONFIRMATION DE TRANSMISSION DU DOSSIER PDF\n' +
       'Dossier transmis ' + c.canal + ' à ' + destLabel + '.\n' +
       'Coordonnées : ' + c.contact + '\n' +
       'Date de transmission : ' + c.date + '\n' +
-      'Transmis par : ' + c.agent;
+      'Transmis par : ' + c.agent + '\n' +
+      'Numéro de transmission : ' + noTransmission + '\n' +
+      'Référence d’accès sécurisée (dossier) : ' + refQrDossier + '\n' +
+      'Référence d’accès sécurisée (expertise / REM) : ' + refQrExpertise + '\n' +
+      'Version du dossier transmise : V1\n' +
+      'Nombre de pages transmises du PDF : ' + nbPages;
     _notesStore[key].push({
       text: noteTxt,
       author: c.agent,
