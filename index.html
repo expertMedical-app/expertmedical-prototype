@@ -1761,6 +1761,7 @@ function goTab(id,navEl){
   document.getElementById('tbTitle').textContent=c.t;
   document.getElementById('tbSub').textContent=c.s;
   if(id==='dashboard') initDashboardCharts();
+  if(typeof i18nRefresh==='function') i18nRefresh();
 }
 
 // VIEW TOGGLE
@@ -2070,6 +2071,7 @@ function trPreview() {
   var box = document.getElementById('trPreviewBox');
   box.innerHTML = html;
   box.style.display = 'block';
+  if (typeof i18nRefresh === 'function') i18nRefresh();
   box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -3487,6 +3489,362 @@ var LANG = {
   }
 };
 
+// ══════════════════════════════════════════════════════════════════════════════
+// Traduction complémentaire par nœuds de texte (couvre le texte non tagué + dynamique)
+// ══════════════════════════════════════════════════════════════════════════════
+var FR2EN = {
+  "CNESST — Tableau de Bord Médical":"CNESST — Medical Dashboard",
+  "propulsé par":"powered by",
+  "Mes dossiers":"My Files",
+  "Dossiers généraux":"All Files",
+  "Rapports & KPIs":"Reports & KPIs",
+  "Agents & équipes":"Agents & Teams",
+  "Paramètres":"Settings",
+  "Nouveau dossier":"New file",
+  "Exporter":"Export",
+  "Volume de dossiers":"File volume",
+  "Complétés (année)":"Completed (year)",
+  "vs sem. dernière":"vs last week",
+  "Nouveaux ce mois":"New this month",
+  "Dossiers reçus vs complétés":"Files received vs completed",
+  "Reçus":"Received",
+  "Complétés":"Completed",
+  "Délais & performance SLA":"Delays & SLA Performance",
+  "Temps moyen global":"Average processing time",
+  "Amélioré de 18min":"Improved by 18min",
+  "Temps médian":"Median time",
+  "Dépassé":"Exceeded",
+  "Conformité SLA — 16 semaines":"SLA compliance — 16 weeks",
+  "% conformité (objectif 85%)":"% compliance (target 85%)",
+  "Temps moyen par dossier":"Average time per file",
+  "Heures — 8 dernières semaines":"Hours — last 8 weeks",
+  "Ressources humaines & coûts":"Human resources & costs",
+  "Charge moyenne":"Average workload",
+  "Charge élevée":"High workload",
+  "Coût moyen / dossier":"Avg. cost / file",
+  "Charge par agent":"Workload per agent",
+  "Dossiers actifs assignés":"Active files assigned",
+  "Coût moyen mensuel par dossier":"Average monthly cost per file",
+  "Février 2026":"February 2026",
+  "Économies cumulées Q1: $14 200 CAD":"Cumulative Q1 savings: $14,200 CAD",
+  "Gestion du risque":"Risk Management",
+  "Échéance dépassée":"Past due",
+  "Délai < 7 jours":"Deadline < 7 days",
+  "Évolution des dossiers en retard — 16 semaines":"Overdue files trend — 16 weeks",
+  "Tendance à la baisse — objectif: <40 dossiers (ligne rouge)":"Downward trend — target: <40 files (red line)",
+  "Dossiers assignés":"Assigned files",
+  "À vous et votre équipe":"To you and your team",
+  "Complétés aujourd'hui":"Completed today",
+  "Objectif: 10/jour":"Target: 10/day",
+  "Temps moyen personnel par dossier":"Personal avg. time per file",
+  "depuis hier":"since yesterday",
+  "Urgente":"Urgent",
+  "Haute":"High",
+  "Normale":"Normal",
+  "Tous":"All",
+  "Toutes":"All",
+  "Statut":"Status",
+  "Priorité":"Priority",
+  "Échéance":"Due Date",
+  "Médecin conseils":"Medical advisors",
+  "Statut — Tous":"Status — All",
+  "À traiter":"To process",
+  "En attente validation":"Awaiting validation",
+  "Analyse IA en cours":"AI analysis in progress",
+  "Complété":"Completed",
+  "Priorité — Toutes":"Priority — All",
+  "Date réception — Tri ↑↓":"Received date — Sort ↑↓",
+  "Réception croissant":"Received ascending",
+  "Réception décroissant":"Received descending",
+  "Pages — Tri ↑↓":"Pages — Sort ↑↓",
+  "Pages croissant":"Pages ascending",
+  "Pages décroissant":"Pages descending",
+  "Assigné — Tri ↑↓":"Assigned — Sort ↑↓",
+  "Assigné A→Z":"Assigned A→Z",
+  "Assigné Z→A":"Assigned Z→A",
+  "Étape — Toutes":"Stage — All",
+  "Gestion":"Management",
+  "Validation IA":"AI Validation",
+  "Analyse médicale":"Medical analysis",
+  "Rapport":"Report",
+  "Statut IA — Tous":"AI status — All",
+  "Analysé":"Analyzed",
+  "En attente":"Pending",
+  "En cours":"In progress",
+  "Erreur":"Error",
+  "Réinitialiser":"Reset",
+  "Assigner ▾":"Assign ▾",
+  "Priorité ▾":"Priority ▾",
+  "Archiver":"Archive",
+  "✕ Annuler":"✕ Cancel",
+  "ID dossier":"File ID",
+  "Performance mensuelle":"Monthly performance",
+  "Volume mensuel 2026":"Monthly volume 2026",
+  "Reçus vs complétés vs archivés":"Received vs completed vs archived",
+  "Archivés":"Archived",
+  "Délai moyen par région (h)":"Average delay per region (h)",
+  "Comparaison interrégionale":"Inter-regional comparison",
+  "Répartition — année courante 2026":"Breakdown — current year 2026",
+  "Charge agent":"Agent workload",
+  "Système IA":"AI System",
+  "Dossiers en cours — Carte des régions administratives":"Active files — Administrative regions map",
+  "Québec — Avril 2026 · Cliquez sur une région pour le détail":"Québec — April 2026 · Click a region for details",
+  "Traités/mois":"Processed/month",
+  "Nouveaux/mois":"New/month",
+  "Coûts cumulés 2026 vs 2025":"Cumulative costs 2026 vs 2025",
+  "Dollars CAD — économies de $9 550 à ce jour":"CAD dollars — $9,550 savings to date",
+  "Indicateurs de performance clés":"Key performance indicators",
+  "Taux de résolution premier contact":"First-contact resolution rate",
+  "Dossiers traités / agent / jour":"Files processed / agent / day",
+  "Taux de réouverture":"Reopening rate",
+  "Délai moyen indemnisation":"Average compensation delay",
+  "Dossiers contestés":"Contested files",
+  "Coût moyen réadaptation":"Average rehabilitation cost",
+  "Performance du modèle CNESST-IA v3.1":"CNESST-AI v3.1 Model Performance",
+  "Temps moyen d'analyse / dossier":"Avg. analysis time / file",
+  "% de pages retirés / dossier":"% pages removed / file",
+  "Classification / dossier":"Classification / file",
+  "Temps moyen de classification":"Average classification time",
+  "Classification / page":"Classification / page",
+  "Temps moyen par page analysée":"Average time per analyzed page",
+  "Extraction / dossier":"Extraction / file",
+  "Temps moyen d'extraction":"Average extraction time",
+  "Extraction / page":"Extraction / page",
+  "Temps moyen par page extraite":"Average time per extracted page",
+  "Répartition par type de gestion":"Distribution by management type",
+  "Temps moyen par étape (min)":"Average time per stage (min)",
+  "Durée de traitement":"Processing duration",
+  "Expertise médicale":"Medical expertise",
+  "Détail par type de gestion":"Detail by management type",
+  "Volume et proportion — dossiers actifs 2026":"Volume and proportion — active files 2026",
+  "Expertise méd.":"Med. expertise",
+  "Détail par utilisation":"Usage breakdown",
+  "Nombre de dossiers traités par module — 2026":"Files processed per module — 2026",
+  "Rôle — Tous":"Role — All",
+  "Médecin expert":"Expert physician",
+  "Médecin conseil":"Medical advisor",
+  "Secrétaire médicale":"Medical secretary",
+  "Gestionnaire":"Manager",
+  "Agent d'indemnisation":"Compensation agent",
+  "Actif":"Active",
+  "En congé":"On leave",
+  "Suspendu":"Suspended",
+  "Non disponible":"Unavailable",
+  "Désactiver":"Deactivate",
+  "Activer":"Activate",
+  "Rôle":"Role",
+  "Nom complet":"Full name",
+  "Adresse courriel":"Email address",
+  "Préférences d'affichage":"Display preferences",
+  "Langue":"Language",
+  "Français (FR)":"French (FR)",
+  "Anglais (EN)":"English (EN)",
+  "Mode d'affichage":"Display mode",
+  "Clair":"Light",
+  "Sombre":"Dark",
+  "Notifications":"Notifications",
+  "Choisissez les notifications que vous souhaitez recevoir.":"Choose the notifications you want to receive.",
+  "Dossiers en retard":"Overdue files",
+  "Recevoir une notification pour les dossiers en retard ou en dépassement de délai.":"Receive a notification for files that are late or past their deadline.",
+  "IA terminée":"AI completed",
+  "Être notifié lorsque l'analyse IA d'un dossier est terminée.":"Be notified when AI analysis of a file is complete.",
+  "Sécurité du compte":"Account security",
+  "Changer le mot de passe":"Change password",
+  "Mettez à jour votre mot de passe régulièrement":"Update your password regularly",
+  "Déconnexion de tous les appareils":"Sign out of all devices",
+  "Fermer toutes les sessions actives sur les autres appareils.":"Close all active sessions on other devices.",
+  "Paramètres IA":"AI Settings",
+  "Définissez les seuils de confiance minimum pour les analyses IA.":"Set the minimum confidence thresholds for AI analysis.",
+  "Seuil de confiance IA pour classification (% minimum)":"AI confidence threshold for classification (% minimum)",
+  "Seuil de confiance IA pour extraction (% minimum)":"AI confidence threshold for extraction (% minimum)",
+  "Ajouter un PDF":"Add a PDF",
+  "Ouvrir les fichiers PDF":"Open PDF files",
+  "Lancer l'analyse IA":"Launch AI analysis",
+  "Assigner à":"Assign to",
+  "Transférer à":"Transfer to",
+  "Transmettre à":"Transmit to",
+  "Notes administratives":"Administrative notes",
+  "Gérer les KPI":"Manage KPIs",
+  "Supprimer":"Delete",
+  "Date de réception":"Received date",
+  "Assigné à":"Assigned to",
+  "Type de dossier":"File type",
+  "Région administrative":"Administrative region",
+  "Extraction données":"Data extraction",
+  "Complète — 89%":"Complete — 89%",
+  "Diagnostic identifié":"Diagnosis identified",
+  "Invalidité estimée":"Estimated disability",
+  "Historique du dossier":"File history",
+  "Dossier reçu et enregistré":"File received and registered",
+  "12 mars 2025 — 09:14 — Système automatique":"March 12, 2025 — 09:14 — Automated system",
+  "Analyse IA complétée — Confiance 92%":"AI analysis completed — 92% confidence",
+  "Assigné à Dr Martin":"Assigned to Dr Martin",
+  "Documents complémentaires demandés":"Additional documents requested",
+  "En attente — Rappel envoyé le 28 mars":"Pending — Reminder sent March 28",
+  "28 mars 2025 — 09:00 — Système automatique":"March 28, 2025 — 09:00 — Automated system",
+  "Ajouter note":"Add note",
+  "Générer rapport PDF":"Generate PDF report",
+  "Rapport PDF — Expertise médicale":"PDF Report — Medical expertise",
+  "Changer la priorité":"Change priority",
+  "Prénom":"First name",
+  "Nom":"Name",
+  "Mode d'envoi":"Delivery mode",
+  "Courriel — envoi électronique":"Email — electronic delivery",
+  "Adresse postale — envoi postal":"Postal address — mail delivery",
+  "Courriel":"Email",
+  "Adresse postale":"Postal address",
+  "Numéro":"Number",
+  "Rue":"Street",
+  "Ville":"City",
+  "Province":"Province",
+  "Code postal":"Postal code",
+  "Médecin":"Physician",
+  "Infirmière":"Nurse",
+  "Organisation":"Organization",
+  "Nom de l'organisation":"Organization name",
+  "Autre…":"Other…",
+  "Date de transmission":"Transmission date",
+  "Transmis par":"Transmitted by",
+  "Générer le code QR":"Generate QR code",
+  "Aperçu":"Preview",
+  "Ce code QR accompagnera le courriel ou la lettre.":"This QR code will accompany the email or letter.",
+  "Le destinataire peut le scanner pour télécharger le dossier.":"The recipient can scan it to download the file.",
+  "Annuler":"Cancel",
+  "Transmettre":"Transmit",
+  "Date de naissance":"Date of birth",
+  "Type d'évaluation":"Evaluation type",
+  "Système":"System",
+  "Modalité":"Modality",
+  "Sur dossier":"On file",
+  "Options du dossier":"File options",
+  "Sélectionner un PDF":"Select a PDF",
+  "— Sélectionner —":"— Select —",
+  "Créer le dossier":"Create file",
+  "Changer le rôle":"Change role",
+  "Vous êtes sur le point de supprimer ce compte.":"You are about to delete this account.",
+  "Cette action est irréversible. Toutes les données associées à ce compte seront définitivement supprimées et ne pourront pas être récupérées.":"This action is irreversible. All data associated with this account will be permanently deleted and cannot be recovered.",
+  "Confirmer la suppression":"Confirm deletion",
+  "Vous êtes sur le point de supprimer ce dossier.":"You are about to delete this file.",
+  "Cette action est irréversible. Toutes les données associées à ce dossier seront définitivement supprimées et ne pourront pas être récupérées.":"This action is irreversible. All data associated with this file will be permanently deleted and cannot be recovered.",
+  "Un courriel de bienvenue sera automatiquement envoyé à l'adresse indiquée lors de la création du compte.":"A welcome email will be automatically sent to the address provided when the account is created.",
+  "Créer l'utilisateur":"Create user",
+  "Nouvel utilisateur":"New user",
+  "Planification — Classification IA":"Scheduling — AI Classification",
+  "Dossier sélectionné — Cliquez sur une date pour planifier":"Selected file — Click a date to schedule",
+  "Confirmer le rendez-vous":"Confirm appointment",
+  "Classification et extraction":"Classification and extraction",
+  "Choisir l'échéance":"Choose due date",
+  "Réception + 30 jours":"Received + 30 days",
+  "Réception + 90 jours":"Received + 90 days",
+  "Choisir une date d'échéance":"Choose a due date",
+  "Dossier sélectionné":"Selected file",
+  "Date d'échéance":"Due date",
+  "Sélectionnez une date ci-dessus":"Select a date above",
+  "Confirmer":"Confirm",
+  "Fichiers PDF du dossier":"File PDF documents",
+  "Assigné":"Assigned",
+  "Ajouter un fichier PDF":"Add a PDF file",
+  "Formats acceptés : PDF — Taille max : 200 Mo":"Accepted formats: PDF — Max size: 200 MB",
+  "Ajouter au dossier":"Add to file",
+  "Gestion des KPI du dossier":"File KPI management",
+  "📊 Performance globale":"📊 Overall performance",
+  "⏱ Temps global gestion dossier":"⏱ Overall file handling time",
+  "⏱ Délai rapport":"⏱ Report delay",
+  "🤖 Performance IA":"🤖 AI Performance",
+  "✨ Auto-remplir avec données IA":"✨ Auto-fill with AI data",
+  "⏱ Temps analyse IA dossier":"⏱ AI analysis time per file",
+  "% Pages retirées du dossier":"% Pages removed from file",
+  "💰 Coûts":"💰 Costs",
+  "$ Coût dossier":"$ File cost",
+  "$ Coût réadaptation":"$ Rehabilitation cost",
+  "⚙️ Traitement dossier":"⚙️ File processing",
+  "⏱ Temps classification dossier":"⏱ File classification time",
+  "⏱ Temps classification/page":"⏱ Classification time/page",
+  "⏱ Temps extraction dossier":"⏱ File extraction time",
+  "⏱ Temps extraction/page":"⏱ Extraction time/page",
+  "⚠️ Risques et problèmes":"⚠️ Risks and issues",
+  "🚫 Dossier contesté":"🚫 Contested file",
+  "🏆 Résultat travailleur":"🏆 Worker outcome",
+  "+ Ajouter une note":"+ Add a note",
+  "Vous êtes sur le point de transférer ce dossier.":"You are about to transfer this file.",
+  "Cette action est irréversible. Tous les accès à ce dossier vous seront retirés définitivement et ne pourront pas être récupérés sans autorisation.":"This action is irreversible. All your access to this file will be permanently removed and cannot be recovered without authorization.",
+  "Confirmer le transfert":"Confirm transfer",
+  "Souhaitez-vous confirmer le transfert ?":"Do you want to confirm the transfer?",
+  // Aperçu / lettre — libellés
+  "Destinataire :":"Recipient:",
+  "Travailleur concerné :":"Worker concerned:",
+  "Date :":"Date:",
+  "Dossier :":"File:",
+  "Organisation :":"Organization:",
+  "Coordonnées du responsable (CNESST)":"Responsible contact (CNESST)",
+  "Réaliser une expertise ou un REM (facultatif)":"Perform an expertise or MER (optional)",
+  // Placeholders de recherche
+  "Ex: Rapport médical initial.pdf":"Ex: Initial medical report.pdf",
+  "ex. durée":"e.g. duration",
+  "Précisez la cause...":"Specify the reason...",
+  "Rédiger une note administrative…":"Write an administrative note…",
+  "Rechercher par nom ou ID...":"Search by name or ID...",
+  "Rechercher par nom ou prénom...":"Search by first or last name...",
+  "Rechercher par nom, rôle ou statut…":"Search by name, role or status…",
+  // Divers dynamiques
+  "À risque":"At risk",
+  "Congé":"Leave",
+  "Étape active":"Active stage",
+  "Janvier":"January","Février":"February","Mars":"March","Avril":"April","Mai":"May","Juin":"June",
+  "Juillet":"July","Août":"August","Septembre":"September","Octobre":"October","Novembre":"November","Décembre":"December"
+};
+// Motifs dynamiques (badges, libellés générés). Retourne la trad ou undefined.
+function _i18nMap(key){
+  if(FR2EN[key]!==undefined) return FR2EN[key];
+  if(/ ▾$/.test(key)){ var b=key.replace(/ ▾$/,''); if(FR2EN[b]!==undefined) return FR2EN[b]+' ▾'; }
+  var m;
+  if((m=key.match(/^Analysé (\d+%)$/)))  return 'Analyzed '+m[1];
+  if((m=key.match(/^Reçus (\d+) \/ Complétés (\d+)$/))) return 'Received '+m[1]+' / Completed '+m[2];
+  var mois={Janvier:'January',"Février":'February',Mars:'March',Avril:'April',Mai:'May',Juin:'June',Juillet:'July',"Août":'August',Septembre:'September',Octobre:'October',Novembre:'November',"Décembre":'December'};
+  if((m=key.match(/^(Janvier|Février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre)\b([\s\S]*)$/)))
+    return mois[m[1]] + m[2];
+  return undefined;
+}
+
+var _i18nOrig = new WeakMap();
+var _i18nOrigPh = new WeakMap();
+function _i18nSkip(el){ return el && (el.tagName==='SCRIPT'||el.tagName==='STYLE'||el.tagName==='NOSCRIPT'); }
+function translateNodes(toEN){
+  var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false);
+  var pending=[],n;
+  while((n=walker.nextNode())){
+    if(_i18nSkip(n.parentNode)) continue;
+    var raw=n.nodeValue; if(!raw) continue; var key=raw.trim(); if(!key) continue;
+    if(toEN){
+      var tr=_i18nMap(key);
+      if(tr!==undefined && tr!==key){
+        if(!_i18nOrig.has(n)) _i18nOrig.set(n, raw);
+        pending.push([n, raw.replace(key, tr)]);
+      }
+    } else if(_i18nOrig.has(n)){
+      pending.push([n, _i18nOrig.get(n)]);
+      _i18nOrig.delete(n);
+    }
+  }
+  pending.forEach(function(p){ p[0].nodeValue=p[1]; });
+  // Placeholders non tagués
+  document.querySelectorAll('[placeholder]').forEach(function(el){
+    var v=(el.getAttribute('placeholder')||'').trim(); if(!v) return;
+    if(toEN){
+      var tv=_i18nMap(v);
+      if(tv!==undefined && tv!==v){
+        if(!_i18nOrigPh.has(el)) _i18nOrigPh.set(el, el.getAttribute('placeholder'));
+        el.setAttribute('placeholder', tv);
+      }
+    } else if(_i18nOrigPh.has(el)){
+      el.setAttribute('placeholder', _i18nOrigPh.get(el));
+      _i18nOrigPh.delete(el);
+    }
+  });
+}
+// Rafraîchit la traduction selon la langue courante (à appeler après un rendu dynamique)
+function i18nRefresh(){ try{ applyTranslations(_currentLang==='en'?'EN':'FR'); }catch(e){} }
+
 var _currentLang = 'fr';
 
 function t(key){ return (LANG[_currentLang]||LANG.fr)[key] || (LANG.fr[key] || key); }
@@ -3528,6 +3886,8 @@ function applyTranslations(lang){
       if(subEl)   subEl.textContent   = cfg.s || '';
     }
   }
+  // Traduction complémentaire (texte non tagué + contenu dynamique)
+  try { translateNodes(_currentLang === 'en'); } catch(e) {}
   // Save preference
   localStorage.setItem('cnesst_lang', lang);
 }
@@ -3764,6 +4124,7 @@ function applyTriE(field, dir, item){
       '<td><button class="abtn" data-name="' + d.name + '" data-id="' + d.id + '" data-ramq="' + d.ramq + '" onclick="showCtx(event)">Actions ▾</button></td>' +
     '</tr>';
   }).join('');
+  if(typeof i18nRefresh==='function') i18nRefresh();
   // Show toast
   var labels = {name:'Nom',statut:'Statut',prio:'Priorité',rec:'Date réception',ech:'Échéance',pages:'Pages',agent:'Assigné'};
   var toast = document.getElementById('assignToast');
@@ -5110,6 +5471,7 @@ function renderNotes(key){
     );
   }).join('');
   body.innerHTML = exempleHTML + notesHTML;
+  if(typeof i18nRefresh==='function') i18nRefresh();
 }
 
 function submitNote(){
