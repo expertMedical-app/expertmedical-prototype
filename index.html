@@ -1911,7 +1911,19 @@ function trEsc(s){
 function trBuildUrl() {
   var d = _ctxDossier || {};
   var ref = d.ramq || d.id || d.name || 'dossier';
-  return 'https://staging.expertmedical.ai/telecharger?dossier=' + encodeURIComponent(ref) + '&t=' + Date.now().toString(36);
+  return 'https://production.expertmedical.ai/telecharger?dossier=' + encodeURIComponent(ref) + '&t=' + Date.now().toString(36);
+}
+
+function trBuildExpUrl() {
+  var d = _ctxDossier || {};
+  var ref = d.ramq || d.id || d.name || 'dossier';
+  return 'https://production.expertmedical.ai/expertise?dossier=' + encodeURIComponent(ref) + '&acces=' + Date.now().toString(36);
+}
+
+function trGenCode(prefix) {
+  var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', s = '';
+  for (var i = 0; i < 8; i++) s += chars.charAt(Math.floor(Math.random() * chars.length));
+  return prefix + '-' + s.slice(0, 4) + '-' + s.slice(4);
 }
 
 function trQrDataURL(url) {
@@ -1985,7 +1997,8 @@ function trCollect() {
     date: document.getElementById('trDate').value,
     titre: titre, tel: tel, courriel: courriel,
     travailleur: d.name || '', codeDossier: code,
-    url: trBuildUrl()
+    url: trBuildUrl(),
+    expUrl: trBuildExpUrl(), expCode: trGenCode('EM')
   };
 }
 
@@ -1993,6 +2006,7 @@ function trPreview() {
   var c = trCollect();
   if (!c) return;
   var qrImg = trQrDataURL(c.url);
+  var expQr = trQrDataURL(c.expUrl);
   var typeDoc = (c.mode === 'email') ? 'Courriel' : 'Lettre';
   var contactLabel = (c.mode === 'email') ? 'Courriel' : 'Adresse';
 
@@ -2032,6 +2046,12 @@ function trPreview() {
       '<div style="text-align:center;margin:0 0 12px"><img src="' + qrImg + '" width="150" height="150" style="background:#fff;padding:6px;border:1px solid #e2e6ec;border-radius:6px" alt="Code QR"></div>' +
       '<p style="margin:0 0 4px">Lien sécurisé : <span style="color:#2563eb;word-break:break-all">' + trEsc(c.url) + '</span></p>' +
       '<p style="margin:0 0 14px">Code d’accès (si applicable) : ' + trEsc(c.codeDossier || '—') + '</p>' +
+
+      '<p style="margin:0 0 4px;font-weight:700;color:#1a7a4a">Réaliser une expertise ou un REM (facultatif)</p>' +
+      '<p style="margin:0 0 10px">Si vous le souhaitez, vous pouvez réaliser directement une expertise médicale ou un rapport d’évaluation médicale (REM) pour ce dossier sur la plateforme ExpertMedical. Le lien et le code d’accès ci-dessous sont réservés exclusivement à ce dossier.</p>' +
+      '<div style="text-align:center;margin:0 0 12px"><img src="' + expQr + '" width="150" height="150" style="background:#fff;padding:6px;border:1px solid #e2e6ec;border-radius:6px" alt="Code QR expertise"></div>' +
+      '<p style="margin:0 0 4px">Lien sécurisé (expertise / REM) : <span style="color:#2563eb;word-break:break-all">' + trEsc(c.expUrl) + '</span></p>' +
+      '<p style="margin:0 0 14px">Code d’accès (expertise / REM) : ' + trEsc(c.expCode) + '</p>' +
 
       '<p style="margin:0 0 4px;font-weight:700;color:#1a7a4a">Confidentialité</p>' +
       '<p style="margin:0 0 10px">Les renseignements contenus dans ce dossier sont confidentiels et sont transmis uniquement aux fins prévues par le mandat ou les obligations administratives applicables. Toute utilisation, reproduction ou communication non autorisée de ces renseignements est interdite.</p>' +
