@@ -2133,8 +2133,30 @@ function closeTransferConfirm() {
 
 function confirmTransfer() {
   closeTransferConfirm();
+  var dest = _selectedPerson ? _selectedPerson.name : '';
+
+  // Note administrative confirmant le transfert de gestion
+  var d = _ctxDossier || {};
+  var key = d.id || d.name;
+  if (key) {
+    var u = document.querySelector('.uname');
+    var agent = u ? u.textContent.trim() : 'Anne-Marie Lajoie';
+    if (!_notesStore[key]) _notesStore[key] = [];
+    var noteTxt =
+      'CONFIRMATION DE TRANSFERT DE GESTION\n' +
+      'La gestion du dossier a été transférée à ' + dest + '.\n' +
+      (d.ramq || d.id ? 'Dossier : ' + (d.ramq || d.id) + '\n' : '') +
+      'Date du transfert : ' + new Date().toLocaleDateString('fr-CA') + '\n' +
+      'Transféré par : ' + agent;
+    _notesStore[key].push({
+      text: noteTxt,
+      author: agent,
+      date: new Date().toLocaleString('fr-CA')
+    });
+  }
+
   var toast = document.getElementById('assignToast');
-  toast.textContent = '✓ Dossier transféré à ' + (_selectedPerson ? _selectedPerson.name : '');
+  toast.textContent = '✓ Dossier transféré à ' + dest;
   toast.classList.add('show');
   setTimeout(function(){ toast.classList.remove('show'); }, 3000);
 }
