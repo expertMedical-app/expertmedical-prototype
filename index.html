@@ -248,6 +248,11 @@ tr:hover td{background:#fafbfc}
 .nd-input:focus{border-color:#d97706;background:#fff}
 .nd-input.green{background:#f0faf4;border-color:#6ee7b7;color:#065f46}
 .nd-input::placeholder{color:#b0926a}
+.tr-lbl{display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:5px}
+.tr-lbl.req::after{content:'*';color:#dc2626;margin-left:2px}
+.tr-in{width:100%;padding:9px 11px;border:1.5px solid #e2e6ec;border-radius:7px;font-size:13px;font-family:inherit;background:#fff;color:#1a1d23;outline:none;box-sizing:border-box;transition:border-color .15s}
+.tr-in:focus{border-color:#1a7a4a}
+.tr-in::placeholder{color:#9ca3af}
 .nd-row{display:flex;gap:12px}
 .nd-row .nd-field{flex:1}
 .nd-toggle-group{display:flex;gap:6px;flex-wrap:wrap}
@@ -1485,6 +1490,9 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
 <div class="cxi" onclick="openAssignTransferModal('transfer')">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><span data-i18n="action.transferer">Transférer à</span>
   </div>
+  <div class="cxi" onclick="openTransmettreModal()">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span data-i18n="action.transmettre">Transmettre à</span>
+  </div>
   <div class="cxi" onclick="hideCtx();openNotes(_ctxDossier)">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span data-i18n="action.note">Notes administratives</span>
   </div>
@@ -1832,6 +1840,59 @@ function openAssignTransferModal(mode) {
 
 function closeAssignTransferModal() {
   document.getElementById('assignTransferModal').classList.remove('show');
+}
+
+function openTransmettreModal() {
+  hideCtx();
+  var d = _ctxDossier || {};
+  document.getElementById('trDossierName').textContent = d.name || '';
+  document.getElementById('trPrenom').value = '';
+  document.getElementById('trNom').value = '';
+  document.getElementById('trMode').value = 'email';
+  document.getElementById('trEmail').value = '';
+  document.getElementById('trAdresse').value = '';
+  document.getElementById('trOrg').value = '';
+  document.getElementById('trDate').value = new Date().toLocaleDateString('fr-CA');
+  var u = document.querySelector('.uname');
+  document.getElementById('trBy').value = u ? u.textContent.trim() : 'Dr Martin';
+  document.getElementById('trQrBox').style.display = 'none';
+  trToggleMode();
+  document.getElementById('transmettreModal').classList.add('show');
+}
+
+function closeTransmettreModal() {
+  document.getElementById('transmettreModal').classList.remove('show');
+}
+
+function trToggleMode() {
+  var mode = document.getElementById('trMode').value;
+  document.getElementById('trEmailField').style.display  = (mode === 'email')  ? '' : 'none';
+  document.getElementById('trPostalField').style.display = (mode === 'postal') ? '' : 'none';
+}
+
+function trGenerateQR() {
+  var d = _ctxDossier || {};
+  var ref = d.ramq || d.id || d.name || 'dossier';
+  var url = 'https://staging.expertmedical.ai/telecharger?dossier=' + encodeURIComponent(ref) + '&t=' + Date.now().toString(36);
+  document.getElementById('trQrImg').src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=0&data=' + encodeURIComponent(url);
+  document.getElementById('trQrUrl').textContent = url;
+  document.getElementById('trQrBox').style.display = 'block';
+}
+
+function trSubmit() {
+  var prenom = document.getElementById('trPrenom').value.trim();
+  var nom    = document.getElementById('trNom').value.trim();
+  var mode   = document.getElementById('trMode').value;
+  var org    = document.getElementById('trOrg').value.trim();
+  var contact = (mode === 'email')
+    ? document.getElementById('trEmail').value.trim()
+    : document.getElementById('trAdresse').value.trim();
+  if (!prenom || !nom) { alert('Veuillez renseigner le prénom et le nom du destinataire.'); return; }
+  if (!contact) { alert(mode === 'email' ? 'Veuillez renseigner le courriel.' : 'Veuillez renseigner l\'adresse postale.'); return; }
+  if (!org) { alert('Veuillez renseigner l\'organisation de destination.'); return; }
+  var canal = (mode === 'email') ? 'par courriel' : 'par voie postale';
+  alert('Dossier transmis ' + canal + ' à ' + prenom + ' ' + nom + ' (' + org + ').');
+  closeTransmettreModal();
 }
 
 function selectAssignTransferPerson(person) {
@@ -3002,6 +3063,7 @@ var LANG = {
     'action.ajouterpdf':'Ajouter un PDF',
     'action.assigner':  'Assigner à',
     'action.transferer':'Transférer à',
+    'action.transmettre':'Transmettre à',
     'action.note':      'Notes administratives',
     'action.supprimer': 'Supprimer',
     'action.archiver':  'Archiver',
@@ -3694,6 +3756,83 @@ renderE();renderA();renderAgents();
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSMETTRE MODAL -->
+<div class="modal-overlay" id="transmettreModal" onclick="if(event.target===this)closeTransmettreModal()">
+  <div class="modal-box" style="max-width:560px;width:95%">
+    <div class="modal-hdr">
+      <span>Transmettre le dossier — <span id="trDossierName" style="color:#1a7a4a"></span></span>
+      <button class="modal-close" onclick="closeTransmettreModal()">✕</button>
+    </div>
+    <div class="modal-body" style="padding:18px 20px">
+
+      <div style="display:flex;gap:12px;margin-bottom:12px">
+        <div style="flex:1">
+          <label class="tr-lbl req">Prénom</label>
+          <input id="trPrenom" class="tr-in" type="text" placeholder="Prénom">
+        </div>
+        <div style="flex:1">
+          <label class="tr-lbl req">Nom</label>
+          <input id="trNom" class="tr-in" type="text" placeholder="Nom">
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px">
+        <label class="tr-lbl req">Mode d'envoi</label>
+        <select id="trMode" class="tr-in" onchange="trToggleMode()">
+          <option value="email">Courriel — envoi électronique</option>
+          <option value="postal">Adresse postale — envoi postal</option>
+        </select>
+      </div>
+
+      <div id="trEmailField" style="margin-bottom:12px">
+        <label class="tr-lbl req">Courriel</label>
+        <input id="trEmail" class="tr-in" type="email" placeholder="nom@organisation.com">
+      </div>
+
+      <div id="trPostalField" style="margin-bottom:12px;display:none">
+        <label class="tr-lbl req">Adresse postale</label>
+        <textarea id="trAdresse" class="tr-in" rows="3" placeholder="Numéro et rue, ville, province, code postal"></textarea>
+      </div>
+
+      <div style="margin-bottom:12px">
+        <label class="tr-lbl req">Organisation</label>
+        <input id="trOrg" class="tr-in" type="text" placeholder="Organisation de destination (saisie libre)">
+      </div>
+
+      <div style="display:flex;gap:12px;margin-bottom:14px">
+        <div style="flex:1">
+          <label class="tr-lbl">Date de transmission</label>
+          <input id="trDate" class="tr-in" type="text" readonly style="background:#f3f4f6;color:#6b7280">
+        </div>
+        <div style="flex:1">
+          <label class="tr-lbl">Transmis par</label>
+          <input id="trBy" class="tr-in" type="text" readonly style="background:#f3f4f6;color:#6b7280">
+        </div>
+      </div>
+
+      <div style="border-top:1px solid #e2e6ec;padding-top:14px">
+        <button class="btn" onclick="trGenerateQR()" style="gap:6px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="14" y2="14"/><line x1="21" y1="14" x2="21" y2="14"/><line x1="14" y1="21" x2="21" y2="21"/><line x1="21" y1="17" x2="21" y2="21"/></svg>
+          Générer le code QR
+        </button>
+        <div id="trQrBox" style="display:none;margin-top:14px;text-align:center;background:#f8fafc;border:1px solid #e2e6ec;border-radius:9px;padding:16px">
+          <img id="trQrImg" alt="Code QR du dossier" width="170" height="170" style="background:#fff;padding:6px;border-radius:6px">
+          <div style="font-size:11px;color:#6b7280;margin-top:8px;line-height:1.4">Ce code QR accompagnera le courriel ou la lettre.<br>Le destinataire peut le scanner pour télécharger le dossier.</div>
+          <div id="trQrUrl" style="font-size:10px;color:#9ca3af;margin-top:6px;word-break:break-all"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="nd-ftr">
+      <button class="btn" onclick="closeTransmettreModal()">Annuler</button>
+      <button class="btn btng" onclick="trSubmit()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Transmettre
+      </button>
     </div>
   </div>
 </div>
