@@ -889,7 +889,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
           <table id="etable">
             <thead><tr>
               <th style="width:36px"><input type="checkbox" class="chk" onchange="selAllE(this)"></th>
-              <th data-i18n="th.nomid">Nom / ID</th><th data-i18n="th.statut">Statut</th><th data-i18n="th.priorite">Priorité</th><th data-i18n="th.reception">Réception</th><th data-i18n="th.echeance">Échéance</th><th data-i18n="th.pages">Pages</th><th data-i18n="th.assigne">Assigné</th><th></th>
+              <th data-i18n="th.nomid">Nom / ID</th><th data-i18n="th.statut">Statut</th><th data-i18n="th.priorite">Priorité</th><th data-i18n="th.reception">Réception</th><th data-i18n="th.echeance">Échéance</th><th data-i18n="th.pages">Pages</th><th data-i18n="th.assigne">Médecin conseils</th><th></th>
             </tr></thead>
             <tbody id="etbody"></tbody>
           </table>
@@ -930,7 +930,7 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
           <table>
             <thead><tr>
               <th style="width:36px"><input type="checkbox" class="chk" onchange="selAll(this)"></th>
-              <th data-i18n="th.iddossier">ID dossier</th><th data-i18n="th.nom">Nom</th><th data-i18n="th.statut">Statut</th><th data-i18n="th.priorite">Priorité</th><th data-i18n="th.reception">Réception</th><th data-i18n="th.pages">Pages</th><th data-i18n="th.assigne">Assigné</th><th data-i18n="th.etape">Étape</th><th data-i18n="th.ia">IA</th><th></th>
+              <th data-i18n="th.iddossier">ID dossier</th><th data-i18n="th.nom">Nom</th><th data-i18n="th.statut">Statut</th><th data-i18n="th.priorite">Priorité</th><th data-i18n="th.reception">Réception</th><th data-i18n="th.pages">Pages</th><th data-i18n="th.assigne">Médecin conseils</th><th data-i18n="th.etape">Étape</th><th data-i18n="th.ia">IA</th><th></th>
             </tr></thead>
             <tbody id="atbody"></tbody>
           </table>
@@ -1560,7 +1560,12 @@ body.dark ::-webkit-scrollbar-thumb:hover{background:#22C55E}
 
 <script>
 // DATA
-const AG=['Dr Martin','Dr Bouchard','Dr Tremblay','Mme Lavoie','M. Gagné','Dr Côté','Mme Roy','Dr Lemay'];
+const AG=['Dr Sophie Martin','Dr Julien Bouchard','Dr Caroline Tremblay','Dr Isabelle Lavoie','Dr Pierre Gagné','Dr Marc Côté','Dr Nathalie Roy','Dr Éric Lemay','Aucun','Aucun'];
+function agentCell(a){
+  if(!a || a==='Aucun') return '<td><span style="font-size:11px;color:var(--mu);font-style:italic">Aucun</span></td>';
+  var ini=a.split(' ').map(function(x){return x[0]||'';}).join('').slice(0,2);
+  return '<td><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:22px;height:22px;font-size:9px">'+ini+'</div><span style="font-size:11px;color:var(--mu)">'+a+'</span></div></td>';
+}
 const ST=[{l:'À traiter',c:'bdx'},{l:'Analyse IA en cours',c:'bdp'},{l:'En attente validation',c:'bdo'},{l:'Complété',c:'bdg'}];
 const PR=[{l:'Urgente',c:'bdr'},{l:'Haute',c:'bdo'},{l:'Normale',c:'bdg'}];
 const TP=['Accident travail','Maladie prof.','Rechute','Réadaptation'];
@@ -1569,8 +1574,8 @@ const NM=['Tremblay, Marc','Gagnon, Sophie','Lapointe, Pierre','Bergeron, Julie'
 function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 function fd(n,fwd){const d=new Date();d.setDate(d.getDate()+(fwd?n:-n));return d.toLocaleDateString('fr-CA')}
 function genRamq(seed){var n='5';for(var i=0;i<8;i++){seed=(seed*1664525+1013904223)&0x7fffffff;n+=seed%10;}return n;}
-const DE=Array.from({length:24},(_,i)=>{const si=rnd(0,3),pi=rnd(0,2),late=Math.random()<.15;const ramq=genRamq(4200+i);return{id:`CNS-2025-${String(4200+i).padStart(4,'0')}`,ramq,name:NM[i%20],st:ST[si],pr:PR[pi],ech:late?fd(rnd(1,5),false):fd(rnd(1,14),true),rec:fd(rnd(5,60),false),pages:rnd(12,280),agent:AG[rnd(0,7)],late}});
-const DA=Array.from({length:56},(_,i)=>{const si=rnd(0,3),pi=rnd(0,2),ei=rnd(0,7),conf=rnd(60,99),ias=['Analysé','En cours','En attente','Erreur'][rnd(0,3)];return{id:genRamq(3800+i),name:NM[i%20],st:ST[si],pr:PR[pi],rec:fd(rnd(1,120),false),pages:rnd(8,350),agent:AG[rnd(0,7)],etape:ET[ei],ei,conf,ias,type:TP[rnd(0,3)]}});
+const DE=Array.from({length:24},(_,i)=>{const si=rnd(0,3),pi=rnd(0,2),late=Math.random()<.15;const ramq=genRamq(4200+i);return{id:`CNS-2025-${String(4200+i).padStart(4,'0')}`,ramq,name:NM[i%20],st:ST[si],pr:PR[pi],ech:late?fd(rnd(1,5),false):fd(rnd(1,14),true),rec:fd(rnd(5,60),false),pages:rnd(12,280),agent:AG[rnd(0,AG.length-1)],late}});
+const DA=Array.from({length:56},(_,i)=>{const si=rnd(0,3),pi=rnd(0,2),ei=rnd(0,7),conf=rnd(60,99),ias=['Analysé','En cours','En attente','Erreur'][rnd(0,3)];return{id:genRamq(3800+i),name:NM[i%20],st:ST[si],pr:PR[pi],rec:fd(rnd(1,120),false),pages:rnd(8,350),agent:AG[rnd(0,AG.length-1)],etape:ET[ei],ei,conf,ias,type:TP[rnd(0,3)]}});
 
 // SVG LINE CHART (pure, no library)
 function makeLine(containerId, labelsId, series, labels, opts){
@@ -1662,7 +1667,7 @@ function prBadge(label){const s=PR_STYLES[label]||{bg:'#f3f4f6',color:'#374151',
 const ST_STYLES={'À traiter':{bg:'#f3f4f6',color:'#374151',dot:'#9ca3af'},'Analyse IA en cours':{bg:'#f5f3ff',color:'#5b21b6',dot:'#7c3aed'},'En attente validation':{bg:'#fef3c7',color:'#92400e',dot:'#d97706'},'Complété':{bg:'#e8f5ee',color:'#145f38',dot:'#1a7a4a'}};
 function stBadge(label){const s=ST_STYLES[label]||{bg:'#f3f4f6',color:'#374151',dot:'#9ca3af'};return '<span class="st-badge" style="background:'+s.bg+';color:'+s.color+'" onclick="openStMenu(event,this)"><span style="width:7px;height:7px;border-radius:50%;background:'+s.dot+';flex-shrink:0;display:inline-block"></span>'+label+' ▾</span>';}
 function renderE(){
-  document.getElementById('etbody').innerHTML=DE.map(d=>`<tr data-priority="${d.pr.l}"><td><input type="checkbox" class="chk"></td><td><div style="font-weight:600;font-size:12px;color:${d.pr.l==='Urgente'?'#991b1b':d.pr.l==='Haute'?'#92400e':'#145f38'}">${d.name}</div><div style="font-size:10px;color:var(--mu);font-family:monospace">${d.ramq}</div></td><td>${stBadge(d.st.l)}</td><td>${prBadge(d.pr.l)}</td><td style="color:var(--mu)">${d.rec}</td><td><div class="ech-cell" onclick="openEchMenu(event,this,'${d.rec}')"><span class="ech-date" style="color:${d.late?'var(--re)':'inherit'};font-weight:${d.late?600:400}">${d.ech}${d.late?' ⚠':''}</span><span class="ech-arrow">▾</span></div></td><td>${d.pages}</td><td><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:22px;height:22px;font-size:9px">${d.agent.split(' ').map(x=>x[0]).join('').slice(0,2)}</div><span style="font-size:11px;color:var(--mu)">${d.agent}</span></div></td><td><button class="abtn" data-name="${d.name}" data-id="${d.id}" data-ramq="${d.ramq}" onclick="showCtx(event)">Actions ▾</button></td></tr>`).join('');
+  document.getElementById('etbody').innerHTML=DE.map(d=>`<tr data-priority="${d.pr.l}"><td><input type="checkbox" class="chk"></td><td><div style="font-weight:600;font-size:12px;color:${d.pr.l==='Urgente'?'#991b1b':d.pr.l==='Haute'?'#92400e':'#145f38'}">${d.name}</div><div style="font-size:10px;color:var(--mu);font-family:monospace">${d.ramq}</div></td><td>${stBadge(d.st.l)}</td><td>${prBadge(d.pr.l)}</td><td style="color:var(--mu)">${d.rec}</td><td><div class="ech-cell" onclick="openEchMenu(event,this,'${d.rec}')"><span class="ech-date" style="color:${d.late?'var(--re)':'inherit'};font-weight:${d.late?600:400}">${d.ech}${d.late?' ⚠':''}</span><span class="ech-arrow">▾</span></div></td><td>${d.pages}</td>${agentCell(d.agent)}<td><button class="abtn" data-name="${d.name}" data-id="${d.id}" data-ramq="${d.ramq}" onclick="showCtx(event)">Actions ▾</button></td></tr>`).join('');
   applyEPriorityFilter();
 }
 const ic={'Analysé':'bdg','En cours':'bdb','En attente':'bdo','Erreur':'bdr'};
@@ -3210,7 +3215,7 @@ var LANG = {
     'th.reception':     'Réception',
     'th.echeance':      'Échéance',
     'th.pages':         'Pages',
-    'th.assigne':       'Assigné',
+    'th.assigne':       'Médecin conseils',
     // Table headers — Dossiers généraux
     'th.iddossier':     'ID dossier',
     'th.nom':           'Nom',
@@ -3341,7 +3346,7 @@ var LANG = {
     'th.reception':     'Received',
     'th.echeance':      'Due Date',
     'th.pages':         'Pages',
-    'th.assigne':       'Assigned',
+    'th.assigne':       'Medical advisors',
     'th.iddossier':     'File ID',
     'th.nom':           'Name',
     'th.etape':         'Stage',
@@ -3712,7 +3717,7 @@ function applyTriE(field, dir, item){
       '<td style="color:var(--mu)">' + d.rec + '</td>' +
       '<td><div class="ech-cell" data-rec="' + d.rec + '" onclick="openEchMenu(event,this,this.dataset.rec)"><span class="ech-date" style="color:' + (d.late ? 'var(--re)' : 'inherit') + ';font-weight:' + (d.late ? 600 : 400) + '">' + d.ech + (d.late ? ' ⚠' : '') + '</span><span class="ech-arrow">▾</span></div></td>' +
       '<td>' + d.pages + '</td>' +
-      '<td><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:22px;height:22px;font-size:9px">' + d.agent.split(' ').map(function(x){return x[0];}).join('').slice(0,2) + '</div><span style="font-size:11px;color:var(--mu)">' + d.agent + '</span></div></td>' +
+      agentCell(d.agent) +
       '<td><button class="abtn" data-name="' + d.name + '" data-id="' + d.id + '" data-ramq="' + d.ramq + '" onclick="showCtx(event)">Actions ▾</button></td>' +
     '</tr>';
   }).join('');
