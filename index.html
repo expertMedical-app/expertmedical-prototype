@@ -3787,6 +3787,29 @@ var FR2EN = {
   "Rechercher par nom ou prénom...":"Search by first or last name...",
   "Rechercher par nom, rôle ou statut…":"Search by name, role or status…",
   // Divers dynamiques
+  "Tableau de bord":"Dashboard",
+  "Adjointe administrative":"Administrative assistant",
+  "Médecin désigné":"Designated physician",
+  "Total actifs":"Total active",
+  "Backlog total":"Total backlog",
+  "Agents actifs":"Active agents",
+  "vs mois dernier":"vs last month",
+  "vs an dernier":"vs last year",
+  "vs sem. dernière":"vs last week",
+  "12 derniers mois — 2025–2026":"Last 12 months — 2025–2026",
+  "Dollars CAD — 2026 (objectif $50)":"CAD dollars — 2026 (target $50)",
+  "Tendance: ▼ -10% en 4 mois":"Trend: ▼ -10% over 4 months",
+  "Dossier":"File",
+  "Dossiers actifs":"Active files",
+  "Dossiers en cours :":"Active files:",
+  "Causes des retards":"Causes of delays",
+  "Valider et classer":"Validate and classify",
+  "Transmettre le dossier —":"Transmit the file —",
+  "Dossier initial":"Initial file",
+  "Moins de 30 jours":"Less than 30 days",
+  "Moins de 3 mois":"Less than 3 months",
+  "Dossier : — | ID : —":"File: — | ID: —",
+  "Fév":"Feb","Avr":"Apr","Déc":"Dec","Aoû":"Aug","Juil":"Jul","Juin":"Jun","Mai":"May",
   "À risque":"At risk",
   "Congé":"Leave",
   "Étape active":"Active stage",
@@ -3800,6 +3823,11 @@ function _i18nMap(key){
   var m;
   if((m=key.match(/^Analysé (\d+%)$/)))  return 'Analyzed '+m[1];
   if((m=key.match(/^Reçus (\d+) \/ Complétés (\d+)$/))) return 'Received '+m[1]+' / Completed '+m[2];
+  if((m=key.match(/^Objectif: (.+)$/)))  return 'Target: '+m[1];
+  if((m=key.match(/^Moins de (\d+) jours$/))) return 'Less than '+m[1]+' days';
+  if((m=key.match(/^Moins de (\d+) mois$/)))  return 'Less than '+m[1]+' months';
+  if((m=key.match(/^([\d.,]+) jours?$/)))     return m[1]+' days';
+  if((m=key.match(/^Dossier (CNS-.+)$/)))     return 'File '+m[1];
   var mois={Janvier:'January',"Février":'February',Mars:'March',Avril:'April',Mai:'May',Juin:'June',Juillet:'July',"Août":'August',Septembre:'September',Octobre:'October',Novembre:'November',"Décembre":'December'};
   if((m=key.match(/^(Janvier|Février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre)\b([\s\S]*)$/)))
     return mois[m[1]] + m[2];
